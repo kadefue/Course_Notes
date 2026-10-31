@@ -4,10 +4,20 @@
 
 [![University](https://img.shields.io/badge/SUA-School%20of%20Engineering%20%26%20Technology-forestgreen.svg)](https://www.sua.ac.tz/)
 [![Department](https://img.shields.io/badge/Department-Agricultural%20Engineering-blue.svg)](https://www.sua.ac.tz/)
-[![Programs](https://img.shields.io/badge/Degree%20Programs-BSc%20AE%20%7C%20BSc%20IWRE%20%7C%20BSc%20BPHE-orange.svg)](#-degree-program-curriculum-matrix)
+[![Programs](https://img.shields.io/badge/Undergraduate%20Programs-BSc%20AE%20%7C%20BSc%20IWRE%20%7C%20BSc%20BPHE-orange.svg)](#-degree-program-curriculum-matrix)
+[![Postgraduate](https://img.shields.io/badge/MSc%20Programs-MSc%20IEM%20%7C%20MSc%20ABE-darkgreen.svg)](#-postgraduate-degree-programs)
 [![Lab](https://img.shields.io/badge/Lab-Electronics%20%26%20Precision%20Agriculture%20(EPAL)-purple.svg)](#)
 
 A centralized academic repository housing official lecture compendia, presentation slide decks, laboratory tutorials, computational notebooks, continuous assessments, and university examination papers. This curriculum bridges traditional biosystems mechanics with **Agriculture 4.0**, modern **AgriTech**, embedded electronics, smart instrumentation, and precision biosystems engineering.
+
+---
+
+> [!IMPORTANT] Curriculum Transition Policy (Academic Years 2025/2026 & 2026/2027)
+> Sokoine University of Agriculture (SUA) launched an updated engineering curriculum starting from academic year **2025/2026**.
+> In the current academic year **2026/2027**:
+> * **First-Year and Second-Year Students**: Operate under the **new curriculum**, where the introductory electronics course is officially designated as **AEN 214: Introduction to Electronics** (formerly AGE 214).
+> * **Third-Year and Fourth-Year Students**: Older continuing student cohorts remain under the **legacy curriculum**, continuing with their established course codes: **AGE 310**, **AGE 316**, and **AGE 418**.
+> * **Postgraduate Students**: Courses **ABE 715** and **ABE 721** are advanced graduate courses serving candidates in both **MSc in Irrigation Engineering and Management (MSc IEM)** and **MSc in Agricultural and Biosystems Engineering (MSc ABE)**.
 
 ---
 
@@ -18,12 +28,14 @@ The notes and learning modules in this repository directly support the core unde
 1. **BSc in Agricultural Engineering (BSc AE)**: Farm power and machinery, agricultural automation, precision agriculture, robotics, and integrated bio-production engineering.
 2. **BSc in Irrigation and Water Resources Engineering (BSc IWRE)**: Hydrological measurement, hydraulic automation, telemetry, soil-water sensor networks, and Variable Rate Irrigation (VRI).
 3. **BSc in Bioprocess and Post-Harvest Engineering (BSc BPHE)**: Post-harvest value addition, smart storage, grain drying control, machine vision quality inspection, and food bioprocess instrumentation.
+4. **MSc in Irrigation Engineering and Management (MSc IEM)** & **MSc in Agricultural and Biosystems Engineering (MSc ABE)**: Advanced computational modeling, numerical hydrology, system dynamics, CAD/CAM, and finite element analysis (FEA).
+5. **PhD in Agroecology / Doctoral Studies**: Advanced synthesis of AI, IoT telemetry, and GIS spatial modeling (AEC 813).
 
 ---
 
 ## 🗺️ Cross-Disciplinary Architecture & Course Mapping
 
-The diagram below illustrates how core engineering courses progress from foundational electronics and computational scripting into advanced smart agricultural systems across the three degree programs:
+The diagram below illustrates how core engineering courses progress from foundational electronics and computational scripting into advanced smart agricultural systems across the undergraduate and postgraduate degree programs:
 
 ```mermaid
 flowchart TD
@@ -33,35 +45,36 @@ flowchart TD
     classDef advanced fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff;
     classDef degrees fill:#dc2626,stroke:#991b1b,stroke-width:2px,color:#fff;
 
-    subgraph Y2 ["📅 Year 2: Computational & Electronic Foundations"]
-        AGE214["⚡ AGE 214: Introduction to Electronics\n(Semiconductors, Op-Amps, Rectifiers, DAQ)"]:::foundation
+    subgraph Y2 ["📅 Year 2: New Curriculum (2026/2027)"]
+        AEN214["⚡ AEN 214 / AGE 214: Introduction to Electronics\n(New Code: AEN 214 | Legacy Code: AGE 214)"]:::foundation
         AGE219["💻 AGE 219: Basics of Computer Programming\n(Python, Google Colab, AgriTech Algorithms)"]:::foundation
     end
 
-    subgraph Y3 ["📅 Year 3: Smart Instrumentation & Embedded Controls"]
+    subgraph Y3 ["📅 Year 3: Continuing Curriculum Track"]
         AGE310["📡 AGE 310: Instrumentation & Measurements\n(Transducers, Signal Conditioning, Drones, Vision)"]:::hardware
         AGE316["🧠 AGE 316: Microcomputer Systems\n(Microcontrollers, Embedded C/Arduino, Interfacing)"]:::hardware
     end
 
-    subgraph Y4 ["📅 Year 4: Advanced AgriTech & Precision Biosystems"]
+    subgraph Y4 ["📅 Year 4: Continuing Curriculum Track"]
         AGE418["🚜 AGE 418: Sensors & Controls in Precision Agriculture\n(GNSS, VRT, Soil/Crop Sensors, Yield Mapping, Robotics)"]:::systems
     end
 
-    subgraph PG ["🎓 Postgraduate & Advanced Research"]
-        ABE715["🐍 ABE 715: Advanced Computer Programming\n(NumPy, Pandas, Geospatial, ML, Numerical Methods)"]:::advanced
-        ABE721["📐 ABE 721: Ag Systems Modelling & Simulation\n(Dynamic Crop Models, Plant-Water Relations, CAD/FEA)"]:::advanced
-        AEC813["🌐 AEC 813: AI, IoT & GIS in Agriculture\n(Smart Ag Systems, Spatial Analysis, Deep Learning)"]:::advanced
+    subgraph PG ["🎓 Advanced Postgraduate Programs (MSc & PhD)"]
+        ABE715["🐍 ABE 715: Advanced Computer Programming\n(MSc IEM & MSc ABE — NumPy, ML, Geospatial, Hydrology)"]:::advanced
+        ABE721["📐 ABE 721: Ag Systems Modelling & Simulation\n(MSc IEM & MSc ABE — Crop Models, Plant-Water, CAD/FEA)"]:::advanced
+        AEC813["🌐 AEC 813: AI, IoT & GIS in Agriculture\n(PhD Agroecology — Spatial AI, Edge IoT Networks)"]:::advanced
     end
 
-    subgraph TargetDegrees ["🎓 Target Undergraduate Degree Cohorts"]
+    subgraph TargetDegrees ["🎓 Degree Cohorts"]
         DEG_AE["🌾 BSc in Agricultural Engineering (AE)"]:::degrees
         DEG_IWRE["💧 BSc in Irrigation & Water Resources Engineering (IWRE)"]:::degrees
         DEG_BPHE["🏭 BSc in Bioprocess & Post-Harvest Engineering (BPHE)"]:::degrees
+        DEG_MSC["🎓 MSc in IEM & MSc in ABE"]:::degrees
     end
 
-    AGE214 --> AGE310
+    AEN214 --> AGE310
     AGE219 --> AGE316
-    AGE214 --> AGE316
+    AEN214 --> AGE316
     AGE310 --> AGE418
     AGE316 --> AGE418
 
@@ -76,25 +89,27 @@ flowchart TD
 
     AGE418 -.-> ABE715
     AGE418 -.-> ABE721
-    AGE418 -.-> AEC813
+    ABE715 --> DEG_MSC
+    ABE721 --> DEG_MSC
+    AEC813 -.-> DEG_MSC
 ```
 
 ---
 
 ## 📊 Degree Program Curriculum Matrix
 
-The table below summarizes how each course module connects to the specific technical competencies required for **BSc AE**, **BSc IWRE**, and **BSc BPHE** students:
+The table below summarizes how each course module connects to the specific technical competencies required for **BSc AE**, **BSc IWRE**, and **BSc BPHE** students, as well as postgraduate **MSc IEM / MSc ABE** scholars:
 
-| Course Code & Title | Primary Year | BSc Agricultural Engineering (BSc AE) | BSc Irrigation & Water Resources Engineering (BSc IWRE) | BSc Bioprocess & Post-Harvest Engineering (BSc BPHE) |
+| Course Code & Title | Curriculum Status & Year | BSc Agricultural Engineering (BSc AE) | BSc Irrigation & Water Resources Engineering (BSc IWRE) | BSc Bioprocess & Post-Harvest Engineering (BSc BPHE) |
 | :--- | :--- | :--- | :--- | :--- |
-| [**AGE 214**](file:///home/kadefue/Course_Notes/AGE%20214)<br>Introduction to Electronics | Year 2 | **Core Hardware Foundation**: BJT/MOSFET motor drivers, sensor conditioning, power rectifiers for farm machinery. | **Sensing Foundations**: Operational amplifiers, voltage dividers, and signal conditioning for environmental probes. | **Process Controls**: Op-amp comparator circuits, temperature/moisture transducers, and actuator drive circuitry. |
+| [**AEN 214 / AGE 214**](file:///home/kadefue/Course_Notes/AGE%20214)<br>Introduction to Electronics | **New Curriculum (AEN 214)** for Y1/Y2<br>*Legacy (AGE 214)* for Y3/Y4 | **Core Hardware Foundation**: BJT/MOSFET motor drivers, sensor conditioning, power rectifiers for farm machinery. | **Sensing Foundations**: Operational amplifiers, voltage dividers, and signal conditioning for environmental probes. | **Process Controls**: Op-amp comparator circuits, temperature/moisture transducers, and actuator drive circuitry. |
 | [**AGE 219**](file:///home/kadefue/Course_Notes/AGE%20219)<br>Basics of Computer Programming | Year 2 | **Farm Computing**: Plow draft force algorithms, fertilizer application math, machinery operational efficiency scripting. | **Hydrological Modeling**: Cumulative rainfall loops, crop water requirements ($ET_c$), and automated irrigation logic. | **Storage Analytics**: Data persistence, file I/O, and capstone mini-project on *"The Smart Grain Bin Manager"*. |
 | [**AGE 310**](file:///home/kadefue/Course_Notes/AGE%20310)<br>Instrumentation & Measurements | Year 3 | **Field Sensing & Robotics**: Transducers, load cells, ag drones (UAVs), machine vision, CAN bus, and ag robotics. | **Water Measurement**: Pressure transducers, ultrasonic level sensors, flow meters, dynamic sensor response, and telemetry. | **Quality & Grading**: Machine vision for sorting/grading, load cells for batching, dynamic thermal response in dryers. |
 | [**AGE 316**](file:///home/kadefue/Course_Notes/AGE%20316)<br>Microcomputer Systems | Year 3 | **Machine Intelligence**: Embedded microcontrollers, Arduino interfacing, tractor implement ECU prototypes. | **Irrigation Automation**: Automated pump controllers, valve actuation timers, remote sensor telemetry nodes. | **Core Embedded Controls**: Microcontroller architecture, PID temperature/airflow controllers for drying and cold storage. |
 | [**AGE 418**](file:///home/kadefue/Course_Notes/AGE%20418)<br>Sensors & Controls in Precision Ag | Year 4 | **Core Specialization**: GNSS/RTK auto-steering, proximal crop/soil sensors, yield monitors, VRT, autonomous field robots. | **Precision Water Management**: Variable Rate Irrigation (VRI), CWSI crop water stress detection, EMI soil mapping. | **Quality & Supply Chain**: Harvest moisture mapping, yield sensor calibration, automated grain sorting and traceability. |
-| [**ABE 715**](file:///home/kadefue/Course_Notes/ABE%20715)<br>Computer Programming (PG) | Postgrad / MSc | Advanced numerical algorithms, machine learning basics, computer vision, and IoT data processing. | Primary curriculum for **MSc Irrigation Engineering and Management**; geospatial analysis & numerical hydrology. | Advanced process simulation, bio-data analytics, and predictive spoilage modeling. |
-| [**ABE 721**](file:///home/kadefue/Course_Notes/ABE%20721)<br>Ag Systems Modelling & Simulation | Postgrad / MSc | CAD/CAM, finite element analysis (FEA), system dynamics, and dynamic machinery simulation. | Dynamic plant-water relations, soil-water-atmosphere models, soft computing, and catchment management. | Bioreactor dynamics, thermal process simulation, and CAD for agro-processing facility design. |
-| [**AEC 813**](file:///home/kadefue/Course_Notes/AEC%20813)<br>AI, IoT & GIS in Agriculture | PhD / Advanced | Edge-AI for autonomous tractors, spatial GIS integration, and large-scale agricultural telematics. | Spatial watershed GIS analytics, AI-driven river basin forecasting, and satellite-based irrigation monitoring. | AI-driven spectral classification for food quality, supply chain IoT telemetry, and smart storage automation. |
+| [**ABE 715**](file:///home/kadefue/Course_Notes/ABE%20715)<br>Advanced Computer Programming | **Postgraduate (MSc)**<br>MSc IEM & MSc ABE | Advanced numerical algorithms, machine learning basics, computer vision, and IoT data processing. | Primary curriculum for **MSc Irrigation Engineering and Management**; geospatial analysis & numerical hydrology. | Advanced process simulation, bio-data analytics, and predictive spoilage modeling. |
+| [**ABE 721**](file:///home/kadefue/Course_Notes/ABE%20721)<br>Ag Systems Modelling & Simulation | **Postgraduate (MSc)**<br>MSc IEM & MSc ABE | CAD/CAM, finite element analysis (FEA), system dynamics, and dynamic machinery simulation. | Dynamic plant-water relations, soil-water-atmosphere models, soft computing, and catchment management. | Bioreactor dynamics, thermal process simulation, and CAD for agro-processing facility design. |
+| [**AEC 813**](file:///home/kadefue/Course_Notes/AEC%20813)<br>AI, IoT & GIS in Agriculture | **Postgraduate (PhD)**<br>PhD Agroecology | Edge-AI for autonomous tractors, spatial GIS integration, and large-scale agricultural telematics. | Spatial watershed GIS analytics, AI-driven river basin forecasting, and satellite-based irrigation monitoring. | AI-driven spectral classification for food quality, supply chain IoT telemetry, and smart storage automation. |
 
 ---
 
@@ -108,7 +123,8 @@ The table below summarizes how each course module connects to the specific techn
 The BSc in Agricultural Engineering trains students to design, mechanize, and optimize biological production systems. The coursework bridges traditional mechanical principles (engines, transmissions, tillage mechanics, structures) with modern electronics, microcomputers, satellite navigation, and autonomous field robotics.
 
 #### 📚 How the Repository Notes Serve BSc AE Students:
-* **[AGE 214: Introduction to Electronics](file:///home/kadefue/Course_Notes/AGE%20214)**:
+* **[AEN 214 / AGE 214: Introduction to Electronics](file:///home/kadefue/Course_Notes/AGE%20214)**:
+  * *Note: First and Second Years follow course code **AEN 214** (2025/2026 new curriculum rollout), while Third/Fourth Years reference **AGE 214**.*
   * Master semiconductor physics, diode rectification circuits, and BJT/MOSFET configurations essential for switching high-current agricultural actuators (solenoids, linear actuators, starter relays).
   * Study operational amplifier (Op-Amp) signal conditioning to interface analog sensors (strain gauges measuring draft forces on implements) with electronic controllers.
   * Understand digital logic primitives and power electronics used in modern tractor electronic control units (ECUs).
@@ -133,7 +149,7 @@ The BSc in Agricultural Engineering trains students to design, mechanize, and op
 
 ```mermaid
 flowchart LR
-    A["AGE 214\nAnalog/Digital Electronics"] --> B["AGE 310 & 316\nSensors & Microcontrollers"]
+    A["AEN 214 / AGE 214\nAnalog/Digital Electronics"] --> B["AGE 310 & 316\nSensors & Microcontrollers"]
     B --> C["AGE 418\nPrecision Ag & Robotics"]
     C --> D["Smart Farm Mechanization\n- Autonomous Tractors\n- ISOBUS Implements\n- VRT Chemical Application"]
 ```
@@ -146,6 +162,9 @@ flowchart LR
 The BSc in Irrigation and Water Resources Engineering equips engineers to manage water resources sustainably, design pressurized and surface irrigation infrastructure, manage agricultural drainage, and deploy smart water management technologies in response to climate variability.
 
 #### 📚 How the Repository Notes Serve BSc IWRE Students:
+* **[AEN 214 / AGE 214: Introduction to Electronics](file:///home/kadefue/Course_Notes/AGE%20214)**:
+  * Understand low-noise operational amplifier conditioning for soil moisture tension sensors and water level probes.
+  * Build transistor switching stages for 12V/24V latching solenoid irrigation valves.
 * **[AGE 219: Basics of Computer Programming](file:///home/kadefue/Course_Notes/AGE%20219)**:
   * **Lecture 3 Case Study**: Developing an automated smart irrigation decision engine in Python based on real-time soil moisture thresholds.
   * **Lecture 4 Case Study**: Looping through 7-day cumulative rainfall and weather records to evaluate effective precipitation and crop water requirements.
@@ -161,7 +180,7 @@ The BSc in Irrigation and Water Resources Engineering equips engineers to manage
   * **Remote Sensing in Water Management (Lecture 3)**: Utilizing Normalized Difference Water Index (NDWI), thermal infrared canopy thermography, and the Crop Water Stress Index (CWSI) to detect plant water stress before visible wilting occurs.
   * **GIS and Spatial Variability (Lectures 2 & 10)**: Digital elevation models (DEM), watershed delineations, flow accumulation mapping, and geospatial soil water-holding capacity maps using geostatistical kriging.
 * **Postgraduate Synergies ([ABE 715](file:///home/kadefue/Course_Notes/ABE%20715) & [ABE 721](file:///home/kadefue/Course_Notes/ABE%20721))**:
-  * ABE 715 specifically targets MSc Irrigation Engineering with Python routines for numerical integration of hydrographs and geospatial raster analysis.
+  * ABE 715 specifically serves **MSc Irrigation Engineering and Management (MSc IEM)** with Python routines for numerical integration of hydrographs and geospatial raster analysis.
   * ABE 721 explores dynamic soil-water-atmosphere-plant models, Richards' equation simulations for unsaturated flow, and soft computing in water resource management.
 
 ```mermaid
@@ -194,7 +213,7 @@ flowchart TD
 The BSc in Bioprocess and Post-Harvest Engineering prepares engineers to eliminate post-harvest losses, design agro-processing facilities, optimize grain drying and storage, maintain cold chains, develop functional biomaterials, and implement automated quality control systems.
 
 #### 📚 How the Repository Notes Serve BSc BPHE Students:
-* **[AGE 214: Introduction to Electronics](file:///home/kadefue/Course_Notes/AGE%20214)**:
+* **[AEN 214 / AGE 214: Introduction to Electronics](file:///home/kadefue/Course_Notes/AGE%20214)**:
   * Temperature transducer circuits: Thermocouples, Resistance Temperature Detectors (RTD Pt100), and thermistors paired with precision operational amplifiers.
   * Rectification, power supplies, and solid-state relay (SSR) switching circuits to control electric heating elements in batch dryers and refrigeration compressors.
   * Filter circuits to remove noise from sensitive micro-strain load cells in continuous grain weighing systems.
@@ -229,19 +248,20 @@ Below is an exhaustive inventory of the course directories maintained in this re
 
 ```
 Course_Notes/
-├── AGE 214/   ⚡ Introduction to Electronics (Year 2)
-├── AGE 219/   💻 Basics of Computer Programming (Year 2)
-├── AGE 310/   📡 Instrumentation and Measurements (Year 3)
-├── AGE 316/   🧠 Microcomputer Systems (Year 3)
-├── AGE 418/   🚜 Sensors and Controls in Precision Agriculture (Year 4)
-├── ABE 715/   🐍 Computer Programming for Postgraduates (MSc IWRE)
-├── ABE 721/   📐 Agricultural Systems Modelling and Simulation (MSc / MPhil)
-└── AEC 813/   🌐 AI, IoT, and GIS Application in Agriculture (PhD Agroecology)
+├── AGE 214/   ⚡ AEN 214 / AGE 214: Introduction to Electronics (New Code: AEN 214)
+├── AGE 219/   💻 AGE 219: Basics of Computer Programming (Year 2)
+├── AGE 310/   📡 AGE 310: Instrumentation and Measurements (Year 3)
+├── AGE 316/   🧠 AGE 316: Microcomputer Systems (Year 3)
+├── AGE 418/   🚜 AGE 418: Sensors and Controls in Precision Agriculture (Year 4)
+├── ABE 715/   🐍 ABE 715: Advanced Computer Programming (MSc IEM & MSc ABE)
+├── ABE 721/   📐 ABE 721: Ag Systems Modelling and Simulation (MSc IEM & MSc ABE)
+└── AEC 813/   🌐 AEC 813: AI, IoT, and GIS Application in Agriculture (PhD Agroecology)
 ```
 
 ### Detailed Course Folders:
 
-#### 1. [`AGE 214: Introduction to Electronics`](file:///home/kadefue/Course_Notes/AGE%20214)
+#### 1. [`AEN 214 / AGE 214: Introduction to Electronics`](file:///home/kadefue/Course_Notes/AGE%20214)
+* **Curriculum Note**: Coded as **AEN 214** under the new curriculum (active for 1st & 2nd Years in 2026/2027) and **AGE 214** under the continuing legacy curriculum.
 * **Instructor**: Dr. Kadeghe Goodluck Fue (Electronics and Precision Agriculture Lab - EPAL)
 * **Complete Compendia (LaTeX Generated PDFs)**:
   * [Lecture 1: Intro to Electronics & Semiconductor Physics](file:///home/kadefue/Course_Notes/AGE%20214/AGE214Lecture1CompendiumFixed.tex.pdf)
@@ -338,21 +358,21 @@ Course_Notes/
 
 ---
 
-#### 6. [`ABE 715: Computer Programming`](file:///home/kadefue/Course_Notes/ABE%20715)
-* **Audience**: Postgraduate Students (MSc Irrigation Engineering and Management, MSc Agricultural Engineering)
+#### 6. [`ABE 715: Advanced Computer Programming`](file:///home/kadefue/Course_Notes/ABE%20715)
+* **Target Audience**: Master of Science Students (**MSc in Irrigation Engineering and Management [MSc IEM]** & **MSc in Agricultural and Biosystems Engineering [MSc ABE]**)
 * **Syllabus Highlights**: Python programming, NumPy matrix operations, Pandas tabular data pipelines, numerical integration (Trapezoidal, Simpson's rule), root finding (Newton-Raphson, Bisection), OpenCV computer vision for biometrics, IoT data streaming, and geospatial spatial raster analysis.
 
 ---
 
 #### 7. [`ABE 721: Agricultural Systems Modelling and Simulation`](file:///home/kadefue/Course_Notes/ABE%20721)
-* **Audience**: Master of Science & Advanced Engineering Candidates
+* **Target Audience**: Master of Science Students (**MSc in Irrigation Engineering and Management [MSc IEM]** & **MSc in Agricultural and Biosystems Engineering [MSc ABE]**)
 * **Modules & Syllabi**: [Official Course Syllabus & Reading List](file:///home/kadefue/Course_Notes/ABE%20721/ABE%20721%20Syllabus.pdf)
 * **Key Content**: System dynamics, dynamic crop models (CERES, DSSAT concepts), plant-water relations, soft computing & fuzzy inference in water resources, Computer Aided Design (CAD), and Finite Element Analysis (FEA) using MATLAB.
 
 ---
 
 #### 8. [`AEC 813: AI, IoT, and GIS Application in Agriculture`](file:///home/kadefue/Course_Notes/AEC%20813)
-* **Audience**: PhD in Agroecology / Doctoral Engineering Candidates
+* **Target Audience**: PhD in Agroecology / Doctoral Engineering Candidates
 * **Key Content**: 15 lecture compendia in LaTeX formatting covering advanced IoT communication architectures, GIS spatial modeling, deep learning architectures in agriculture, and edge-computing implementations.
 
 ---
@@ -366,11 +386,11 @@ To get the most out of these course materials, students are encouraged to use th
   * Libraries: `numpy`, `pandas`, `matplotlib`, `scipy`, `scikit-learn`, `geopandas`, `opencv-python`.
 * **Embedded Electronics & Hardware Prototyping**:
   * [Arduino IDE](https://www.arduino.cc/en/software) for microcomputer firmware (AGE 316).
-  * [Fritzing](https://fritzing.org/) or [Tinkercad Circuits](https://www.tinkercad.com/) for breadboard and schematic modeling (AGE 214 / AGE 316).
+  * [Fritzing](https://fritzing.org/) or [Tinkercad Circuits](https://www.tinkercad.com/) for breadboard and schematic modeling (AEN 214 / AGE 316).
 * **Geospatial & Precision Agriculture**:
   * [QGIS](https://qgis.org/) for spatial analysis, GNSS yield map generation, and raster processing (AGE 418 / ABE 715 / AEC 813).
 * **Technical Documentation**:
-  * [Overleaf / LaTeX](https://www.overleaf.com/) for drafting engineering reports and assignments matching departmental publishing standards (standard for ABE 721 / AGE compendia).
+  * [Overleaf / LaTeX](https://www.overleaf.com/) for drafting engineering reports and assignments matching departmental publishing standards (standard for ABE 721 / AEN 214 compendia).
 
 ---
 
