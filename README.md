@@ -403,11 +403,57 @@ As certified by the Department of Agricultural Engineering, professional integri
 
 ---
 
-## 👨‍🏫 Course Administration & Instructor Information
+## 👨‍🏫 Laboratory Leadership & Instructional Team
 
-* **Lead Instructor**: Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T)
+These courses and laboratory modules are developed and delivered by the **Electronics and Precision Agriculture Lab (EPAL)** within the Department of Agricultural Engineering:
+
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz`
+  * *Personal Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Teaching & Research Laboratories**:
+  * **Electronics and Precision Agriculture Lab (EPAL)**: [**www.epalab.org**](https://www.epalab.org)
+  * **Youth Empowerment through Establishment of Social Innovation (YEESI) Lab**: [**yeesi.epalab.org**](https://yeesi.epalab.org)
 * **Department**: Department of Agricultural Engineering (DAE)
-* **Faculty**: School of Engineering and Technology (SoET)
+* **School**: School of Engineering and Technology (SoET)
 * **Institution**: Sokoine University of Agriculture (SUA), Morogoro, Tanzania
-* **Laboratory**: Electronics and Precision Agriculture Lab (EPAL)
-* **Official Academic Correspondence**: `kadeghe.fue@sua.ac.tz`
+
+---
+
+## 👨‍🔬 About Dr. Kadeghe Goodluck Fue (PhD, P.Eng)
+
+**Dr. Kadeghe "Kade" Goodluck Fue** is a Senior Lecturer of Mechatronics, Artificial Intelligence, and Precision Agriculture at Sokoine University of Agriculture (SUA) and a Registered Professional Engineer (**PE11382**) with the Engineers Registration Board (ERB) in Tanzania. He is a distinguished Software Development Engineer and Robotics Specialist with over 15 years of systems engineering, full-stack software development, and AgriTech innovation experience.
+
+### 🎓 Academic & Professional Credentials
+* **Ph.D. in Engineering (Artificial Intelligence and Robotics)** — *University of Georgia, USA* (2020)
+* **M.Sc. in Agricultural and Biological Engineering (Information Systems and Precision Agriculture)** — *University of Florida, USA* (2014)
+* **B.Sc. in Computer Engineering & Information Technology** — *University of Dar es Salaam, Tanzania* (2011)
+* **Editorial Board Member**: *Scientific Reports* (Nature Portfolio) and active peer reviewer for premier IEEE, ASABE, and Elsevier journals.
+* **Author of 57+ Scientific Publications** spanning agricultural robotics, computer vision, embedded systems, remote sensing, and precision fertilization.
+* **Enterprise Software Architect**: Architected major national software systems, including SUA's internal Government e-Payment Gateway (GePG) financial module processing over 10 Billion TZS annually in real time.
+* **Project Leadership**: Lead Principal Investigator for the USAID/National Academies PEER Project (Project 9-456) and Component Leader under the World Bank HEET Project at SUA.
+
+> [!TIP] Connect with Dr. Fue's Digital Ecosystem
+> Students are strongly encouraged to visit Dr. Fue's official personal website at [**www.kadefue.com**](https://www.kadefue.com) and the lab portal at [**www.epalab.org**](https://www.epalab.org) to explore research publications, software repositories, open-source hardware designs, and career guidance in AI and robotics.
+
+---
+
+## 🚀 Student Entrepreneurship, Startups & Spin-Offs (EPAL & YEESI Lab)
+
+The **Electronics and Precision Agriculture Lab (EPAL)** and the **Morogoro YEESI Lab** ([**yeesi.epalab.org**](https://yeesi.epalab.org)) are not just teaching facilities—they function as an active social innovation incubator and AgriTech accelerator for undergraduate and postgraduate engineering students. Funded in part by USAID and the US National Academies of Sciences, Engineering, and Medicine (PEER Program), the lab trains young engineers to commercialize their class projects, embedded systems firmware, and AI models.
+
+Notable student-led companies and spin-offs incubated through this ecosystem include:
+
+* 🌾 **AGROSCAN Company Ltd** ([**epalab.org**](https://www.epalab.org)):
+  * Co-founded by student innovators including **Stephano Mashauri** and **Dickson Massawe**.
+  * Developed **FARMHIRE**, a digital platform connecting smallholder farmers with tractor and machinery owners for equipment rentals and sales, significantly expanding access to agricultural mechanization.
+* 🐄 **Afya ya Mnyama (Afya ya Mnyama Digital / Mnyama Check)**:
+  * A cutting-edge AgriTech startup focused on smart livestock monitoring.
+  * Employs IoT-enabled smart ear tags and AI predictive diagnostics to continuously monitor livestock vital signs, detect early disease outbreaks, and reduce mortality rates among pastoralist herds.
+* 🛠️ **AgriMfumo Ltd**:
+  * An official EPAL commercial spin-off delivering digital farm management software, automated greenhouse environmental telemetry, and smart irrigation controllers.
+* 🌍 **Collaborative Ecosystem**:
+  * EPAL and YEESI Lab students regularly participate in national and continental hackathons, partnering with organizations like *NeuroTech Africa*, *NileAGI*, *UNESCO-IRCAI*, and *Anzisha Ventures*.
+
+> [!IMPORTANT] A Message to Students (BSc AE, BSc IWRE, BSc BPHE, MSc IEM, MSc ABE)
+> The class notes, Arduino code, sensor circuits, and Python algorithms in this repository are designed to be practical building blocks. You are challenged to look beyond academic grades and use these materials to develop real-world solutions, launch AgriTech startups, and lead the transformation of agriculture across Tanzania and Africa. Visit [**yeesi.epalab.org**](https://yeesi.epalab.org) and [**www.epalab.org**](https://www.epalab.org) to discover upcoming hackathons, innovation challenges, and incubator programs!

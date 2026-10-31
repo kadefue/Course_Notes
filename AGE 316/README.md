@@ -56,3 +56,24 @@ AGE 316 is a required professional engineering course specifically designated fo
 * **Assignments & Spreadsheets**:
   * `AGE 316 ASSIGNMENT 1 2024-25.xls` & `ASSIGNMENT 2 2024-25.xls`
   * Continuous grading records: `AGE 316 TEST 1 2024-25.xls`, `TEST 2 2024-25.xls`.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He holds a Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. Specializing in embedded systems, microcontroller firmware, and hardware-software integration, Dr. Fue invites students to explore [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) for open-source embedded hardware designs and guides.
+
+### 🚀 Student Innovations & Entrepreneurship
+The microcontroller firmware, sensor interfacing, and actuator drivers taught in AGE 316 directly power student-led AgriTech ventures nurtured at EPAL and the YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)):
+* **AGROSCAN Company Ltd** (telematics controllers for tractor rental services via **FARMHIRE**, co-founded by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (embedded microcontroller firmware on smart wearable livestock ear tags for continuous vital sign tracking)
+* **AgriMfumo Ltd** (microcontroller-driven automated irrigation solenoids and environmental controllers)
+
+Students are encouraged to prototype embedded products and participate in EPAL robotics and IoT hackathons!

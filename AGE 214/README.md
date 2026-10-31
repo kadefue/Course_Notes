@@ -66,3 +66,24 @@ The curriculum covers semiconductor physics, discrete active and passive compone
 
 * **Lecture Compendia (`.pdf`)**: 15 complete academic compendia typeset in $\LaTeX$ (`AGE214Lecture1CompendiumFixed.tex.pdf` through `AGE214Lecture15CompendiumFixed.tex.pdf`).
 * **Lecture Presentations (`.pptx`)**: 15 slide decks covering each individual lecture module.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He holds a Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. With 15+ years of software and hardware engineering experience and 57+ scientific publications, Dr. Fue leads EPAL and the Morogoro YEESI Lab. Students are encouraged to explore [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) for research publications, open projects, and technical resources.
+
+### 🚀 Student Innovations & Entrepreneurship
+The foundational circuits learned in this course (sensor conditioning, power switches, and DAQ interfaces) power real-world student ventures incubated at EPAL and the YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)), including:
+* **AGROSCAN Company Ltd** (mechanization access platform **FARMHIRE**, co-founded by student innovators like Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (IoT smart ear tag sensors for real-time livestock health diagnostics)
+* **AgriMfumo Ltd** (commercial spin-off for smart farm telemetry and automated irrigation)
+
+Students are encouraged to apply these electronic principles toward solving agricultural challenges and launching their own AgriTech startups!

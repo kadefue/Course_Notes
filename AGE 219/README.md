@@ -71,3 +71,24 @@ Every programming concept in AGE 219 is paired with an authentic biosystems engi
 
 * **Code Originality**: Students are required to write their own logic. Copying code without attribution is considered academic misconduct. Students must be prepared to explain every line of their code during oral defense evaluations.
 * **Responsible AI Usage**: Generative AI (ChatGPT, Gemini) is permitted solely as a personal tutor to explain errors and debug syntax. Generating complete assignments using AI is prohibited. All AI assistance must be disclosed in the Python notebook header comments.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He holds a Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. A seasoned software development engineer with 15+ years of software architecture experience (including architecting SUA's GePG enterprise payment integration), Dr. Fue encourages students to visit [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) for coding projects, research publications, and career mentorship.
+
+### 🚀 Student Innovations & Entrepreneurship
+The coding logic, data pipelines, and case studies developed in AGE 219 serve as the launchpad for youth AgriTech enterprises incubated at EPAL and the Morogoro YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)):
+* **AGROSCAN Company Ltd** (developed **FARMHIRE** to digitize agricultural mechanization access, spearheaded by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (AI-driven livestock health monitoring algorithms based on Python data structures)
+* **AgriMfumo Ltd** (cloud-backed farm management and IoT software systems)
+
+Students are encouraged to transform their Python scripts and Colab notebooks into scalable software solutions for African agriculture!

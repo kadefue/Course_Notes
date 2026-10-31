@@ -48,3 +48,24 @@ This directory contains a complete 15-lecture compendium series formatted in pro
   * `AEC813_Lecture5_Practical_Applications.pptx`
   * `AEC813_Lecture6_Recent_Research.pptx`
 * **Compendia (`.pdf`)**: Full set of 15 lecture compendia (`AEC813Lecture1Compendium.tex.pdf` through `AEC813Lecture15Compendium.tex.pdf`).
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Research Team
+
+* **Research Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Lead Researcher & Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He holds a Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. With 15+ years of systems development and AI research experience and 57+ publications, Dr. Fue is Lead PI of the USAID/National Academies PEER Project (Project 9-456). Doctoral scholars are invited to visit [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) for high-impact research collaborations, AI datasets, and publications.
+
+### 🚀 Innovation Incubation & Commercial Spin-Offs
+Doctoral research at EPAL and the Morogoro YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)) actively translates into scalable social innovations and spin-offs:
+* **AGROSCAN Company Ltd** (mechanization logistics platform **FARMHIRE**, co-founded by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (AI-driven livestock biometric diagnostics and wearable IoT ear tags)
+* **AgriMfumo Ltd** (advanced cloud-connected agricultural telemetry systems)
+
+Doctoral researchers are encouraged to utilize EPAL's Lambda Labs Quad AI workstation and sensor infrastructure to pioneer transformative AgriTech ventures!

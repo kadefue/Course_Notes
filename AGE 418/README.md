@@ -65,3 +65,24 @@ The curriculum integrates satellite positioning (GNSS/RTK), Geographic Informati
   * `AE 418 Test 2 2023-2024.docx`
 * **University Examinations**:
   * `AGE 418_UE 2025_FUE_23 FEB 2026.doc` & `AGE 418_UE 2025_FUE_23 FEB 2026 2.doc`: Official University Final Examination papers.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He earned his Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering (Precision Ag) from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. With 57+ peer-reviewed publications and leadership on USAID PEER and World Bank HEET projects, Dr. Fue is a pioneering researcher in East African precision agriculture. Students are encouraged to visit [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) for research papers, precision datasets, and career guidance.
+
+### 🚀 Student Innovations & Entrepreneurship
+AGE 418 is the senior launchpad for commercializing AgriTech solutions. Startups and spin-offs incubated through EPAL and the Morogoro YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)) include:
+* **AGROSCAN Company Ltd** (providing digital access to agricultural mechanization through **FARMHIRE**, spearheaded by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (AI-driven livestock biometric diagnostics and wearable IoT ear tags)
+* **AgriMfumo Ltd** (precision agriculture management platforms and sensor telemetry)
+
+Graduating seniors are encouraged to leverage their AGE 418 capstone projects and EPAL facilities to build high-impact precision agriculture enterprises!

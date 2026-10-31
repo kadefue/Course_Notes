@@ -66,3 +66,24 @@ This course is simultaneously taken by all three undergraduate engineering cohor
   * `AGE 310_ASS_1.xlsx`: Quantitative sensor calibration and instrumentation calculation assignments.
 * **University Examinations**:
   * `AGE 310_UE 2025_FUE_23 FEB 2026.doc`: Official University Final Examination paper covering BSc AE, BSc IWRE, and BSc BPHE cohorts.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He holds a Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. With 15+ years in instrumentation, autonomous systems, and sensor fusion, Dr. Fue leads research projects funded by USAID and the US National Academies. Students are encouraged to visit [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) to explore ongoing instrumentation and drone research.
+
+### 🚀 Student Innovations & Entrepreneurship
+AGE 310 concepts—machine vision, environmental sensors, strain load cells, and IoT telemetry—are the technical foundation for prominent student startups fostered in EPAL and the YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)):
+* **AGROSCAN Company Ltd** (mechanization telemetry and equipment rental platform **FARMHIRE**, driven by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (IoT sensor tags monitoring animal vitals using dynamic temperature and biometric sensors)
+* **AgriMfumo Ltd** (automated irrigation telemetry and smart sensor interfaces)
+
+Students are encouraged to utilize EPAL's testing benches and fabrication tools to design market-ready instrumentation products!

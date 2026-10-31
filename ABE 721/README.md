@@ -65,3 +65,24 @@ This course provides advanced analytical modeling frameworks for students in:
 * **LaTeX Requirement**: All assignments and term papers must be typeset in $\LaTeX$ (preferably using Overleaf) and submitted as PDF. Handwritten work is not accepted.
 * **Code Submission**: Students must provide both properly documented $\LaTeX$ explanations (with embedded output plots) and executable source code (`.py`, `.m`, or `.R`).
 * **Submissions Email**: Send assignments exclusively to `kadeghe.fue@sua.ac.tz`.
+
+---
+
+## 👨‍🏫 Laboratory Leadership & Teaching Staff
+
+* **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))
+* **Principal Investigator (PI) & Lead Instructor**: **Dr. Kadeghe Goodluck Fue**, PhD, P.Eng (T)
+  * *Email*: `kadeghe.fue@sua.ac.tz` | *Website*: [**www.kadefue.com**](https://www.kadefue.com)
+* **Laboratory Technician**: **Mr. Patrick Mathias**
+* **Department**: Department of Agricultural Engineering (DAE), Sokoine University of Agriculture
+
+### 👨‍🔬 About the Instructor
+**Dr. Kadeghe Goodluck Fue** is a Senior Lecturer of Mechatronics, AI, and Precision Agriculture at SUA and a Registered Professional Engineer (PE11382). He earned his Ph.D. in Engineering (AI and Robotics) from the University of Georgia, USA, an M.Sc. in Agricultural & Biological Engineering from the University of Florida, USA, and a B.Sc. in Computer Engineering & IT from the University of Dar es Salaam. An authority on dynamic agricultural modeling and system simulation, Dr. Fue serves on the editorial board of *Scientific Reports* (Nature Portfolio). Students are encouraged to visit [**www.kadefue.com**](https://www.kadefue.com) and [**www.epalab.org**](https://www.epalab.org) to explore research articles, simulation models, and grant collaborations.
+
+### 🚀 Student Innovations & Commercialization
+The mathematical modeling, dynamic simulations, and soft computing frameworks taught in ABE 721 provide the theoretical foundation behind commercial solutions emerging from EPAL and the YEESI Lab ([**yeesi.epalab.org**](https://yeesi.epalab.org)):
+* **AGROSCAN Company Ltd** (mechanization logistics platform **FARMHIRE**, co-founded by EPAL student innovators including Stephano Mashauri and Dickson Massawe)
+* **Afya ya Mnyama** (biometric and epidemiological modeling for livestock herd disease prediction)
+* **AgriMfumo Ltd** (soil-crop-atmosphere simulation algorithms embedded into commercial farm IoT dashboards)
+
+Postgraduate scholars in **MSc IEM** and **MSc ABE** are encouraged to leverage their modeling assignments to create commercial simulation engines and start viable spin-offs!
