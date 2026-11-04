@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_1():
@@ -438,6 +438,22 @@ def build_lecture_1():
                                 "National cattle identification regulations in Tanzania (Ministry of Livestock and Fisheries) mandate ISO 11784/11785 RFID ear tags operating at 134.2 kHz. A livestock ear tag antenna coil has an inductance L = 1.50 mH and internal resistance R = 12.0 Ω. Calculate the required parallel tuning capacitor C, the resulting circuit Quality Factor Q, and the -3dB bandwidth.",
                                 ex4_steps))
 
+    # Worked Example 6
+    ex6_steps = [
+        "1. Problem Definition: An autonomous soil greenhouse telemetry node at Morogoro operates on an unregulated 12V solar battery bus with peak inrush spikes. The sensitive 3.3V microcontroller module draws I_load = 150 mA and requires bus ripple voltage below ΔV_ripple ≤ 25 mV at switching frequency f_sw = 100 kHz.",
+        "2. Sizing Bulk Filter Electrolytic Capacitor: Required minimum capacitance to maintain voltage during PWM switching period (duty cycle D = 0.5):",
+        "   C_bulk ≥ [ I_load · D · (1 - D) ] / [ f_sw · ΔV_ripple ] = [ 0.150 A × 0.5 × 0.5 ] / [ 100,000 Hz × 0.025 V ] = 0.0375 / 2,500 = 1.50 × 10⁻⁵ F = 15.0 μF.",
+        "3. Incorporating Equivalent Series Resistance (ESR) Safety Margin: Commercial electrolytic capacitors have ESR ≈ 0.25 Ω. Ripple caused by ESR: ΔV_ESR = I_load · ESR = 0.15 A × 0.25 Ω = 37.5 mV. Upsize C_bulk by a factor of 4 to guarantee low ESR:",
+        "   Specify standard C_bulk = 100 μF, 25V low-ESR solid aluminum electrolytic capacitor.",
+        "4. High-Frequency Decoupling Ceramic Bypass Sizing: High-frequency transient spikes from digital clock switching (t_rise = 5 ns, ΔI = 80 mA) require immediate local charge delivery:",
+        "   C_bypass ≥ ΔI · (Δt / ΔV_noise) = 0.080 A × (5 × 10⁻⁹ s / 0.020 V) = 2.0 × 10⁻⁸ F = 20 nF. Specify standard 100 nF (0.1 μF) X7R surface-mount ceramic capacitor soldered directly across V_CC and GND pins.",
+        "5. Inrush Current Limiting Thermistor (NTC): During initial solar connection, uncharged 100 μF capacitor acts as a dead short. Peak inrush current without limiter: I_surge = 12V / 0.1Ω (cable) = 120 A! Sizing NTC to limit inrush to I_max ≤ 3.0 A:",
+        "   R_NTC ≥ V_in / I_max = 12.0 V / 3.0 A = 4.0 Ω. Select 5.0 Ω nominal 25°C disc NTC thermistor. At steady-state 150 mA, NTC self-heats and resistance collapses to 0.15 Ω, consuming negligible steady-state power (P = 0.15² × 0.15 = 3.4 mW)."
+    ]
+    story.append(create_example(6, "Multi-Stage DC Bus Decoupling & Inrush NTC Suppression for Solar Nodes",
+                                "Design a complete passive DC power conditioning and decoupling network for a 12V solar-powered agricultural sensor telemetry node in Morogoro. Calculate the required bulk capacitor C_bulk, high-frequency ceramic bypass capacitor C_bypass, and NTC inrush current limiter resistance R_NTC.",
+                                ex6_steps))
+
     # -------------------------------------------------------------
     # SECTION 7: LABORATORY EXPERIMENT PROTOCOL
     # -------------------------------------------------------------
@@ -521,24 +537,38 @@ def build_lecture_1():
     for q in q_part_c:
         story.append(Paragraph(q, styles['DocBullet']))
 
-    # -------------------------------------------------------------
-    # SECTION 10: REFERENCES
-    # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("1.9 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "3. Hughes, E., Hiley, J., Smith, I. M., & Brown, K. (2016). <i>Electrical and Electronic Technology</i> (12th ed.). Pearson.",
-        "4. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "5. Brown, R. J., & Davis, P. W. (2023). Basic Electronic Components and Circuits. <i>Journal of Electrical Engineering</i>, 44(2), 78-85.",
-        "6. Johnson, M. A., & Smith, K. L. (2023). Fundamentals of Electronics: An Introduction. <i>IEEE Transactions on Education</i>, 66(3), 456-465.",
-        "7. Person (2015). <i>Mechatronics: Electronic Control Systems in Mechanical and Electrical Engineering</i> (6th ed.). Pearson. ISBN-10: 9781292076683."
+
+    # -------------------------------------------------------------
+    # SECTION 10: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
+    # -------------------------------------------------------------
+    story.append(Paragraph("1.10 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models and constitutive physical relationships "
+        "established in this compendium for passive electronic components under DC, transient, and sinusoidal AC steady-state regimes:",
+        styles['DocBody']
+    ))
+
+    lec1_formulas = [
+        ["Ohm's Law & Conduction", "<i>V</i> = <i>I</i> · <i>R</i><br/><i>P</i> = <i>I</i><sup>2</sup><i>R</i> = <i>V</i><sup>2</sup>/<i>R</i>", "Fundamental DC voltage drop, loop current, and thermal heat dissipation in agricultural sensor circuits."],
+        ["Physical Resistance", "<i>R</i> = <i>ρ</i> · (<i>L</i> / <i>A</i>)", "Calculates conductor resistance and geometric sizing of farm wiring and soil moisture probe electrode rods."],
+        ["Temperature Dependence", "<i>R</i>(<i>T</i>) = <i>R</i><sub>0</sub> [ 1 + <i>α</i>(<i>T</i> - <i>T</i><sub>0</sub>) ]", "Governs thermal drift of metal-film resistors and resistance-temperature tracking in grain silo thermistors."],
+        ["Electrostatic Capacitance", "<i>C</i> = (<i>ε</i><sub>r</sub> <i>ε</i><sub>0</sub> <i>A</i>) / <i>d</i><br/><i>Q</i> = <i>C</i> · <i>V</i>", "Governs charge storage, dielectric polarization, and capacitive soil moisture sensor dielectric permittivity."],
+        ["Electrostatic Energy", "<i>W</i><sub>E</sub> = 0.5 · <i>C</i> · <i>V</i><sup>2</sup>", "Quantifies energy stored in capacitor electric fields and power supply holdup reservoirs."],
+        ["RC Charging Transient", "<i>v</i><sub>C</sub>(<i>t</i>) = <i>V</i><sub>s</sub> [ 1 - <i>e</i><sup>-<i>t</i> / <i>τ</i></sup> ]<br/><i>τ</i> = <i>R</i> · <i>C</i>", "Determines 63.2% rise time and 5<i>τ</i> settling latency for analog sensor filtering and pulse timing networks."],
+        ["RC Discharging Transient", "<i>v</i><sub>C</sub>(<i>t</i>) = <i>V</i><sub>0</sub> · <i>e</i><sup>-<i>t</i> / <i>τ</i></sup>", "Models charge bleed-off and power-down delay in solar pump motor controllers and battery monitors."],
+        ["Electromagnetic Inductance", "<i>L</i> = (<i>μ</i><sub>r</sub> <i>μ</i><sub>0</sub> <i>N</i><sup>2</sup> <i>A</i>) / <i>l</i><br/><i>v</i><sub>L</sub>(<i>t</i>) = <i>L</i> · (<i>di</i> / <i>dt</i>)", "Governs coil self-inductance, magnetic flux linkage, and induced counter-EMF in relay and solenoid coils."],
+        ["Magnetic Stored Energy", "<i>W</i><sub>M</sub> = 0.5 · <i>L</i> · <i>I</i><sup>2</sup>", "Quantifies magnetic field energy responsible for destructive inductive kickback spikes in de-energized actuators."],
+        ["Capacitive Reactance", "<i>X</i><sub>C</sub> = 1 / (2π <i>f</i> <i>C</i>)", "Inverse frequency impedance: blocks DC (<i>X</i><sub>C</sub> &rarr; &infin;) and shunts high-frequency noise to ground."],
+        ["Inductive Reactance", "<i>X</i><sub>L</sub> = 2π <i>f</i> <i>L</i>", "Direct frequency impedance: passes DC freely and chokes high-frequency inverter ripple and RF interference."],
+        ["Series LC Resonance", "<i>f</i><sub>0</sub> = 1 / [ 2π √(<i>L</i> · <i>C</i>) ]", "Establishes zero net reactance condition for ISO 11784/11785 134.2 kHz livestock RFID transponder antennas."],
+        ["Series Circuit Impedance", "<i>Z</i> = √[ <i>R</i><sup>2</sup> + (<i>X</i><sub>L</sub> - <i>X</i><sub>C</sub>)<sup>2</sup> ]", "Total complex opposition to AC current in agricultural transducer cables and induction motor stator windings."],
+        ["Passive Filter Cutoff", "<i>f</i><sub>c</sub> = 1 / (2π <i>R</i> · <i>C</i>)", "-3 dB half-power corner frequency for anti-aliasing low-pass filters conditioning analog tractor sensor telemetry."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec1_formulas))
 
     render_pdf("AEN_214_Lecture_1_Compendium.pdf", story)
 
 if __name__ == "__main__":
     build_lecture_1()
+

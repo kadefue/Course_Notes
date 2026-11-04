@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_3():
@@ -411,6 +411,32 @@ def build_lecture_3():
                                 "A 24V solar inverter battery charger at SUA Agricultural Mechanization Workshop charges a 15,000 μF reservoir capacitor bank through a bridge rectifier from a 24 V_rms transformer secondary. Total secondary loop resistance is 0.63 Ω. If the unit is energized at AC mains voltage peak (V_m = 33.94 V): (a) Calculate the worst-case initial peak inrush current, (b) Compare against the 1N5402 diode surge rating (I_FSM = 30 A), (c) Size an NTC inrush limiting thermistor to restrict peak current to 15 A, and (d) Evaluate the steady-state thermal power dissipation of the NTC.",
                                 ex7_steps))
 
+    # Worked Example 8
+    ex8_steps = [
+        "1. Problem Definition: Electrostatic crop sprayers apply an electric charge to atomized pesticide droplets, causing droplets to accelerate toward grounded plant foliage and wrap around the underside of leaves. The charging electrode requires a 6.0 kV DC potential with negligible current (I_load = 50 μA). The portable backpack unit operates from a 12V LiFePO4 battery driving a flyback oscillator producing 500 V_peak AC at 25 kHz.",
+        "2. Topology Selection: A multistage Cockcroft-Walton voltage cascade multiplier is chosen using ultrafast high-voltage silicon diodes and ceramic disk capacitors.",
+        "3. Multiplier Stage Calculation: Each Cockcroft-Walton stage (one diode-capacitor pair for positive peak and one for negative peak) provides a DC voltage gain of 2 · V_peak. DC output voltage for an N-stage cascade is: V_out = 2 · N · V_peak.",
+        "4. Calculate Required Number of Stages: N = V_out / (2 · V_peak) = 6,000 V / (2 × 500 V) = 6 stages (using 12 diodes and 12 capacitors).",
+        "5. Diode Voltage Stress: In a Cockcroft-Walton ladder, every diode experiences a peak inverse voltage: PIV = 2 · V_peak = 2 × 500 V = 1,000 V. 1 kV ultrafast diodes (e.g. UF4007, t_rr = 75 ns) are selected.",
+        "6. Output Voltage Droop Under Load: ΔV = (I_load / (f · C)) · [ (2/3)·N³ + (N²/2) - (N/6) ]. For C = 4.7 nF, f = 25 kHz, and N = 6: Factor = (2/3)·216 + 18 - 1 = 144 + 18 - 1 = 161. ΔV = [ (50 × 10⁻⁶ A) / (25,000 Hz × 4.7 × 10⁻⁹ F) ] × 161 = [ 50 × 10⁻⁶ / 1.175 × 10⁻⁴ ] × 161 = 0.4255 × 161 = 68.5 V.",
+        "7. Loaded Output Voltage: V_loaded = 6,000 V - 68.5 V = 5,931.5 V (Droop is only 1.14%, providing exceptional electrostatic charge uniformity across cashew canopy)."
+    ]
+    story.append(create_example(8, "Cockcroft-Walton Multistage Voltage Multiplier for Electrostatic Orchard Sprayer",
+                                "An electrostatic cashew tree sprayer requires 6.0 kV DC at 50 μA to charge atomized pesticide droplets from a 500 V_peak, 25 kHz portable AC flyback driver. Determine the required number of multiplier stages N, calculate the PIV rating for the cascade diodes, evaluate output voltage droop for 4.7 nF stage capacitors, and determine the loaded output voltage.",
+                                ex8_steps))
+
+    # Worked Example 9
+    ex9_steps = [
+        "1. Problem Definition: An off-grid solar-powered borehole water pump controller in Singida requires a rectified DC bus of 48.0 V delivering 10.0 A continuous load current (P_dc = 480 W). Compare the thermal dissipation and transformer utilization between (A) A Center-Tapped Full-Wave Rectifier, and (B) A Full-Wave Bridge Rectifier using 1N1184 silicon power diodes (V_K = 0.85 V, r_bulk = 0.015 Ω).",
+        "2. Center-Tapped Rectifier Analysis: In a center-tapped topology, current flows through only one diode at any instant. Peak diode current is I_peak = π · I_dc / 2 = 15.7 A. RMS diode current is I_rms = I_dc / √2 = 7.07 A. Average diode forward drop is V_D = 0.85 + (7.07 × 0.015) = 0.956 V. Total diode conduction power loss: P_loss_CT = 2 × (V_K · (I_dc / 2) + I_rms² · r_bulk) = 2 × (0.85 × 5.0 + 50.0 × 0.015) = 2 × (4.25 + 0.75) = 10.0 W. Diode PIV rating: PIV_CT = 2 · V_peak ≈ 2 × (48V × π / 2) = 150.8 V.",
+        "3. Full-Wave Bridge Rectifier Analysis: In a bridge topology, current flows through two diodes in series at all times. Conduction power loss: P_loss_Bridge = 4 × (V_K · (I_dc / 2) + I_rms² · r_bulk) = 20.0 W. Diode PIV rating: PIV_Bridge = V_peak ≈ 75.4 V.",
+        "4. Transformer Utilization Factor (TUF) Comparison: The center-tapped secondary has two windings, each active for only half the cycle (TUF = 0.672). Required secondary transformer rating = 480 W / 0.672 = 714 VA. The bridge secondary has a single winding utilized continuously across both half cycles (TUF = 0.812). Required transformer rating = 480 W / 0.812 = 591 VA.",
+        "5. Engineering Synthesis: While the bridge dissipates 10 W more in diode heat, it reduces transformer weight, copper cost, and core volume by 123 VA (17.2% savings), and halves diode PIV stress, making the bridge configuration decisively superior for cost-effective agricultural field power systems."
+    ]
+    story.append(create_example(9, "Center-Tapped vs. Bridge Rectifier: Thermal Dissipation & Transformer Sizing",
+                                "A 48V, 10A DC agricultural borehole pump power supply is evaluated for two rectifier topologies: Center-Tapped vs Full-Wave Bridge. Given diode forward parameters V_K = 0.85 V and r_bulk = 0.015 Ω, calculate the diode conduction power dissipation, diode PIV stress, and required transformer VA ratings using Transformer Utilization Factors (TUF) for both topologies.",
+                                ex9_steps))
+
     # -------------------------------------------------------------
     # SECTION 9: LABORATORY BENCH PROTOCOL
     # -------------------------------------------------------------
@@ -507,21 +533,31 @@ def build_lecture_3():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 12: REFERENCES
+    # SECTION 12: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("3.12 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "3. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "4. Malvino, A. P., & Bates, D. J. (2020). <i>Electronic Principles</i> (9th ed.). McGraw-Hill Education.",
-        "5. Brown, R. J., & Davis, P. W. (2023). Basic Electronic Components and Circuits. <i>Journal of Electrical Engineering</i>, 44(2), 78-85.",
-        "6. Rashid, M. H. (2018). <i>Power Electronics: Devices, Circuits, and Applications</i> (4th ed.). Pearson.",
-        "7. Neamen, D. A. (2012). <i>Semiconductor Physics and Devices: Basic Principles</i> (4th ed.). McGraw-Hill."
+    story.append(Paragraph("3.12 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models, rectifier topologies, and wave-shaping "
+        "relationships established in this compendium for semiconductor diodes:",
+        styles['DocBody']
+    ))
+
+    lec3_formulas = [
+        ["Shockley Diode Equation", "<i>I</i><sub>D</sub> = <i>I</i><sub>S</sub> · [ <i>e</i><sup><i>V</i><sub>D</sub> / (<i>ηV</i><sub>T</sub>)</sup> - 1 ]", "Governs non-linear conduction across all forward and reverse bias operating regimes."],
+        ["Thermal Voltage", "<i>V</i><sub>T</sub> = (<i>k</i><sub>B</sub><i>T</i>) / <i>q</i> ≈ 25.86 mV at 300 K", "Proportional to absolute temperature; causes forward knee voltage to decrease by -2.0 mV/°C."],
+        ["Dynamic Small-Signal Resistance", "<i>r</i><sub>d</sub> = (<i>η</i> · <i>V</i><sub>T</sub>) / (<i>I</i><sub>D</sub> + <i>I</i><sub>S</sub>) ≈ 26 mV / <i>I</i><sub>D</sub>", "Incremental AC resistance at DC Q-point bias current; governs small-signal attenuators and sensors."],
+        ["Half-Wave DC Output Voltage", "<i>V</i><sub>dc</sub> = <i>V</i><sub>m</sub> / <i>π</i> - <i>V</i><sub>K</sub> ≈ 0.318 · <i>V</i><sub>m</sub> - 0.7 V", "Average DC voltage delivered to load across single half-cycle conduction."],
+        ["Full-Wave Bridge DC Output", "<i>V</i><sub>dc</sub> = (2 · <i>V</i><sub>m</sub>) / <i>π</i> - 2<i>V</i><sub>K</sub> ≈ 0.637 · <i>V</i><sub>m</sub> - 1.4 V", "Average DC output voltage accounting for two conducting diode barrier drops."],
+        ["Peak-to-Peak Ripple (Smoothed)", "<i>V</i><sub>r(pp)</sub> = <i>I</i><sub>dc</sub> / (2 · <i>f</i> · <i>C</i>) = <i>V</i><sub>dc</sub> / (2 · <i>f</i> · <i>R</i><sub>L</sub> · <i>C</i>)", "Filter capacitor ripple voltage under constant load current discharge (full-wave)."],
+        ["RMS Ripple & Ripple Factor", "<i>γ</i> = <i>V</i><sub>r(rms)</sub> / <i>V</i><sub>dc</sub> = 1 / ( 4 · √3 · <i>f</i> · <i>R</i><sub>L</sub> · <i>C</i> )", "Measures residual AC fluctuation relative to DC component; target < 5% in farm telemetry."],
+        ["Rectification Efficiency", "<i>η</i><sub>rect</sub> = <i>P</i><sub>dc</sub> / <i>P</i><sub>ac</sub> = (8 / <i>π</i><sup>2</sup>) · [ <i>R</i><sub>L</sub> / (<i>R</i><sub>L</sub> + 2<i>r</i><sub>f</sub>) ] ≤ 81.2%", "Maximum thermodynamic efficiency of full-wave rectification into resistive loads."],
+        ["Peak Inverse Voltage (Bridge)", "PIV ≥ <i>V</i><sub>m</sub>", "Peak reverse voltage sustained by non-conducting diodes in bridge topology."],
+        ["Peak Inverse Voltage (Center-Tapped)", "PIV ≥ 2 · <i>V</i><sub>m</sub>", "Two-fold peak reverse voltage stress in center-tapped secondary configuration."],
+        ["Transformer Utilization (TUF)", "TUF<sub>bridge</sub> = 0.812 &nbsp;|&nbsp; TUF<sub>CT</sub> = 0.672", "Ratio of DC load power to transformer secondary VA rating required."],
+        ["Diode Conduction Dissipation", "<i>P</i><sub>D</sub> = <i>V</i><sub>K</sub> · <i>I</i><sub>D(avg)</sub> + <i>I</i><sub>D(rms)</sub><sup>2</sup> · <i>r</i><sub>bulk</sub>", "Total thermal power dissipated as heat in rectifier diodes, governing heatsink sizing."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec3_formulas))
 
     render_pdf("AEN_214_Lecture_3_Compendium.pdf", story)
 

@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_5():
@@ -419,6 +419,27 @@ def build_lecture_5():
                                 "Analyze a two-stage cascaded BJT preamplifier consisting of a Common-Emitter amplifier (A_v1 = -85, Z_out1 = 2.2 kΩ) cascaded into a Common-Collector buffer (A_v2 = 0.985, Z_in2 = 120 kΩ, Z_out2 = 24 Ω) driving a 600 Ω data acquisition cable. Calculate the overall loaded voltage gain A_v(total) and evaluate the performance improvement compared to driving the 600 Ω load directly from Stage 1.",
                                 ex9_steps))
 
+    # Worked Example 10
+    ex10_steps = [
+        "1. Problem Definition: Industrial soil moisture and electrical conductivity probes in large sugarcane estates transmit sensor readings across 500 meters of cabling using the standard 4-20 mA current loop standard. Current transmission is immune to cable resistance drop. Design a discrete PNP BJT constant-current sink/source circuit capable of delivering a programmed 20.0 mA full-scale loop current from a 24.0 V DC power bus into loop wire plus receiver resistances varying from R_loop = 0 Ω to 500 Ω.",
+        "2. Topology & Zener Reference: A PNP transistor (2N3906 or BD140) has its base held at a stable reference potential using a 5.6V Zener diode (1N752A) biased from the +24V rail via resistor R_bias. The emitter is connected to +24V through precision resistor R_E.",
+        "3. Emitter Voltage & Current Formulation:",
+        "   Base voltage relative to 24V bus: V_B = 24.0 V - V_Z = 24.0 V - 5.6 V = 18.4 V.",
+        "   Emitter voltage: V_E = V_B + V_BE = 18.4 V + 0.70 V = 19.1 V.",
+        "   Voltage drop across emitter resistor: V_RE = 24.0 V - V_E = 5.6 V - 0.70 V = 4.90 V.",
+        "4. Calculate Emitter Resistor R_E: For I_E ≈ I_C = 20.0 mA:",
+        "   R_E = V_RE / I_E = 4.90 V / 0.020 A = 245 Ω (Select standard 249 Ω 0.1% metal film resistor; actual I_E = 4.90 / 249 = 19.68 mA).",
+        "5. Compliance Voltage & Maximum Loop Resistance:",
+        "   Transistor remains in active constant-current mode as long as collector-emitter voltage V_CE ≥ 1.0 V (preventing saturation).",
+        "   Maximum collector voltage: V_C(max) = V_E - V_CE(min) = 19.1 V - 1.0 V = 18.1 V.",
+        "   Maximum allowable loop load resistance: R_loop(max) = V_C(max) / I_C = 18.1 V / 0.020 A = 905 Ω.",
+        "6. Verification: Since maximum farm cable plus receiver resistance is 500 Ω (producing V_C = 20 mA × 500 Ω = 10.0 V, giving V_CE = 19.1 - 10.0 = 9.1 V), the BJT operates well within its linear active region.",
+        "7. Thermal Power Dissipation: Under short-circuit loop condition (R_loop = 0 Ω): V_C = 0V, V_CE = 19.1 V. Transistor power P_D = 19.1 V × 20 mA = 0.382 W. A TO-126 package (BD140) is specified to run cool in 45°C ambient field cabinets."
+    ]
+    story.append(create_example(10, "BJT Constant Current Source Design for 4-20 mA Precision Irrigation Telemetry",
+                                "Design a discrete PNP transistor constant current source powered from a 24V supply to deliver 20.0 mA into a remote agricultural sensor loop (R_loop = 0 to 500 Ω). Using a 5.6V Zener diode reference and silicon PNP transistor (V_BE = 0.70 V), calculate the required emitter resistor R_E, determine the maximum loop compliance resistance R_loop(max), and evaluate transistor thermal dissipation under shorted loop conditions.",
+                                ex10_steps))
+
     # -------------------------------------------------------------
     # SECTION 9: LABORATORY BENCH PROTOCOL
     # -------------------------------------------------------------
@@ -518,21 +539,31 @@ def build_lecture_5():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 12: REFERENCES
+    # SECTION 12: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("5.12 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "3. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "4. Malvino, A. P., & Bates, D. J. (2020). <i>Electronic Principles</i> (9th ed.). McGraw-Hill Education.",
-        "5. Streetman, B. G., & Banerjee, S. K. (2016). <i>Solid State Electronic Devices</i> (7th ed.). Pearson.",
-        "6. Pierret, R. F. (1996). <i>Semiconductor Device Fundamentals</i>. Addison-Wesley.",
-        "7. Williams, S. E., & Wilson, T. A. (2023). Introduction to Semiconductor Devices and Circuits. <i>Journal of Applied Physics</i>, 135(6), 065420."
+    story.append(Paragraph("5.12 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models, bias networks, "
+        "and small-signal amplifier equations established in this compendium for bipolar junction transistors:",
+        styles['DocBody']
+    ))
+
+    lec5_formulas = [
+        ["Kirchhoff Current Law", "<i>I</i><sub>E</sub> = <i>I</i><sub>B</sub> + <i>I</i><sub>C</sub>", "Conservation of charge carriers across emitter, base, and collector terminals."],
+        ["Current Gain Ratios", "<i>α</i> = <i>I</i><sub>C</sub> / <i>I</i><sub>E</sub> = <i>β</i> / (<i>β</i> + 1) &nbsp;|&nbsp; <i>β</i> = <i>I</i><sub>C</sub> / <i>I</i><sub>B</sub> = <i>α</i> / (1 - <i>α</i>)", "Inter-terminal DC current gain definitions connecting common-base and common-emitter circuits."],
+        ["Collector-Emitter Leakage", "<i>I</i><sub>CEO</sub> = (<i>β</i> + 1) · <i>I</i><sub>CBO</sub>", "Exponentially temperature-dependent leakage current causing thermal runaway if uncompensated."],
+        ["VDB Thévenin Network", "<i>V</i><sub>TH</sub> = <i>V</i><sub>CC</sub> · [ <i>R</i><sub>2</sub> / (<i>R</i><sub>1</sub> + <i>R</i><sub>2</sub>) ]<br/><i>R</i><sub>TH</sub> = (<i>R</i><sub>1</sub> · <i>R</i><sub>2</sub>) / (<i>R</i><sub>1</sub> + <i>R</i><sub>2</sub>)", "Equivalent single-source biasing network for exact base circuit analysis."],
+        ["VDB Base Current", "<i>I</i><sub>B</sub> = (<i>V</i><sub>TH</sub> - <i>V</i><sub>BE</sub>) / [ <i>R</i><sub>TH</sub> + (<i>β</i> + 1)<i>R</i><sub>E</sub> ]", "Exact quiescent base drive current accounting for finite transistor current gain."],
+        ["Beta-Immunity Criterion", "<i>β</i> · <i>R</i><sub>E</sub> ≥ 10 · <i>R</i><sub>TH</sub> &implies; <i>I</i><sub>CQ</sub> ≈ (<i>V</i><sub>TH</sub> - <i>V</i><sub>BE</sub>) / <i>R</i><sub>E</sub>", "Design rule guaranteeing Q-point stability across manufacturing beta spreads and temperature shifts."],
+        ["DC Load Line & Operating Point", "<i>V</i><sub>CE</sub> = <i>V</i><sub>CC</sub> - <i>I</i><sub>C</sub> · (<i>R</i><sub>C</sub> + <i>R</i><sub>E</sub>)", "Constrains active collector voltage; maximum dynamic AC headroom achieved at <i>V</i><sub>CEQ</sub> ≈ <i>V</i><sub>CC</sub> / 2."],
+        ["Dynamic AC Emitter Resistance", "<i>r</i><sub>e</sub> = <i>V</i><sub>T</sub> / <i>I</i><sub>EQ</sub> ≈ 26 mV / <i>I</i><sub>EQ</sub>", "Intrinsic small-signal diode resistance of forward-biased base-emitter junction."],
+        ["Common-Emitter Voltage Gain", "<i>A</i><sub>v</sub> = - [ <i>R</i><sub>C</sub> || <i>R</i><sub>L</sub> ] / ( <i>r</i><sub>e</sub> + <i>R</i><sub>E(unbypassed)</sub> )", "Inverting midband AC voltage amplification; degenerated by unbypassed emitter resistance."],
+        ["Input Impedance (CE Stage)", "<i>Z</i><sub>in(base)</sub> = <i>β</i> · ( <i>r</i><sub>e</sub> + <i>R</i><sub>E</sub> ) &nbsp;|&nbsp; <i>Z</i><sub>in</sub> = <i>R</i><sub>TH</sub> || <i>Z</i><sub>in(base)</sub>", "Effective load presented to upstream transducer or preamplifier stage."],
+        ["Emitter Follower (CC Buffer)", "<i>A</i><sub>v</sub> = [ <i>R</i><sub>E</sub> || <i>R</i><sub>L</sub> ] / [ <i>r</i><sub>e</sub> + (<i>R</i><sub>E</sub> || <i>R</i><sub>L</sub>) ] ≈ 1", "Unity voltage gain buffer providing high input impedance and ultra-low output impedance."],
+        ["Saturated Switch Overdrive", "<i>I</i><sub>B(sat)</sub> = ODF · [ <i>I</i><sub>C(sat)</sub> / <i>β</i><sub>min</sub> ]<br/><i>P</i><sub>sat</sub> = <i>V</i><sub>CE(sat)</sub> · <i>I</i><sub>C(sat)</sub> + <i>V</i><sub>BE(sat)</sub> · <i>I</i><sub>B(sat)</sub>", "Guarantees deep saturation across temperature extremes for solenoid valve and relay switching."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec5_formulas))
 
     render_pdf("AEN_214_Lecture_5_Compendium.pdf", story)
 

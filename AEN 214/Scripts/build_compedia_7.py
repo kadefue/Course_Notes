@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_7():
@@ -471,6 +471,21 @@ def build_lecture_7():
                                 "An automated irrigation scheduler computes total daily evapotranspiration by adding net radiation component A = 4.75 mm/day and wind component B = 0.625 mm/day using binary floating-point arithmetic. Trace the step-by-step FPU algorithm: (a) Express numbers in scientific binary, (b) Align exponents by right-shifting the smaller mantissa, (c) Add mantissas, (d) Normalize result, and (e) Verify against decimal addition.",
                                 ex11_steps))
 
+    # Worked Example 12
+    ex12_steps = [
+        "1. Problem Definition: An autonomous tractor implements ISO 11783 (ISOBUS) CAN-bus protocol to communicate engine load and fuel rate across the J1939 network. A broadcast frame payload arrives with 8 data bytes in Hexadecimal: '28 4E 8C 03 FF 7D 1A C0'.",
+        "2. Disassemble Parameter Group 65266 (Fuel Economy): Bytes 1-2 ('28 4E') represent Engine Fuel Rate in Little-Endian byte order (Least Significant Byte first: LSB = 0x28, MSB = 0x4E).",
+        "3. Assemble 16-Bit Binary Word: Raw 16-bit integer = 0x4E28.",
+        "4. Convert Hexadecimal to Binary and Decimal: 0x4E28 = (4 × 16³) + (14 × 16²) + (2 × 16¹) + (8 × 16⁰) = 16,384 + 3,584 + 32 + 8 = 20,048 in decimal.",
+        "5. Apply ISOBUS J1939 Physical Scaling Factor: Standard J1939 scaling for Fuel Rate is 0.05 Liters/hour per bit with 0 L/h offset.",
+        "   Actual Fuel Rate = Raw Integer × 0.05 L/h = 20,048 × 0.05 = 1,002.4 L/h (or for engine fuel rate SPN 183: 0.05 L/h gives 1,002.4 / 100 = 10.024 L/h under field plowing load).",
+        "6. Binary Fixed-Point Verification: The tractor ECU uses Q12.4 fixed-point math where the lower 4 bits are fractional (resolution 1/16 = 0.0625). Lower 4 bits of 0x4E28: 1000₂ = 8/16 = 0.50.",
+        "7. Engineering Conclusion: Hexadecimal representation compresses 64 binary bus bits into an 8-byte string, allowing deterministic CAN-bus arbitration and real-time fuel telemetry across Tanzanian tractor fleets."
+    ]
+    story.append(create_example(12, "ISOBUS J1939 CAN-Bus Hexadecimal Telemetry Disassembly & Fuel Flow Rate Extraction",
+                                "A smart tractor engine controller broadcasts an 8-byte ISOBUS payload: '28 4E 8C 03 FF 7D 1A C0'. Disassemble bytes 1-2 (Fuel Rate), convert from Little-Endian hexadecimal to binary and decimal, apply the J1939 physical scaling factor (0.05 L/h per count), and evaluate fixed-point precision.",
+                                ex12_steps))
+
     # -------------------------------------------------------------
     # SECTION 7: LABORATORY BENCH PROTOCOL
     # -------------------------------------------------------------
@@ -570,21 +585,31 @@ def build_lecture_7():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 10: REFERENCES
+    # SECTION 10: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("7.10 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Tocci, R. J., Widmer, N. S., & Moss, G. L. (2017). <i>Digital Systems: Principles and Applications</i> (12th ed.). Pearson.",
-        "2. Mano, M. M., & Ciletti, M. D. (2018). <i>Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog</i> (6th ed.). Pearson.",
-        "3. Floyd, T. L. (2015). <i>Digital Fundamentals</i> (11th ed.). Pearson.",
-        "4. Karim, M. A., & Chen, X. (2017). <i>Digital Design: Basic Concepts and Principles</i>. CRC Press.",
-        "5. Roth, C. H., & Kinney, L. L. (2020). <i>Fundamentals of Logic Design</i> (7th ed.). Cengage Learning.",
-        "6. Kleitz, W. (2014). <i>Digital Electronics: A Practical Approach with VHDL</i> (9th ed.). Pearson.",
-        "7. Johnson, M. A., & Smith, K. L. (2023). Fundamentals of Electronics: An Introduction. <i>IEEE Transactions on Education</i>, 66(3), 456-465."
+    story.append(Paragraph("7.10 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing radix mathematics, signed binary arithmetic, "
+        "and coding relationships established in this compendium for digital number systems:",
+        styles['DocBody']
+    ))
+
+    lec7_formulas = [
+        ["Positional Radix Theorem", "<i>N</i><sub><i>r</i></sub> = ∑<sub><i>i</i>=-<i>m</i></sub><sup><i>n</i>-1</sup> <i>d</i><sub><i>i</i></sub> · <i>r</i><sup><i>i</i></sup>", "Fundamental place-value power series expansion for integers and fractions in any radix <i>r</i>."],
+        ["Unsigned Dynamic Range", "0 ≤ <i>N</i> ≤ <i>r</i><sup><i>n</i></sup> - 1", "Total unique discrete states representable by an <i>n</i>-digit word in radix <i>r</i>."],
+        ["Two's Complement Negation", "<i>N</i><sup>*</sup> = 2<sup><i>n</i></sup> - <i>N</i> = <i>N</i> + 1", "Hardware arithmetic inversion allowing subtraction using unmodified parallel binary adder circuits."],
+        ["Two's Complement Range", "- 2<sup><i>n</i>-1</sup> ≤ <i>N</i> ≤ + 2<sup><i>n</i>-1</sup> - 1", "Asymmetric signed dynamic range (e.g. -128 to +127 for 8-bit, -32,768 to +32,767 for 16-bit)."],
+        ["Signed Arithmetic Overflow", "<i>V</i> = <i>C</i><sub><i>n</i>-1</sub> ⊕ <i>C</i><sub><i>n</i></sub> = (<i>A</i><sub><i>n</i>-1</sub> · <i>B</i><sub><i>n</i>-1</sub> · <i>S</i><sub><i>n</i>-1</sub>) + (<i>A</i><sub><i>n</i>-1</sub> · <i>B</i><sub><i>n</i>-1</sub> · <i>S</i><sub><i>n</i>-1</sub>)", "Hardware flag indicating result exceeded signed capacity (carry into MSB differs from carry out)."],
+        ["Binary to Gray Code", "<i>G</i><sub><i>n</i>-1</sub> = <i>B</i><sub><i>n</i>-1</sub> &nbsp;|&nbsp; <i>G</i><sub><i>i</i></sub> = <i>B</i><sub><i>i</i>+1</sub> ⊕ <i>B</i><sub><i>i</i></sub>", "Unit-distance encoding eliminating multi-bit race conditions in tractor steering angle encoders."],
+        ["Gray Code to Binary", "<i>B</i><sub><i>n</i>-1</sub> = <i>G</i><sub><i>n</i>-1</sub> &nbsp;|&nbsp; <i>B</i><sub><i>i</i></sub> = <i>B</i><sub><i>i</i>+1</sub> ⊕ <i>G</i><sub><i>i</i></sub>", "Reconstruction algorithm executed in microcontroller firmware to extract true angular position."],
+        ["BCD Decimal Adjustment (+6)", "If ( <i>S</i><sub>3</sub><i>S</i><sub>2</sub><i>S</i><sub>1</sub><i>S</i><sub>0</sub> > 9 ) or ( <i>C</i><sub>aux</sub> = 1 ) &implies; <i>S</i><sub>corrected</sub> = <i>S</i> + 0110<sub>2</sub>", "Skips the 6 invalid 4-bit states (1010<sub>2</sub> to 1111<sub>2</sub>) to maintain valid decimal digit arithmetic."],
+        ["Excess-3 Unweighted Code", "XS3 = BCD + 0011<sub>2</sub>", "Self-complementing code where 9's complement is formed by bitwise NOT operation."],
+        ["Parity Bit Error Check", "<i>P</i><sub>even</sub> = <i>d</i><sub>0</sub> ⊕ <i>d</i><sub>1</sub> ⊕ ... ⊕ <i>d</i><sub><i>n</i>-1</sub>", "Transmitted check bit detecting all single-bit corruption events across long farm sensor cables."],
+        ["ADC Quantization Resolution", "Δ<i>V</i> = <i>V</i><sub>ref</sub> / ( 2<sup><i>n</i></sup> - 1 )", "Smallest detectable analog voltage change for an <i>n</i>-bit analog-to-digital converter."],
+        ["IEEE 754 Floating-Point", "<i>V</i> = (-1)<sup><i>S</i></sup> · ( 1 + ∑<sub><i>i</i>=1</sub><sup>23</sup> <i>b</i><sub>23-<i>i</i></sub> · 2<sup>-<i>i</i></sup> ) · 2<sup><i>E</i> - 127</sup>", "Single-precision representation encoding wide-dynamic-range agronomic sensor data."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec7_formulas))
 
     render_pdf("AEN_214_Lecture_7_Compendium.pdf", story)
 

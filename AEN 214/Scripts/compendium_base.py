@@ -10,18 +10,104 @@ Embeds SUA.png logo on every page header.
 """
 
 import os
+import re
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, KeepTogether, PageBreak
+    SimpleDocTemplate, Paragraph as _RLParagraph, Spacer, Table, TableStyle, Image, KeepTogether, PageBreak
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT, TA_JUSTIFY
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from PIL import Image as PILImage
+
+# -------------------------------------------------------------
+# RIGOROUS SCIENTIFIC FORMULA RECTIFIER
+# -------------------------------------------------------------
+def rectify_scientific_text(text):
+    """
+    Rigorously rectifies text to standard scientific notation:
+    - Never uses raw '_' or '^' for subscript or superscript.
+    - Uses HTML <sub>...</sub> and <sup>...</sup> for true sub/superscripts.
+    - Italicizes mathematical variables (V, I, R, C, L, t, f, etc.).
+    - Converts Greek symbol names to Unicode (π, μ, τ, β, α, γ, λ, θ, Ω, etc.).
+    - Standardizes scientific multiplication (×, ·) and units.
+    """
+    if not isinstance(text, str):
+        return text
+
+    # Split by HTML tags to leave existing tags untouched
+    parts = re.split(r'(<[^>]+>)', text)
+    rectified_parts = []
+    
+    for part in parts:
+        if part.startswith('<') and part.endswith('>'):
+            rectified_parts.append(part)
+            continue
+            
+        p = part
+
+        # 1. Superscripts with ^
+        p = re.sub(r'(\b[0-9A-Za-z\)]+)\^\{([^\}]+)\}', r'\1<sup>\2</sup>', p)
+        p = re.sub(r'(\b[0-9A-Za-z\)]+)\^([\-0-9A-Za-z\+]+)', r'\1<sup>\2</sup>', p)
+
+        # 2. Time-dependent / state variables with parentheses: v_C(t), i_L(t), v_L(t), i_C(t)
+        p = re.sub(r'\b([VvIi])_([A-Za-z0-9]+)\(([t])\)', r'<i>\1</i><sub>\2</sub>(<i>\3</i>)', p)
+
+        # 3. Complex subscripts with parentheses: V_CE(sat), R_DS(on), V_GS(th), V_BE(sat), I_C(sat), P_Z(max)
+        p = re.sub(r'\b([VvRrIiPp])_([A-Za-z0-9]+)\(([A-Za-z0-9]+)\)', r'<i>\1</i><sub>\2(\3)</sub>', p)
+
+        # 4. Standard variable subscripts:
+        var_prefixes = ['V', 'v', 'I', 'i', 'R', 'r', 'C', 'c', 'L', 'X', 'Z', 'E', 'n', 'p', 'N', 'P', 'f', 't', 'g', 'm', 'M', 'S', 'G', 'B', 'F', 'Q', 'd', 'k', 'W', 'q', 'Y', 'U']
+        for var in var_prefixes:
+            pattern = r'(?<![A-Za-z0-9])(' + var + r')_([A-Za-z0-9]+)\b'
+            p = re.sub(pattern, r'<i>\1</i><sub>\2</sub>', p)
+
+        # 5. Greek letter subscripts
+        p = re.sub(r'(?<![A-Za-z0-9])(tau|beta|alpha|theta|mu|eta|epsilon|gamma|lambda|sigma|rho|phi|Phi)_([A-Za-z0-9]+)\b', r'<i>\1</i><sub>\2</sub>', p)
+
+        # 6. Clean Greek names to Unicode
+        p = re.sub(r'\bmu\b', 'μ', p)
+        p = re.sub(r'\btheta\b', 'θ', p)
+        p = re.sub(r'\btau\b', 'τ', p)
+        p = re.sub(r'\bbeta\b', 'β', p)
+        p = re.sub(r'\balpha\b', 'α', p)
+        p = re.sub(r'\bgamma\b', 'γ', p)
+        p = re.sub(r'\blambda\b', 'λ', p)
+        p = re.sub(r'\bpi\b', 'π', p)
+        p = re.sub(r'\bOhm\b', 'Ω', p)
+        p = re.sub(r'\bkOhm\b', 'kΩ', p)
+        p = re.sub(r'\bMOhm\b', 'MΩ', p)
+        p = re.sub(r'\bmicroFarad\b', 'μF', p)
+        p = re.sub(r'\bmicroHenry\b', 'μH', p)
+        p = re.sub(r'\bmicroA\b', 'μA', p)
+        p = re.sub(r'\bmicroF\b', 'μF', p)
+        p = re.sub(r'\bmicroH\b', 'μH', p)
+        p = re.sub(r'\bmicro-mol\b', 'μmol', p)
+        p = re.sub(r'\bmicrosecond\b', 'μs', p)
+        p = re.sub(r'\bmicroseconds\b', 'μs', p)
+
+        # 7. Differences (Delta X)
+        p = re.sub(r'\bDelta\s+([A-Za-z])\b', r'Δ<i>\1</i>', p)
+
+        # 8. Scientific multiplication & symbols
+        p = re.sub(r'(\d+)\s+x\s+(10<sup>)', r'\1 × \2', p)
+        p = p.replace(' * ', ' · ')
+        p = p.replace(' >= ', ' ≥ ').replace(' <= ', ' ≤ ')
+
+        rectified_parts.append(p)
+
+    return ''.join(rectified_parts)
+
+def ScientificParagraph(text, *args, **kwargs):
+    if isinstance(text, str):
+        text = rectify_scientific_text(text)
+    return _RLParagraph(text, *args, **kwargs)
+
+Paragraph = ScientificParagraph
 
 # -------------------------------------------------------------
 # FONT REGISTRATION (DEJAVUSANS PREVENTS ALL BLACK SPOTS / RECTANGLES)
@@ -479,10 +565,49 @@ def create_custom_table(headers, rows, col_widths=None):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3.5),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [COLOR_WHITE, COLOR_BG_LIGHT]),
     ]))
-    return KeepTogether([tbl, Spacer(1, 7)])
+    return tbl
+def create_equation_box(formula_markup, eq_num=None):
+    """Creates a high-visibility, centered scientific equation block with equation number."""
+    styles = get_custom_stylesheet()
+    formula_markup = rectify_scientific_text(formula_markup)
+    if eq_num:
+        content = [
+            [Paragraph(f"<b>{formula_markup}</b>", styles['FormulaBox']),
+             Paragraph(f"<b>({eq_num})</b>", styles['FormulaBox'])]
+        ]
+        tbl = Table(content, colWidths=[6.3 * inch, 0.9 * inch])
+    else:
+        content = [[Paragraph(f"<b>{formula_markup}</b>", styles['FormulaBox'])]]
+        tbl = Table(content, colWidths=[7.2 * inch])
+    tbl.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), COLOR_CALLOUT_BG),
+        ('BOX', (0, 0), (-1, -1), 0.8, COLOR_SUA_GREEN),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+    ]))
+    return KeepTogether([tbl, Spacer(1, 6)])
+
+
+def create_formula_summary_table(formula_list):
+    """
+    Creates a styled scientific formula reference table.
+    formula_list: list of [Law / Concept, Formula, Agricultural Engineering Context]
+    """
+    headers = ["Governing Physical / Circuit Law", "Standard Scientific Equation", "Agricultural Engineering Context"]
+    rows = []
+    for row in formula_list:
+        rows.append([
+            rectify_scientific_text(row[0]),
+            rectify_scientific_text(row[1]),
+            rectify_scientific_text(row[2])
+        ])
+    return create_custom_table(headers, rows, [2.2 * inch, 2.5 * inch, 2.5 * inch])
 
 
 def render_pdf(filename, story):
+
     """Builds the final document with NumberedCanvas."""
     out_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Notes", filename))
     os.makedirs(os.path.dirname(out_path), exist_ok=True)

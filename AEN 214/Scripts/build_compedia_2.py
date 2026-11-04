@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_2():
@@ -504,9 +504,126 @@ def build_lecture_2():
         "6. Compute depletion width and capacitance at maximum tuning voltage V_R = 12.0 V: Total reverse voltage = 0.82 + 12.0 = 12.82 V. W(12V) = W(1V) × √(12.82 / 1.82) = 0.343 μm × 2.654 = 0.910 μm. Capacitance C_j(12V) = C_j(1V) / 2.654 = 36.2 pF / 2.654 = 13.64 pF.",
         "7. Capacitance Tuning Ratio: TR = C_j(1V) / C_j(12V) = 36.2 pF / 13.64 pF = 2.65:1. This enables voltage-controlled frequency synthesis from 433 MHz to 434.7 MHz in Tanzanian livestock tracking collar transceivers."
     ]
-    story.append(create_example(5, "Junction Depletion Capacitance & Varactor Tuning for Livestock Tracking LoRa Telemetry",
-                                "A varactor diode used in the voltage-controlled oscillator (VCO) of an automated cattle tracking LoRa transponder (433 MHz band) consists of a silicon p⁺-n abrupt junction with N_D = 2.0 × 10¹⁶ cm⁻³, N_A = 1.0 × 10¹⁸ cm⁻³, area A = 1.2 × 10⁻³ cm², and V_0 = 0.82 V. Calculate the depletion width W and junction capacitance C_j at reverse bias voltages of V_R = 1.0 V and V_R = 12.0 V, and evaluate the resulting tuning ratio.",
-                                ex5_steps))
+    # Worked Example 7
+    ex7_steps = [
+        "1. Problem Definition: A high-power solar photovoltaic pump inverter at Bahi, Dodoma utilizes silicon rectifier diodes with junction area A = 0.05 cm² and donor doping N_D = 1.0 × 10¹⁶ cm⁻³. During peak afternoon pumping at ambient T_amb = 45°C, junction temperature reaches T_j = 125°C (398 K).",
+        "2. Formulate Intrinsic Concentration Temperature Law: n_i(T) = B · T^(3/2) · exp[ -E_g / (2 · k_B · T) ], where B = 5.23 × 10¹⁵ cm⁻³·K^(-3/2), E_g = 1.12 eV, and k_B = 8.617 × 10⁻⁵ eV/K.",
+        "3. Compute Intrinsic Concentration at 25°C (298 K): n_i(298 K) = 1.50 × 10¹⁰ cm⁻³.",
+        "4. Compute Intrinsic Concentration at 125°C (398 K):",
+        "   Exponent = -1.12 eV / [ 2 × (8.617 × 10⁻⁵ eV/K) × 398 K ] = -1.12 / 0.06859 = -16.329.",
+        "   Prefactor = (5.23 × 10¹⁵) × (398)^(1.5) = (5.23 × 10¹⁵) × 7,940 = 4.153 × 10¹⁹.",
+        "   n_i(398 K) = (4.153 × 10¹⁹) × exp(-16.329) = (4.153 × 10¹⁹) × (8.10 × 10⁻⁸) = 3.364 × 10¹² cm⁻³.",
+        "5. Intrinsic Ratio Evaluation: n_i surged by a factor of (3.364 × 10¹²) / (1.50 × 10¹⁰) = 224.3 times!",
+        "6. Minority Hole Density Surge: p = n_i² / N_D. At 25°C: p = (1.5 × 10¹⁰)² / 10¹⁶ = 2.25 × 10⁴ cm⁻³. At 125°C: p = (3.364 × 10¹²)² / 10¹⁶ = 1.132 × 10⁹ cm⁻³ (surged by 50,300 times!).",
+        "7. Reverse Leakage Current Impact: Reverse saturation current I_S is directly proportional to n_i². If I_S(25°C) = 2.0 nA, then at 125°C: I_S(125°C) = 2.0 nA × 50,300 = 100.6 μA. Under 600V reverse bus voltage, continuous leakage dissipation = 600V × 100.6 μA = 60.4 mW. Without heat sinking, this localized leakage initiates destructive thermal runaway."
+    ]
+    story.append(create_example(7, "High-Temperature Intrinsic Carrier Surge & Thermal Leakage in Dodoma Solar Inverters",
+                                "In semi-arid Dodoma, solar pump inverter diodes operate at junction temperatures reaching 125°C. Given silicon donor doping N_D = 1.0 × 10¹⁶ cm⁻³ and bandgap E_g = 1.12 eV, calculate the intrinsic concentration n_i at 125°C, determine the percentage surge over room temperature (25°C), and compute the increase in minority carrier leakage current.",
+                                ex7_steps))
+
+    # Worked Example 8
+    ex8_steps = [
+        "1. Problem Definition: An autonomous drone crop sprayer utilizes high-speed freewheeling silicon diodes in its 48V brushless DC motor ESCs. The P-side has hole diffusion coefficient D_p = 12.0 cm²/s and minority carrier lifetime τ_p = 0.25 μs = 2.5 × 10⁻⁷ s.",
+        "2. Diffusion Length Formula: L_p = √( D_p · τ_p ).",
+        "3. Calculate Hole Diffusion Length: L_p = √[ 12.0 cm²/s × (2.5 × 10⁻⁷ s) ] = √[ 3.0 × 10⁻⁶ cm² ] = 1.732 × 10⁻³ cm = 17.32 μm.",
+        "4. Physical Significance: 17.32 μm is the average distance an injected minority hole travels through the N-region before recombining with an electron.",
+        "5. Transit Time Across Base: For an N-base width W_base = 25 μm, since W_base > L_p, substantial minority charge storage occurs.",
+        "6. Reverse Recovery Time (t_rr): When the BLDC motor phases switch, stored minority charge Q_rr = I_F · τ_p must be swept out before the diode blocks. For forward current I_F = 8.0 A: Q_rr = 8.0 A × (2.5 × 10⁻⁷ s) = 2.0 μC.",
+        "   Under reverse current ramp di/dt = 100 A/μs: t_rr = √[ 2 · Q_rr / (di/dt) ] = √[ 2 × 2.0 × 10⁻⁶ C / (100 × 10⁶ A/s) ] = √[ 4.0 × 10⁻¹⁴ s² ] = 2.0 × 10⁻⁷ s = 200 ns.",
+        "7. ESC Switching Loss: At 40 kHz motor PWM frequency, switching power loss P_rr = 0.5 · V_bus · I_peak · t_rr · f_sw = 0.5 × 48V × 20A × 200 ns × 40,000 Hz = 3.84 W per diode (requiring Schottky upgrades for drone flight endurance)."
+    ]
+    story.append(create_example(8, "Minority Carrier Diffusion Length & Reverse Recovery Dynamics in Drone ESC Diodes",
+                                "A high-speed freewheeling diode in an agricultural spray drone motor driver has hole diffusion coefficient D_p = 12.0 cm²/s and lifetime τ_p = 0.25 μs. Calculate the hole diffusion length L_p, determine the stored minority charge at 8.0 A forward current, and compute the reverse recovery time t_rr and switching power dissipation under 40 kHz motor PWM switching.",
+                                ex8_steps))
+
+    # Analytical Theory: Derivation of Built-in Potential & Poisson Electrostatics
+    story.append(Paragraph("2.6.3 Rigorous Analytical Derivation of Built-In Potential from Drift-Diffusion Balance", styles['SecH2']))
+    story.append(Paragraph(
+        "Under true thermal equilibrium with zero externally applied voltage, the net hole current across the PN junction must equal zero identically. "
+        "The hole current density is the sum of field-driven drift and concentration gradient-driven diffusion:",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>J<sub>p</sub>(x) = q · p(x) · μ<sub>p</sub> · E(x) - q · D<sub>p</sub> · [ dp(x) / dx ] = 0</b>", styles['FormulaBox']))
+    story.append(Paragraph(
+        "Rearranging to express the built-in electric field <i>E</i>(<i>x</i>) as a function of the hole concentration gradient yields:",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>E(x) = [ D<sub>p</sub> / μ<sub>p</sub> ] · [ 1 / p(x) ] · [ dp(x) / dx ] = V<sub>T</sub> · [ 1 / p(x) ] · [ dp(x) / dx ]</b>", styles['FormulaBox']))
+    story.append(Paragraph(
+        "where <i>V</i><sub>T</sub> = <i>D</i><sub>p</sub> / <i>μ</i><sub>p</sub> = (<i>k</i><sub>B</sub><i>T</i>) / <i>q</i> is the thermal voltage. "
+        "The total electrostatic potential difference between the neutral N-region (<i>x</i> = +<i>x</i><sub>n</sub>) and neutral P-region (<i>x</i> = -<i>x</i><sub>p</sub>) "
+        "is obtained by integrating the electric field across the space-charge depletion zone:",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>V₀ = - ∫<sub>-x<sub>p</sub></sub><sup>x<sub>n</sub></sup> E(x) dx = - V<sub>T</sub> · ∫<sub>p<sub>p</sub></sub><sup>p<sub>n</sub></sup> [ dp / p ] = V<sub>T</sub> · ln[ p<sub>p</sub> / p<sub>n</sub> ]</b>", styles['FormulaBox']))
+    story.append(Paragraph(
+        "In the neutral P-region, majority hole concentration is <i>p</i><sub>p</sub> ≈ <i>N</i><sub>A</sub>. "
+        "In the neutral N-region, minority hole concentration is dictated by the Law of Mass Action: <i>p</i><sub>n</sub> = <i>n</i><sub>i</sub><sup>2</sup> / <i>N</i><sub>D</sub>. "
+        "Substituting these expressions yields the celebrated governing equation for the built-in contact potential:",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>V₀ = V<sub>T</sub> · ln[ (N<sub>A</sub> · N<sub>D</sub>) / n<sub>i</sub><sup>2</sup> ] &nbsp;&nbsp;[Volts]</b>", styles['FormulaBox']))
+
+    story.append(Paragraph("2.6.4 Space-Charge Distribution and Poisson Electrostatics", styles['SecH2']))
+    story.append(Paragraph(
+        "Inside the depletion layer, all mobile carriers have diffused away, leaving uncompensated static ionized dopants. "
+        "The space-charge density <i>ρ</i>(<i>x</i>) is modeled as a step function (the depletion approximation):<br/>"
+        "&nbsp;&nbsp;&bull; For -<i>x</i><sub>p</sub> ≤ <i>x</i> &lt; 0 (P-side depletion): <b>ρ(x) = - q · N<sub>A</sub></b> (negative acceptor ions)<br/>"
+        "&nbsp;&nbsp;&bull; For 0 &lt; <i>x</i> ≤ <i>x</i><sub>n</sub> (N-side depletion): <b>ρ(x) = + q · N<sub>D</sub></b> (positive donor ions)<br/>"
+        "Total charge neutrality dictates that <b>q · N<sub>A</sub> · x<sub>p</sub> · A = q · N<sub>D</sub> · x<sub>n</sub> · A &implies; N<sub>A</sub> · x<sub>p</sub> = N<sub>D</sub> · x<sub>n</sub></b>. "
+        "Hence, the depletion layer penetrates more deeply into the lightly doped side of the junction.<br/>"
+        "Poisson's 1-D electrostatic equation connects electric field gradient to charge density: <b>dE(x)/dx = ρ(x) / ε<sub>s</sub></b>. "
+        "Integrating from -<i>x</i><sub>p</sub> to 0 gives the electric field on the P-side, and from 0 to <i>x</i><sub>n</sub> on the N-side. "
+        "The maximum electric field occurs precisely at the metallurgical junction (<i>x</i> = 0):",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>E<sub>max</sub> = - (q · N<sub>A</sub> · x<sub>p</sub>) / ε<sub>s</sub> = - (q · N<sub>D</sub> · x<sub>n</sub>) / ε<sub>s</sub> = - [ 2 · (V₀ + V<sub>R</sub>) ] / W</b>", styles['FormulaBox']))
+    story.append(Paragraph(
+        "A second integration gives the parabolic potential profile <i>V</i>(<i>x</i>) across the depletion zone. "
+        "Equating the total potential difference to (<i>V</i><sub>0</sub> + <i>V</i><sub>R</sub>) yields the complete formula for total depletion width:",
+        styles['DocBody']
+    ))
+    story.append(Paragraph("<b>W = x<sub>n</sub> + x<sub>p</sub> = √[ (2 · ε<sub>s</sub> · (V₀ + V<sub>R</sub>) / q) · ( (N<sub>A</sub> + N<sub>D</sub>) / (N<sub>A</sub> · N<sub>D</sub>) ) ]</b>", styles['FormulaBox']))
+
+    # Worked Example 9
+    ex9_steps = [
+        "1. Problem Definition: A precision turbine fertigation flowmeter installed in an automated sugarcane drip irrigation header in Kilombero uses a multi-pole ring magnet on its rotor. The ring has 8 magnetic pole pairs (16 alternating poles). Flow rate Q ranges from 5.0 m³/h to 50.0 m³/h. The turbine rotor rotates at k_rot = 18.5 RPM per m³/h of flow.",
+        "2. Compute Rotor Speed Range:",
+        "   At Q_min = 5.0 m³/h: N_min = 18.5 × 5.0 = 92.5 RPM (1.542 rev/s).",
+        "   At Q_max = 50.0 m³/h: N_max = 18.5 × 50.0 = 925.0 RPM (15.417 rev/s).",
+        "3. Hall Switch Pulse Generation: With 8 pole pairs, the digital Hall switch triggers 8 complete HIGH-LOW pulses per mechanical revolution.",
+        "4. Calculate Output Frequency Range:",
+        "   f_min = 1.542 rev/s × 8 pulses/rev = 12.33 Hz.",
+        "   f_max = 15.417 rev/s × 8 pulses/rev = 123.33 Hz.",
+        "5. Flowmeter Meter Factor (K-Factor):",
+        "   K = f / Q = (123.33 pulses/s) / (50.0 m³/h / 3600 s/h) = 123.33 / 0.01389 m³/s = 8,880 pulses per m³ (or 8.88 pulses per liter).",
+        "6. Microcontroller Pulse Accumulation: The irrigation node uses an ESP32 hardware pulse counter (PCNT) module. For a 10-minute fertigation dose at 30 m³/h: Total volume V = 30 m³/h × (10/60 h) = 5.0 m³ = 5,000 liters. Total pulses recorded = 5,000 L × 8.88 pulses/L = 44,400 pulses.",
+        "7. Diagnostic Error Detection: If pulse frequency abruptly drops to zero while the main booster pump relay is energized, the microcontroller flags a 'Pipe Burst / Pump Cavitation Fault' and halts acid injection within 250 ms, preventing soil acidification and fertilizer loss."
+    ]
+    story.append(create_example(9, "Hall-Effect Turbine Flowmeter Calibration for Sugarcane Fertigation in Kilombero",
+                                "An automated drip fertigation header in Kilombero measures liquid fertilizer flow with a turbine meter equipped with an 8-pole-pair magnetic ring and a digital Hall switch. Given a rotor constant of 18.5 RPM per m³/h, determine the pulse output frequency across 5.0 to 50.0 m³/h, calculate the flowmeter K-factor in pulses per liter, and evaluate the pulse count for a 5,000-liter fertigation cycle.",
+                                ex9_steps))
+
+    # Worked Example 10
+    ex10_steps = [
+        "1. Problem Definition: An agronomic LoRa wireless soil moisture sensor node operating in the Dodoma vineyard belt uses a varactor diode (1SV149) in an LC voltage-controlled oscillator (VCO) to tune carrier transmission frequency across the 433 MHz ISM band (f_1 = 433.05 MHz to f_2 = 434.79 MHz).",
+        "2. Governing Resonant Tank Formula: f_0 = 1 / [ 2 · π · √( L · C_total ) ].",
+        "3. Fixed Inductor Selection: An RF surface-mount inductor L = 12.0 nH = 1.20 × 10⁻⁸ H is selected.",
+        "4. Calculate Required Total Capacitance at Band Center (f = 433.92 MHz):",
+        "   C_total = 1 / [ 4 · π² · f_0² · L ] = 1 / [ 4 · π² · (433.92 × 10⁶)² · (1.20 × 10⁻⁸) ] = 1 / [ 39.478 × 1.8829 × 10¹⁷ × 1.20 × 10⁻⁸ ] = 1 / 8.920 × 10¹⁰ = 1.121 × 10⁻¹¹ F = 11.21 pF.",
+        "5. Calculate Required Capacitance Range:",
+        "   At f_high = 434.79 MHz: C_min = 1 / [ 4 · π² · (434.79 × 10⁶)² · (1.20 × 10⁻⁸) ] = 11.16 pF.",
+        "   At f_low = 433.05 MHz: C_max = 1 / [ 4 · π² · (433.05 × 10⁶)² · (1.20 × 10⁻⁸) ] = 11.25 pF.",
+        "6. Required Varactor Capacitance Tuning: Accounting for fixed circuit board stray capacitance C_stray = 2.50 pF, the varactor junction capacitance must adjust from C_j_min = 11.16 - 2.50 = 8.66 pF to C_j_max = 11.25 - 2.50 = 8.75 pF.",
+        "7. Varactor Bias Voltage Tuning: The varactor follows C_j(V_R) = C_j0 / √( 1 + V_R / V_0 ) where C_j0 = 22.0 pF and V_0 = 0.75 V.",
+        "   Solving for V_R: (C_j0 / C_j)² = 1 + V_R / V_0  &implies;  V_R = V_0 · [ (C_j0 / C_j)² - 1 ].",
+        "   For C_j = 8.75 pF: V_R = 0.75 · [ (22.0 / 8.75)² - 1 ] = 0.75 · [ 6.322 - 1 ] = 0.75 · 5.322 = 3.99 V.",
+        "   For C_j = 8.66 pF: V_R = 0.75 · [ (22.0 / 8.66)² - 1 ] = 0.75 · [ 6.454 - 1 ] = 0.75 · 5.454 = 4.09 V.",
+        "8. Conclusion: A precision DAC tuning voltage from 3.99V to 4.09V precisely steers the telemetry transmission frequency, preventing RF cross-channel interference between neighboring vineyard sensor clusters."
+    ]
+    story.append(create_example(10, "Varactor Diode Frequency Tuning for Agronomic Telemetry in Dodoma Vineyards",
+                                "An agronomic LoRa wireless node operating in the 433 MHz band utilizes a varactor diode in an LC tank oscillator with L = 12.0 nH and stray capacitance C_stray = 2.50 pF. Determine the total capacitance required for resonance at 433.05 MHz and 434.79 MHz, calculate the required varactor junction capacitance range, and compute the necessary DC reverse bias tuning voltages for a varactor with C_j0 = 22.0 pF and V_0 = 0.75 V.",
+                                ex10_steps))
 
     # -------------------------------------------------------------
     # SECTION 8: LABORATORY BENCH PROTOCOL
@@ -595,23 +712,34 @@ def build_lecture_2():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 11: REFERENCES
+    # SECTION 10: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("2.11 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Streetman, B. G., & Banerjee, S. K. (2016). <i>Solid State Electronic Devices</i> (7th ed.). Pearson.",
-        "2. Sze, S. M., & Ng, K. K. (2007). <i>Physics of Semiconductor Devices</i> (3rd ed.). John Wiley & Sons.",
-        "3. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "4. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "5. Williams, S. E., & Wilson, T. A. (2023). Introduction to Semiconductor Devices and Circuits. <i>Journal of Applied Physics</i>, 135(6), 065420.",
-        "6. Pierret, R. F. (1996). <i>Semiconductor Device Fundamentals</i>. Addison-Wesley.",
-        "7. Neamen, D. A. (2012). <i>Semiconductor Physics and Devices: Basic Principles</i> (4th ed.). McGraw-Hill."
+    story.append(Paragraph("2.10 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models and constitutive solid-state relationships "
+        "established in this compendium for semiconductor physics, charge transport kinetics, and PN junction electrostatics:",
+        styles['DocBody']
+    ))
+
+    lec2_formulas = [
+        ["Bandgap Energy & Photons", "<i>E</i><sub>g</sub> = <i>h</i> · <i>f</i> = (<i>h</i> · <i>c</i>) / <i>λ</i>", "Defines minimum photon energy for optical electron-hole generation in crop NDVI sensors and solar cells."],
+        ["Law of Mass Action", "<i>n</i> · <i>p</i> = <i>n</i><sub>i</sub><sup>2</sup>(<i>T</i>)", "Fundamental thermal equilibrium carrier product across intrinsic and extrinsic semiconductors."],
+        ["Intrinsic Carrier Density", "<i>n</i><sub>i</sub>(<i>T</i>) = <i>B</i> · <i>T</i><sup>3/2</sup> · <i>e</i><sup>-<i>E</i><sub>g</sub> / (2<i>k</i><sub>B</sub><i>T</i>)</sup>", "Exponential thermal generation of carriers responsible for high-temperature sensor drift in tropical soils."],
+        ["Electrical Conductivity", "<i>σ</i> = <i>q</i> · ( <i>n</i> · <i>μ</i><sub>n</sub> + <i>p</i> · <i>μ</i><sub>p</sub> )<br/><i>ρ</i> = 1 / <i>σ</i>", "Governs bulk semiconductor resistivity and ohmic contact design for agricultural transducers."],
+        ["Einstein Relation", "<i>D</i><sub>n</sub> / <i>μ</i><sub>n</sub> = <i>D</i><sub>p</sub> / <i>μ</i><sub>p</sub> = <i>V</i><sub>T</sub> = (<i>k</i><sub>B</sub><i>T</i>) / <i>q</i>", "Connects thermal carrier diffusion constants with electric field mobility at thermal voltage <i>V</i><sub>T</sub> ≈ 26 mV."],
+        ["Total Carrier Transport", "<i>J</i><sub>total</sub> = <i>J</i><sub>drift</sub> + <i>J</i><sub>diff</sub>", "Superposition of field-driven drift current and concentration gradient-driven diffusion current."],
+        ["Built-in Barrier Potential", "<i>V</i><sub>0</sub> = <i>V</i><sub>T</sub> · ln[ (<i>N</i><sub>A</sub> · <i>N</i><sub>D</sub>) / <i>n</i><sub>i</sub><sup>2</sup> ]", "Internal electrostatic contact barrier voltage across PN metallurgical junction (≈ 0.7V for Silicon at 300K)."],
+        ["Depletion Region Width", "<i>W</i> = √[ 2<i>ε</i><sub>s</sub> (<i>V</i><sub>0</sub> + <i>V</i><sub>R</sub>) / <i>q</i> · (1/<i>N</i><sub>A</sub> + 1/<i>N</i><sub>D</sub>) ]", "Space charge depletion layer thickness under thermal equilibrium and reverse bias <i>V</i><sub>R</sub>."],
+        ["Peak Junction Electric Field", "<i>E</i><sub>max</sub> = [ 2 · (<i>V</i><sub>0</sub> + <i>V</i><sub>R</sub>) ] / <i>W</i>", "Maximum internal electric field located at metallurgical interface; governs avalanche breakdown."],
+        ["Junction Depletion Capacitance", "<i>C</i><sub>j</sub> = (<i>ε</i><sub>s</sub> · <i>A</i>) / <i>W</i>", "Voltage-dependent junction capacitance governing varactor tuning and diode high-frequency limits."],
+        ["Hall Effect Voltage", "<i>V</i><sub>H</sub> = (<i>I</i><sub>x</sub> · <i>B</i><sub>z</sub>) / (<i>n</i> · <i>q</i> · <i>t</i>) = <i>R</i><sub>H</sub> · (<i>I</i><sub>x</sub> · <i>B</i><sub>z</sub>) / <i>t</i>", "Transverse Lorentz force potential for non-contact tractor wheel speed and shaft rotation sensing."],
+        ["Hall Coefficient", "<i>R</i><sub>H</sub> = 1 / (<i>n</i> · <i>q</i>) &nbsp;[m<sup>3</sup>/C]", "Fundamental material parameter identifying majority carrier polarity (negative for electrons, positive for holes)."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec2_formulas))
 
     render_pdf("AEN_214_Lecture_2_Compendium.pdf", story)
 
 if __name__ == "__main__":
     build_lecture_2()
+

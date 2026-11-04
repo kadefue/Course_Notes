@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_6():
@@ -394,6 +394,23 @@ def build_lecture_6():
                                 "A CD4051B 8-channel CMOS analog multiplexer (R_on = 280 Ω, I_leak = 5 nA @ 60°C) sequentially samples eight gypsum block soil moisture probes (R_sensor up to 50 kΩ) into an ESP32 microcontroller ADC (C_sample = 15 pF). (a) Calculate the worst-case RC time constant, (b) Determine the minimum ADC settling time required to achieve 12-bit accuracy (< 0.5 LSB error), and (c) Evaluate the DC voltage offset error caused by off-channel leakage current at 60°C tropical field temperatures.",
                                 ex9_steps))
 
+    # Worked Example 10
+    ex10_steps = [
+        "1. Problem Definition: An MPPT solar charge controller for a 12V LiFePO4 battery in an off-grid drip irrigation station in Morogoro uses a synchronous buck converter. The converter steps down 36V PV input to 14.4V battery charging voltage at continuous output inductor current I_out = 20.0 A. Switching frequency is f_sw = 100 kHz. Duty cycle D = V_out / V_in = 14.4 / 36.0 = 0.40.",
+        "2. Low-Side Freewheeling Switch Comparison: Compare (A) An asynchronous Schottky freewheeling diode (MBR20100CT, V_F = 0.65 V @ 20 A) versus (B) A synchronous N-channel power MOSFET (IRFB7437, R_DS(on) = 1.5 mΩ @ 25°C, 2.5 mΩ @ 100°C).",
+        "3. Low-Side Conduction Interval: The low-side freewheeling device conducts for fraction (1 - D) = 1 - 0.40 = 0.60 of each switching period.",
+        "4. Schottky Diode Conduction Power Dissipation:",
+        "   P_diode = (1 - D) · I_out · V_F = 0.60 × 20.0 A × 0.65 V = 7.80 Watts.",
+        "5. Synchronous MOSFET Conduction Power Dissipation:",
+        "   At maximum junction temperature (100°C), R_DS(on) = 2.5 mΩ = 0.0025 Ω.",
+        "   P_MOSFET = (1 - D) · I_out² · R_DS(on) = 0.60 × (20.0 A)² × 0.0025 Ω = 0.60 × 400 × 0.0025 = 0.60 Watts.",
+        "6. Power Loss Reduction: Conduction power loss drops from 7.80 W to 0.60 W — a massive saving of ΔP = 7.20 W (92.3% reduction in freewheeling heat!).",
+        "7. Total Efficiency & Thermal Management Impact: Eliminating 7.2 W of wasted heat per controller allows the enclosure to be completely sealed against Morogoro dust and insect ingress without requiring noisy failure-prone cooling fans, while boosting daily battery charging energy delivered to the farmer."
+    ]
+    story.append(create_example(10, "Synchronous Rectification MOSFET vs. Schottky Diode Efficiency in Solar MPPT Regulators",
+                                "An off-grid 12V solar MPPT buck converter operates at 36V input, 14.4V battery output (duty cycle D = 0.40), delivering 20.0 A continuous inductor current. Compare the thermal dissipation between an asynchronous Schottky diode (V_F = 0.65 V) and a synchronous N-channel power MOSFET (R_DS(on) = 2.5 mΩ @ 100°C) during the freewheeling phase (1 - D = 0.60), and determine the power loss reduction and enclosure sealing feasibility.",
+                                ex10_steps))
+
     # -------------------------------------------------------------
     # SECTION 9: LABORATORY BENCH PROTOCOL
     # -------------------------------------------------------------
@@ -493,21 +510,31 @@ def build_lecture_6():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 12: REFERENCES
+    # SECTION 12: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("6.12 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "3. Neamen, D. A. (2012). <i>Semiconductor Physics and Devices: Basic Principles</i> (4th ed.). McGraw-Hill.",
-        "4. Rashid, M. H. (2018). <i>Power Electronics: Devices, Circuits, and Applications</i> (4th ed.). Pearson.",
-        "5. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "6. Sze, S. M., & Ng, K. K. (2007). <i>Physics of Semiconductor Devices</i> (3rd ed.). John Wiley & Sons.",
-        "7. Williams, S. E., & Wilson, T. A. (2023). Introduction to Semiconductor Devices and Circuits. <i>Journal of Applied Physics</i>, 135(6), 065420."
+    story.append(Paragraph("6.12 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models, pinch-off physics, "
+        "and switching dynamics equations established in this compendium for field effect transistors:",
+        styles['DocBody']
+    ))
+
+    lec6_formulas = [
+        ["JFET Shockley Square Law", "<i>I</i><sub>D</sub> = <i>I</i><sub>DSS</sub> · [ 1 - (<i>V</i><sub>GS</sub> / <i>V</i><sub>P</sub>) ]<sup>2</sup>", "Governs drain current in saturation pinch-off region (for <i>V</i><sub>DS</sub> ≥ <i>V</i><sub>GS</sub> - <i>V</i><sub>P</sub>)."],
+        ["JFET Transconductance", "<i>g</i><sub>m</sub> = <i>g</i><sub>m0</sub> · [ 1 - (<i>V</i><sub>GS</sub> / <i>V</i><sub>P</sub>) ] &nbsp;|&nbsp; <i>g</i><sub>m0</sub> = 2<i>I</i><sub>DSS</sub> / |<i>V</i><sub>P</sub>|", "Voltage-to-current gain parameter; maximum at <i>V</i><sub>GS</sub> = 0V; drops to zero at pinch-off."],
+        ["JFET Self-Bias Equation", "<i>V</i><sub>GS</sub> = - <i>I</i><sub>D</sub> · <i>R</i><sub>S</sub>", "Provides negative gate-to-source bias using single supply rail and source degeneration."],
+        ["E-MOSFET Square Law", "<i>I</i><sub>D</sub> = <i>k</i> · [ <i>V</i><sub>GS</sub> - <i>V</i><sub>GS(th)</sub> ]<sup>2</sup>", "Drain conduction in saturation for enhancement devices above threshold voltage <i>V</i><sub>GS(th)</sub>."],
+        ["E-MOSFET Conduction Parameter", "<i>k</i> = <i>I</i><sub>D(on)</sub> / [ <i>V</i><sub>GS(on)</sub> - <i>V</i><sub>GS(th)</sub> ]<sup>2</sup> &nbsp;[A/V<sup>2</sup>]", "Device physical transconductance parameter extracted from datasheet test points."],
+        ["MOSFET Triode / Ohmic Region", "<i>I</i><sub>D</sub> = 2<i>k</i> · [ (<i>V</i><sub>GS</sub> - <i>V</i><sub>GS(th)</sub>) · <i>V</i><sub>DS</sub> - <i>V</i><sub>DS</sub><sup>2</sup> / 2 ]", "Low-voltage conduction behaving as a linear voltage-controlled resistor for analog switches."],
+        ["Common-Source Voltage Gain", "<i>A</i><sub>v</sub> = - <i>g</i><sub>m</sub> · [ <i>r</i><sub>d</sub> || <i>R</i><sub>D</sub> || <i>R</i><sub>L</sub> ]", "Midband inverting voltage gain of JFET/MOSFET small-signal preamplifier stage."],
+        ["Power MOSFET Conduction Loss", "<i>P</i><sub>cond</sub> = <i>I</i><sub>D(rms)</sub><sup>2</sup> · <i>R</i><sub>DS(on)</sub>(<i>T</i><sub>j</sub>)", "Ohmic heat dissipation during ON-state; <i>R</i><sub>DS(on)</sub> increases positively with temperature."],
+        ["MOSFET Switching Power Loss", "<i>P</i><sub>sw</sub> = 0.5 · <i>V</i><sub>DS</sub> · <i>I</i><sub>D</sub> · (<i>t</i><sub>r</sub> + <i>t</i><sub>f</sub>) · <i>f</i><sub>sw</sub>", "Dynamic transition dissipation across turn-on and turn-off intervals in PWM motor drivers."],
+        ["Gate Driver Peak Current", "<i>I</i><sub>gate(peak)</sub> = <i>V</i><sub>drv</sub> / ( <i>R</i><sub>drv</sub> + <i>R</i><sub>g(int)</sub> )", "Peak current required to rapidly charge gate capacitance through Miller plateau region."],
+        ["Gate Charge Drive Power", "<i>P</i><sub>gate</sub> = <i>Q</i><sub>g(total)</sub> · <i>V</i><sub>drv</sub> · <i>f</i><sub>sw</sub>", "Power dissipated by gate driver IC to switch input capacitance at high PWM frequencies."],
+        ["Thermal Heatsink Equilibrium", "<i>T</i><sub>j</sub> = <i>T</i><sub>amb</sub> + <i>P</i><sub>total</sub> · ( <i>θ</i><sub>jc</sub> + <i>θ</i><sub>cs</sub> + <i>θ</i><sub>sa</sub> ) ≤ <i>T</i><sub>j(max)</sub>", "Heatsink sizing equation guaranteeing junction reliability under tropical ambient extremes."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec6_formulas))
 
     render_pdf("AEN_214_Lecture_6_Compendium.pdf", story)
 

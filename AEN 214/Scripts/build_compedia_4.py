@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_4():
@@ -382,6 +382,42 @@ def build_lecture_4():
     story.append(create_example(7, "Varactor Diode Frequency Synthesis for Rangeland Cattle Tracking LoRa Transponders",
                                 "A livestock telemetry collar developed at SUA Mechanization Lab uses a varactor-tuned LC tank oscillator (L = 22 nH) in its 433 MHz LoRa transceiver. Given stray circuit capacitance C_stray = 2.50 pF: (a) Determine the required resonant capacitance range to cover 430 MHz to 440 MHz, (b) Calculate the net varactor capacitance values C_v(min) and C_v(max), and (c) Discuss the reliability advantages of solid-state electronic tuning over mechanical trimmer capacitors in harsh African rangeland environments.",
                                 ex7_steps))
+
+    # Worked Example 8
+    ex8_steps = [
+        "1. Problem Definition: An agricultural drone telemetry ground station operates from an unregulated 24V solar lead-acid battery bank (V_in = 20.0 V to 29.0 V). A precision 10.0 V DC reference rail is needed to power sensitive soil spectral radiometer analog front-ends drawing a load current of I_L = 20 mA to 80 mA. A 10.0 V, 5.0 W Zener diode (1N5347B) is specified with I_ZK = 1.0 mA, I_ZM = 450 mA, and Z_Z = 2.0 Ω.",
+        "2. Series Resistor Maximum Limit (to ensure regulation at minimum input and maximum load):",
+        "   R_S(max) = (V_in(min) - V_Z) / (I_L(max) + I_ZK) = (20.0 V - 10.0 V) / (80 mA + 1.0 mA) = 10.0 V / 81 mA = 123.5 Ω.",
+        "3. Series Resistor Minimum Limit (to prevent Zener burnout at maximum input and minimum load):",
+        "   R_S(min) = (V_in(max) - V_Z) / (I_L(min) + I_ZM) = (29.0 V - 10.0 V) / (20 mA + 450 mA) = 19.0 V / 470 mA = 40.4 Ω.",
+        "4. Standard Resistor Selection: Choose standard 5% value R_S = 100 Ω (comfortably between 40.4 Ω and 123.5 Ω).",
+        "5. Extreme Operating Point Analysis:",
+        "   At V_in(max) = 29.0 V and I_L(min) = 20 mA: Total current I_S = (29.0 - 10.0) / 100 Ω = 190 mA. Zener current I_Z = 190 mA - 20 mA = 170 mA (well below 450 mA rating).",
+        "   Zener power dissipation: P_Z = V_Z · I_Z = 10.0 V × 0.170 A = 1.70 W (comfortably within 5.0 W rating).",
+        "6. Series Resistor Power Rating: P_RS = I_S² · R_S = (0.190 A)² × 100 Ω = 3.61 W. A 5W or 10W wirewound ceramic resistor must be specified to withstand Morogoro ambient temperatures.",
+        "7. Line Regulation Verification: If input fluctuates by ΔV_in = 29.0 - 20.0 = 9.0 V, the output shift is ΔV_out = ΔV_in · [ Z_Z / (R_S + Z_Z) ] = 9.0 V × [ 2.0 / (100 + 2.0) ] = 9.0 × 0.0196 = 0.176 V (1.76% stability)."
+    ]
+    story.append(create_example(8, "Zener Shunt Voltage Regulator Design Boundaries for Solar Farm Radiometry",
+                                "A precision 10.0V reference for agricultural drone telemetry radiometers is designed from a 20V-29V solar battery bank with load varying from 20 mA to 80 mA. Using a 10V, 5W Zener diode (I_ZK = 1.0 mA, I_ZM = 450 mA, Z_Z = 2.0 Ω), calculate the minimum and maximum allowable series resistance R_S, select a standard value, determine Zener and resistor thermal dissipations, and evaluate line regulation.",
+                                ex8_steps))
+
+    # Worked Example 9
+    ex9_steps = [
+        "1. Problem Definition: An off-grid 15 kWp solar array powering a center-pivot irrigation system in Kilombero consists of 12 parallel strings. Each string produces V_oc = 450 V and I_mp = 9.2 A at peak irradiance. During morning and evening, partial shading of adjacent tree lines causes voltage mismatch between strings. To prevent reverse current from unshaded strings driving into shaded strings, blocking diodes are installed in each string combiner box.",
+        "2. Diode Selection Comparison: Compare standard silicon rectifier diodes (1N1186, V_F = 1.15 V @ 10 A) with Silicon Carbide (SiC) Schottky diodes (C3D10060A, V_F = 0.55 V @ 10 A).",
+        "3. Conduction Power Loss per String at Peak Current (9.2 A):",
+        "   Standard Silicon: P_loss_Si = V_F · I_mp = 1.15 V × 9.2 A = 10.58 W per string.",
+        "   SiC Schottky: P_loss_Schottky = V_F · I_mp = 0.55 V × 9.2 A = 5.06 W per string.",
+        "4. Total Combiner Box Power Loss Across 12 Strings:",
+        "   Total Silicon Loss = 12 × 10.58 W = 127.0 W.",
+        "   Total Schottky Loss = 12 × 5.06 W = 60.7 W.",
+        "5. Daily Energy Yield Impact: Over 6.5 peak sun hours per day: Energy saved = (127.0 W - 60.7 W) × 6.5 h = 431 Wh/day = 157.3 kWh per year.",
+        "6. Combiner Box Thermal Enclosure: Inside an IP65 sealed outdoor combiner box exposed to 40°C Morogoro ambient heat, dissipating 127 W raises internal temperature above 85°C, risking fuse derating and terminal melting. Dissipating only 60.7 W allows passive cooling without fans.",
+        "7. Economic & Reliability Verdict: The 52.2% reduction in diode thermal dissipation provided by Schottky diodes significantly enhances system reliability and maximizes water pumping runtime."
+    ]
+    story.append(create_example(9, "Solar Combiner Box Schottky vs. Standard Blocking Diode Efficiency Analysis",
+                                "A 12-string solar PV array in Kilombero generates 9.2 A per string at peak irradiance. Compare standard silicon diodes (V_F = 1.15 V) against SiC Schottky barrier diodes (V_F = 0.55 V) for string reverse blocking. Calculate the power loss per string, total combiner box thermal dissipation, annual energy savings over 6.5 peak sun hours/day, and discuss the impact on combiner box thermal management.",
+                                ex9_steps))
     story.append(Paragraph("4.9 Practical Laboratory Bench Protocol: Zener Regulation & Optoisolator CTR Characterization", styles['SecH1']))
     story.append(Paragraph(
         "<b>Laboratory Objectives:</b><br/>"
@@ -476,21 +512,31 @@ def build_lecture_4():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 12: REFERENCES
+    # SECTION 12: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("4.12 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "3. Schubert, E. F. (2018). <i>Light-Emitting Diodes</i> (3rd ed.). Cambridge University Press.",
-        "4. Sze, S. M., & Ng, K. K. (2007). <i>Physics of Semiconductor Devices</i> (3rd ed.). John Wiley & Sons.",
-        "5. Nelson, J. (2003). <i>The Physics of Solar Cells</i>. Imperial College Press.",
-        "6. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "7. Williams, S. E., & Wilson, T. A. (2023). Introduction to Semiconductor Devices and Circuits. <i>Journal of Applied Physics</i>, 135(6), 065420."
+    story.append(Paragraph("4.12 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing mathematical models, optoelectronic relationships, "
+        "and protective device equations established in this compendium for special purpose diodes:",
+        styles['DocBody']
+    ))
+
+    lec4_formulas = [
+        ["Zener Dynamic Terminal Voltage", "<i>V</i><sub>Z</sub> = <i>V</i><sub>Z0</sub> + <i>I</i><sub>Z</sub> · <i>Z</i><sub>Z</sub>", "Models non-zero slope in breakdown region governing regulation stiffness under variable load current."],
+        ["Zener Temperature Drift", "<i>TC</i> = [ Δ<i>V</i><sub>Z</sub> / (<i>V</i><sub>Z</sub> · Δ<i>T</i>) ] × 100% &nbsp;[%/°C]", "Negative for Zener effect (< 5V), positive for Avalanche effect (> 6V); zero near 5.6V."],
+        ["Maximum Safe Zener Current", "<i>I</i><sub>ZM</sub> = <i>P</i><sub>ZM</sub> / <i>V</i><sub>Z</sub>", "Maximum continuous reverse current before exceeding junction thermal rating."],
+        ["Zener Series Resistor Bounds", "<i>R</i><sub>S(min)</sub> = (<i>V</i><sub>in(max)</sub> - <i>V</i><sub>Z</sub>) / (<i>I</i><sub>L(min)</sub> + <i>I</i><sub>ZM</sub>)<br/><i>R</i><sub>S(max)</sub> = (<i>V</i><sub>in(min)</sub> - <i>V</i><sub>Z</sub>) / (<i>I</i><sub>L(max)</sub> + <i>I</i><sub>ZK</sub>)", "Defines allowable series resistance range for guaranteed voltage regulation across all line/load extremes."],
+        ["Photon Energy & Wavelength", "<i>E</i><sub>ph</sub> = (<i>h</i> · <i>c</i>) / <i>λ</i> ≈ 1240 / <i>λ</i> &nbsp;[eV for <i>λ</i> in nm]", "Governs semiconductor bandgap engineering for LED emission and photodiode detection bands."],
+        ["LED Current-Limiting Resistor", "<i>R</i><sub>series</sub> = (<i>V</i><sub>supply</sub> - <i>V</i><sub>F</sub>) / <i>I</i><sub>F</sub>", "Sets operating forward current (10 to 30 mA for indicators, 350 to 1000 mA for greenhouse PAR luminaires)."],
+        ["Optocoupler Transfer Ratio", "CTR = ( <i>I</i><sub>C</sub> / <i>I</i><sub>F</sub> ) × 100%", "Current gain metric across galvanic optical isolation barrier for sensor and relay interfaces."],
+        ["Schottky Diode Conduction", "<i>V</i><sub>F(Schottky)</sub> ≈ 0.25 to 0.45 V &nbsp;|&nbsp; <i>t</i><sub>rr</sub> ≈ 0", "Thermionic majority carrier transport yielding ultra-low forward loss and zero recovery charge in inverters."],
+        ["Solar Module Bypass Loss", "<i>P</i><sub>bypass</sub> = <i>I</i><sub>string</sub> · <i>V</i><sub>F</sub>", "Thermal power dissipated when shaded group of solar cells is safely bypassed."],
+        ["TVS Surge Clamping Power", "<i>P</i><sub>pp</sub> = <i>V</i><sub>clamp</sub> · <i>I</i><sub>pp</sub>", "Peak transient power absorption capability under 8/20 μs or 10/1000 μs tropical lightning surges."],
+        ["Photodiode Responsivity", "<i>R</i> = <i>I</i><sub>photo</sub> / <i>P</i><sub>opt</sub> = (<i>η</i><sub>ext</sub> · <i>q</i> · <i>λ</i>) / (<i>h</i> · <i>c</i>) &nbsp;[A/W]", "Conversion efficiency from incident optical irradiance (W) to photocurrent (A) in pyranometers."],
+        ["Solar Cell Open-Circuit Voltage", "<i>V</i><sub>OC</sub> = <i>V</i><sub>T</sub> · ln[ (<i>I</i><sub>SC</sub> / <i>I</i><sub>S</sub>) + 1 ]", "Maximum photovoltaic potential generated under illuminated open-circuit conditions."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec4_formulas))
 
     render_pdf("AEN_214_Lecture_4_Compendium.pdf", story)
 

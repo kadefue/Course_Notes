@@ -13,7 +13,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer, PageBreak, KeepTogether
 from compendium_base import (
     get_custom_stylesheet, create_banner_header, create_callout,
-    create_example, create_figure, create_custom_table, render_pdf
+    create_example, create_figure, create_custom_table, create_formula_summary_table, render_pdf
 )
 
 def build_lecture_8():
@@ -473,6 +473,25 @@ def build_lecture_8():
                                 "Convert the grain elevator belt slip trip equation Trip = (P · /B) + T into Product-of-Sums (POS) form and synthesize using ONLY 2-input NOR gates. Trace the algebraic steps, draw the gate architecture, and demonstrate that a single 74HC02 IC fulfills the entire safety specification.",
                                 ex12_steps))
 
+    # Worked Example 13
+    ex13_steps = [
+        "1. Problem Definition: An industrial tea processing factory in Tukuyu, Rungwe operates an automated leaf drying boiler system. Four fault sensors monitor operating hazards with strict priority: Priority 3 (Highest: Steam Overpressure P3), Priority 2 (Combustion Flameout P2), Priority 1 (Low Feedwater P1), and Priority 0 (Lowest: Flue Filter Clogged P0). Design a 4-to-2 Priority Encoder to output the 2-bit binary code (Y1, Y0) of the highest active fault, plus a Valid Fault flag (V).",
+        "2. Formulate Priority Truth Table:",
+        "   If P3=1: (Y1, Y0) = 11, regardless of P2, P1, P0 (Don't Cares X).",
+        "   If P3=0, P2=1: (Y1, Y0) = 10, regardless of P1, P0.",
+        "   If P3=0, P2=0, P1=1: (Y1, Y0) = 01, regardless of P0.",
+        "   If P3=0, P2=0, P1=0, P0=1: (Y1, Y0) = 00.",
+        "   If all inputs are 0: V = 0 (No fault); if any input is 1: V = 1 (Active fault).",
+        "3. Boolean Synthesis for Valid Flag: V = P3 + P2 + P1 + P0.",
+        "4. Boolean Synthesis for Output Y1: Active for P3 OR P2: Y1 = P3 + P2.",
+        "5. Boolean Synthesis for Output Y0: Active for P3 OR (P2' · P1): Y0 = P3 + (P2' · P1).",
+        "6. Gate Implementation: Output Y1 requires a single 2-input OR gate. Output Y0 requires one NOT gate, one 2-input AND gate, and one 2-input OR gate. Flag V requires a 4-input OR gate (or three cascaded 2-input OR gates).",
+        "7. Engineering Realization: Using standard 74HC logic (74HC148 priority encoder or discrete gates), this circuit instantaneously directs the PLC safety routine to initiate emergency steam blow-off (Priority 3) even if multiple lesser faults trigger simultaneously, preventing catastrophic boiler explosion."
+    ]
+    story.append(create_example(13, "Four-Input Priority Encoder Design for Agro-Industrial Boiler Safety Annunciation",
+                                "Synthesize a 4-input active-HIGH priority encoder for an automated agricultural biomass boiler monitoring steam overpressure (highest priority P3), flameout (P2), low water (P1), and filter clogging (P0). Derive the minimized Boolean equations for the 2-bit encoded output (Y1, Y0) and the Valid Fault flag (V), and specify the logic gate implementation.",
+                                ex13_steps))
+
     # -------------------------------------------------------------
     # SECTION 8: LABORATORY BENCH PROTOCOL
     # -------------------------------------------------------------
@@ -566,21 +585,31 @@ def build_lecture_8():
         story.append(Paragraph(q, styles['DocBullet']))
 
     # -------------------------------------------------------------
-    # SECTION 11: REFERENCES
+    # SECTION 11: GOVERNING SCIENTIFIC FORMULAS & ANALYTICAL LAWS
     # -------------------------------------------------------------
     story.append(Spacer(1, 8))
-    story.append(Paragraph("8.11 Prescribed Textbooks & Research Bibliography", styles['SecH1']))
-    refs = [
-        "1. Mano, M. M., & Ciletti, M. D. (2018). <i>Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog</i> (6th ed.). Pearson.",
-        "2. Tocci, R. J., Widmer, N. S., & Moss, G. L. (2017). <i>Digital Systems: Principles and Applications</i> (12th ed.). Pearson.",
-        "3. Floyd, T. L. (2015). <i>Digital Fundamentals</i> (11th ed.). Pearson.",
-        "4. Karim, M. A., & Chen, X. (2017). <i>Digital Design: Basic Concepts and Principles</i>. CRC Press.",
-        "5. Roth, C. H., & Kinney, L. L. (2020). <i>Fundamentals of Logic Design</i> (7th ed.). Cengage Learning.",
-        "6. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
-        "7. Johnson, M. A., & Smith, K. L. (2023). Fundamentals of Electronics: An Introduction. <i>IEEE Transactions on Education</i>, 66(3), 456-465."
+    story.append(Paragraph("8.11 Comprehensive Scientific Formula & Analytical Synthesis", styles['SecH1']))
+    story.append(Paragraph(
+        "The following analytical formulation synthesizes all governing logic gate relationships, noise margin theorems, "
+        "and adder circuit equations established in this compendium for digital electronics:",
+        styles['DocBody']
+    ))
+
+    lec8_formulas = [
+        ["High-State Noise Margin", "<i>NM</i><sub>H</sub> = <i>V</i><sub>OH(min)</sub> - <i>V</i><sub>IH(min)</sub>", "Immunity against positive noise spikes corrupting a HIGH logic state on farm signal lines."],
+        ["Low-State Noise Margin", "<i>NM</i><sub>L</sub> = <i>V</i><sub>IL(max)</sub> - <i>V</i><sub>OL(max)</sub>", "Immunity against negative ground bounce corrupting a LOW logic state in tractor cabins."],
+        ["Digital Fan-Out Sizing", "FO<sub>H</sub> = ⌊ |<i>I</i><sub>OH</sub>| / <i>I</i><sub>IH</sub> ⌋ &nbsp;|&nbsp; FO<sub>L</sub> = ⌊ <i>I</i><sub>OL</sub> / |<i>I</i><sub>IL</sub>| ⌋", "Maximum number of standard sub-gate inputs a driver output can reliably switch."],
+        ["Power-Delay Product (PDP)", "PDP = <i>P</i><sub>D</sub> · <i>t</i><sub>p</sub> &nbsp;[Joules]", "Fundamental figure of merit balancing switching speed against thermal energy consumption."],
+        ["Half Adder Boolean Equations", "<i>S</i> = <i>A</i> ⊕ <i>B</i> &nbsp;|&nbsp; <i>C</i> = <i>A</i> · <i>B</i>", "Generates sum and carry-out for two single-bit binary inputs without input carry."],
+        ["Full Adder Sum & Carry", "<i>S</i><sub><i>i</i></sub> = <i>A</i><sub><i>i</i></sub> ⊕ <i>B</i><sub><i>i</i></sub> ⊕ <i>C</i><sub><i>i</i></sub><br/><i>C</i><sub><i>i</i>+1</sub> = (<i>A</i><sub><i>i</i></sub> · <i>B</i><sub><i>i</i></sub>) + (<i>C</i><sub><i>i</i></sub> · (<i>A</i><sub><i>i</i></sub> ⊕ <i>B</i><sub><i>i</i></sub>))", "Complete arithmetic unit accommodating input carry from lower stage in multi-bit ALU."],
+        ["Ripple Carry Total Delay", "<i>t</i><sub>adder</sub> = (<i>n</i> - 1) · <i>t</i><sub>carry</sub> + <i>t</i><sub>sum</sub>", "Worst-case propagation latency across <i>n</i> cascaded full adder stages."],
+        ["Carry Look-Ahead Logic", "<i>G</i><sub><i>i</i></sub> = <i>A</i><sub><i>i</i></sub> · <i>B</i><sub><i>i</i></sub> &nbsp;|&nbsp; <i>P</i><sub><i>i</i></sub> = <i>A</i><sub><i>i</i></sub> ⊕ <i>B</i><sub><i>i</i></sub><br/><i>C</i><sub><i>i</i>+1</sub> = <i>G</i><sub><i>i</i></sub> + (<i>P</i><sub><i>i</i></sub> · <i>C</i><sub><i>i</i></sub>)", "Generates multi-bit carries in parallel with <i>O</i>(1) delay for high-speed tractor autopilots."],
+        ["Half Subtractor Equations", "<i>D</i> = <i>A</i> ⊕ <i>B</i> &nbsp;|&nbsp; <i>B</i><sub>out</sub> = <i>A</i> · <i>B</i>", "Generates difference and borrow-out for two single-bit binary inputs."],
+        ["Full Subtractor Equations", "<i>D</i><sub><i>i</i></sub> = <i>A</i><sub><i>i</i></sub> ⊕ <i>B</i><sub><i>i</i></sub> ⊕ <i>B</i><sub>in</sub><br/><i>B</i><sub><i>i</i>+1</sub> = (<i>A</i><sub><i>i</i></sub> · <i>B</i><sub><i>i</i></sub>) + (<i>B</i><sub>in</sub> · (<i>A</i><sub><i>i</i></sub> ⊕ <i>B</i><sub><i>i</i></sub>))", "Complete subtractor unit accommodating borrow input from downstream stage."],
+        ["Universal NAND Synthesis", "NOT(<i>A</i>) = (<i>A</i> · <i>A</i>)<br/>AND(<i>A</i>,<i>B</i>) = ((<i>A</i> · <i>B</i>))<br/>OR(<i>A</i>,<i>B</i>) = (<i>A</i> · <i>B</i>)", "Proof of functional completeness: all combinational logic synthesized using only NAND gates."],
+        ["SR Latch Switch Debounce", "<i>Q</i><sup>+</sup> = <i>S</i> + <i>R</i> · <i>Q</i> &nbsp;(for <i>S</i> · <i>R</i> = 0)", "Bistable memory holding output stable during mechanical switch contact bounce."]
     ]
-    for r in refs:
-        story.append(Paragraph(r, styles['DocBody']))
+    story.append(create_formula_summary_table(lec8_formulas))
 
     render_pdf("AEN_214_Lecture_8_Compendium.pdf", story)
 
