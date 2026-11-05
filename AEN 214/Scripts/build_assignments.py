@@ -12,9 +12,9 @@ import os
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Spacer, Table, TableStyle, KeepTogether
 from compendium_base import (
-    NumberedCanvas, get_custom_stylesheet,
+    NumberedCanvas, get_custom_stylesheet, Paragraph, rectify_scientific_text,
     COLOR_PRIMARY, COLOR_SECONDARY, COLOR_ACCENT, COLOR_BG_LIGHT, COLOR_BORDER, COLOR_DARK
 )
 
@@ -96,12 +96,12 @@ def build_assignment_1():
     story.append(Paragraph(
         "<b>Question 1 (5 Marks):</b> A through-hole carbon film resistor has five colored bands in sequence: Red, Violet, Black, Brown, Brown. "
         "Decode its nominal resistance, tolerance percentage, and calculate the maximum and minimum permissible resistance values. "
-        "If a 12V DC source is placed across this resistor, compute the power dissipated and state whether a 1/4W rating is adequate.",
+        "If a 12V DC source is placed across this resistor, compute the power dissipated (<i>P</i> = <i>V</i><sup>2</sup> / <i>R</i>) and state whether a 1/4W rating is adequate.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 2 (5 Marks):</b> Explain the physical differences between an insulator, a semiconductor, and a conductor in terms of "
-        "their energy band structures, forbidden energy gaps (E_g), and the presence of charge carriers at absolute zero (0 K) versus room temperature (300 K).",
+        "their energy band structures, forbidden energy gaps (<i>E</i><sub>g</sub>), and the presence of charge carriers at absolute zero (0 K) versus room temperature (300 K).",
         styles['DocBody']
     ))
     story.append(Paragraph(
@@ -119,21 +119,21 @@ def build_assignment_1():
     story.append(Spacer(1, 6))
     story.append(Paragraph("PART B: Quantitative Circuit Analysis & Derivations [35 Marks]", styles['SecH1']))
     story.append(Paragraph(
-        "<b>Question 5 (8 Marks):</b> An analog soil moisture sensor signal conditioning circuit uses a series RC low-pass filter with R = 15 kΩ and C = 4.7 μF. "
-        "(a) Calculate the circuit time constant τ. (b) Determine the time required for the capacitor to charge from 0V to 90% of a 5V step input. "
-        "(c) Calculate the electrostatic energy stored in the capacitor when fully charged to 5V.",
+        "<b>Question 5 (8 Marks):</b> An analog soil moisture sensor signal conditioning circuit uses a series RC low-pass filter with <i>R</i> = 15 kΩ and <i>C</i> = 4.7 μF. "
+        "(a) Calculate the circuit time constant <i>τ</i> = <i>R</i> · <i>C</i>. (b) Determine the time required for the capacitor to charge from 0V to 90% of a 5V step input using <i>v</i><sub>C</sub>(<i>t</i>) = <i>V</i><sub>supply</sub> · [ 1 - <i>e</i><sup>-<i>t</i> / <i>τ</i></sup> ]. "
+        "(c) Calculate the electrostatic energy stored in the capacitor <i>W</i><sub>C</sub> = 0.5 · <i>C</i> · <i>V</i><sup>2</sup> when fully charged to 5V.",
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 6 (9 Marks):</b> A monocrystalline silicon PN junction diode is fabricated with an acceptor doping concentration N_A = 4.0 × 10¹⁷ cm⁻³ and "
-        "donor doping concentration N_D = 1.0 × 10¹⁶ cm⁻³ at a temperature T = 300 K (intrinsic carrier concentration n_i = 1.5 × 10¹⁰ cm⁻³). "
-        "(a) Calculate the junction built-in barrier potential V₀. (b) If the junction temperature rises to 350 K, explain qualitatively and calculate quantitatively "
-        "the directional change in V₀ (assume thermal voltage V_T scales linearly with T).",
+        "<b>Question 6 (9 Marks):</b> A monocrystalline silicon PN junction diode is fabricated with an acceptor doping concentration <i>N</i><sub>A</sub> = 4.0 × 10<sup>17</sup> cm<sup>-3</sup> and "
+        "donor doping concentration <i>N</i><sub>D</sub> = 1.0 × 10<sup>16</sup> cm<sup>-3</sup> at a temperature <i>T</i> = 300 K (intrinsic carrier concentration <i>n</i><sub>i</sub> = 1.5 × 10<sup>10</sup> cm<sup>-3</sup>). "
+        "(a) Calculate the junction built-in barrier potential <i>V</i><sub>0</sub> = <i>V</i><sub>T</sub> · ln[ (<i>N</i><sub>A</sub> · <i>N</i><sub>D</sub>) / <i>n</i><sub>i</sub><sup>2</sup> ]. (b) If the junction temperature rises to 350 K, explain qualitatively and calculate quantitatively "
+        "the directional change in <i>V</i><sub>0</sub> (assume thermal voltage <i>V</i><sub>T</sub> scales linearly with <i>T</i>).",
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 7 (9 Marks):</b> Starting from the Shockley diode equation I_D = I_S · [e^(V_D / (η V_T)) - 1], prove mathematically that the dynamic AC junction "
-        "resistance is given by r_d = (η · V_T) / I_D. For a silicon diode with η = 1 and V_T = 26 mV, calculate r_d at: (i) I_D = 0.5 mA, (ii) I_D = 2.0 mA, and (iii) I_D = 20 mA.",
+        "<b>Question 7 (9 Marks):</b> Starting from the Shockley diode equation <i>I</i><sub>D</sub> = <i>I</i><sub>S</sub> · [ <i>e</i><sup><i>V</i><sub>D</sub> / (<i>ηV</i><sub>T</sub>)</sup> - 1 ], prove mathematically that the dynamic AC junction "
+        "resistance is given by <i>r</i><sub>d</sub> = (<i>η</i> · <i>V</i><sub>T</sub>) / <i>I</i><sub>D</sub>. For a silicon diode with <i>η</i> = 1 and <i>V</i><sub>T</sub> = 26 mV, calculate <i>r</i><sub>d</sub> at: (i) <i>I</i><sub>D</sub> = 0.5 mA, (ii) <i>I</i><sub>D</sub> = 2.0 mA, and (iii) <i>I</i><sub>D</sub> = 20 mA.",
         styles['DocBody']
     ))
     story.append(Paragraph(
@@ -148,43 +148,43 @@ def build_assignment_1():
     story.append(Paragraph("PART C: Agricultural Engineering Systems Design [45 Marks]", styles['SecH1']))
     story.append(Paragraph(
         "<b>Question 9 (11 Marks) - Solar Irrigation Power Rectification:</b><br/>"
-        "Design a 12V DC power supply to operate an automated greenhouse drip-irrigation solenoid manifold from a 230V_rms, 50Hz single-phase AC generator. "
-        "The four solenoid valves draw a continuous load current I_dc = 2.0 A. A full-wave bridge rectifier using four 1N5404 silicon diodes (V_F = 0.8 V) "
+        "Design a 12V DC power supply to operate an automated greenhouse drip-irrigation solenoid manifold from a 230 <i>V</i><sub>rms</sub>, 50 Hz single-phase AC generator. "
+        "The four solenoid valves draw a continuous load current <i>I</i><sub>dc</sub> = 2.0 A. A full-wave bridge rectifier using four 1N5404 silicon diodes (<i>V</i><sub>F</sub> = 0.8 V) "
         "with a parallel reservoir capacitor filter is selected.<br/>"
-        "(a) Determine the required transformer secondary RMS voltage (V_sec) to maintain a minimum peak load voltage of 15.0V.<br/>"
-        "(b) Sizing the smoothing filter capacitor C to ensure peak-to-peak ripple voltage does not exceed 0.8 V_p-p.<br/>"
-        "(c) Calculate the minimum Peak Inverse Voltage (PIV) rating required for the rectifier diodes, including a 100% safety margin.<br/>"
+        "(a) Determine the required transformer secondary RMS voltage (<i>V</i><sub>sec</sub>) to maintain a minimum peak load voltage of 15.0 V.<br/>"
+        "(b) Sizing the smoothing filter capacitor <i>C</i> using <i>V</i><sub>r(pp)</sub> = <i>I</i><sub>dc</sub> / (2 · <i>f</i> · <i>C</i>) to ensure peak-to-peak ripple voltage does not exceed 0.8 <i>V</i><sub>pp</sub>.<br/>"
+        "(c) Calculate the minimum Peak Inverse Voltage (PIV) rating required for the rectifier diodes, including a 100% safety margin (PIV ≥ 2 · <i>V</i><sub>m</sub>).<br/>"
         "(d) Select an appropriate standard commercial capacitor value and specify its minimum working voltage (WVDC).",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 10 (11 Marks) - Hall Effect Tractor PTO Tachometer:</b><br/>"
         "A precision digital tachometer on a tractor Power Take-Off (PTO) shaft incorporates an N-type semiconductor Hall effect sensor slab with thickness "
-        "t = 0.20 mm and electron carrier concentration n = 3.2 × 10¹⁵ cm⁻³. A regulated bias current I_x = 20 mA flows longitudinally through the sensor. "
-        "When a magnetic gear tooth passes within 2 mm of the sensor, a perpendicular magnetic flux density B_z = 0.42 Tesla is measured.<br/>"
-        "(a) Derive the expression for the Hall coefficient R_H and compute its numerical value.<br/>"
-        "(b) Calculate the generated Hall voltage V_H in millivolts.<br/>"
+        "<i>t</i> = 0.20 mm and electron carrier concentration <i>n</i> = 3.2 × 10<sup>15</sup> cm<sup>-3</sup>. A regulated bias current <i>I</i><sub>x</sub> = 20 mA flows longitudinally through the sensor. "
+        "When a magnetic gear tooth passes within 2 mm of the sensor, a perpendicular magnetic flux density <i>B</i><sub>z</sub> = 0.42 Tesla is measured.<br/>"
+        "(a) Derive the expression for the Hall coefficient <i>R</i><sub>H</sub> = 1 / (<i>n</i> · <i>q</i>) and compute its numerical value.<br/>"
+        "(b) Calculate the generated Hall voltage <i>V</i><sub>H</sub> = (<i>R</i><sub>H</sub> · <i>I</i><sub>x</sub> · <i>B</i><sub>z</sub>) / <i>t</i> in millivolts.<br/>"
         "(c) If electrical noise from the tractor alternator induces a 2.5 mV stray voltage, calculate the Signal-to-Noise Ratio (SNR) in decibels (dB) "
-        "and suggest a differential amplifier topology to eliminate common-mode alternator noise.",
+        "via SNR = 20 · log<sub>10</sub>(<i>V</i><sub>signal</sub> / <i>V</i><sub>noise</sub>) and suggest a differential amplifier topology to eliminate common-mode alternator noise.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 11 (11 Marks) - Sensor Analog Input Overvoltage Protection:</b><br/>"
         "An analog soil conductivity probe installed along an outdoor farm furrow is connected to a 3.3V microcontroller ADC pin via a 50-meter cable. "
         "Inductive switching from nearby borehole pumps induces AC transient spikes of ±25V peak into the cable. "
-        "Design a double-diode clipper protection network using two silicon diodes (V_K = 0.7 V) and a series current-limiting resistor R_S.<br/>"
+        "Design a double-diode clipper protection network using two silicon diodes (<i>V</i><sub>K</sub> = 0.7 V) and a series current-limiting resistor <i>R</i><sub>S</sub>.<br/>"
         "(a) Draw the complete circuit schematic showing connection to the 3.3V power rail and ground.<br/>"
-        "(b) Determine the maximum and minimum voltages delivered to the ADC pin during ±25V transient surges.<br/>"
-        "(c) If the maximum allowable transient current through each protection diode is 20 mA, calculate the minimum safe value and wattage rating of series resistor R_S.",
+        "(b) Determine the maximum and minimum voltages delivered to the ADC pin during ±25V transient surges (clamped to <i>V</i><sub>DD</sub> + <i>V</i><sub>K</sub> and -<i>V</i><sub>K</sub>).<br/>"
+        "(c) If the maximum allowable transient current through each protection diode is 20 mA, calculate the minimum safe value <i>R</i><sub>S</sub> = (<i>V</i><sub>peak</sub> - <i>V</i><sub>clamp</sub>) / <i>I</i><sub>max</sub> and wattage rating of series resistor <i>R</i><sub>S</sub>.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 12 (12 Marks) - Capacitive Grain Moisture Sensor Filtering:</b><br/>"
         "A continuous-flow maize dryer utilizes a cylindrical coaxial capacitor sensor whose dielectric constant varies linearly with grain moisture content "
-        "(C_dry = 120 pF at 12% moisture; C_wet = 480 pF at 28% moisture). The sensor is excited by a 100 kHz sinusoidal oscillator.<br/>"
-        "(a) Calculate the capacitive reactance X_C of the sensor at both dry (12%) and wet (28%) grain conditions.<br/>"
-        "(b) The sensor forms an AC voltage divider with an inductor L to convert moisture variations into amplitude variations. "
-        "Determine the required inductance L so that the circuit achieves electrical resonance at 100 kHz when grain moisture is exactly at the target storage value of 14% (C = 165 pF).<br/>"
+        "(<i>C</i><sub>dry</sub> = 120 pF at 12% moisture; <i>C</i><sub>wet</sub> = 480 pF at 28% moisture). The sensor is excited by a 100 kHz sinusoidal oscillator.<br/>"
+        "(a) Calculate the capacitive reactance <i>X</i><sub>C</sub> = 1 / (2 · <i>π</i> · <i>f</i> · <i>C</i>) of the sensor at both dry (12%) and wet (28%) grain conditions.<br/>"
+        "(b) The sensor forms an AC voltage divider with an inductor <i>L</i> to convert moisture variations into amplitude variations. "
+        "Determine the required inductance <i>L</i> = 1 / [ 4 · <i>π</i><sup>2</sup> · <i>f</i><sup>2</sup> · <i>C</i> ] so that the circuit achieves electrical resonance at 100 kHz when grain moisture is exactly at the target storage value of 14% (<i>C</i> = 165 pF).<br/>"
         "(c) What safety hazards arise if high-moisture grain causes localized dielectric heating inside the capacitor sensor?",
         styles['DocBody']
     ))
@@ -216,7 +216,7 @@ def build_assignment_2():
     ))
     story.append(Paragraph(
         "<b>Question 3 (5 Marks):</b> Describe the pinch-off phenomenon in an N-channel Junction Field Effect Transistor (JFET). "
-        "Explain why the drain current saturates at a constant value (I_DSS) beyond pinch-off (V_DS > |V_P|) rather than dropping to zero.",
+        "Explain why the drain current saturates at a constant value (<i>I</i><sub>DSS</sub>) beyond pinch-off (<i>V</i><sub>DS</sub> > |<i>V</i><sub>P</sub>|) rather than dropping to zero.",
         styles['DocBody']
     ))
     story.append(Paragraph(
@@ -230,26 +230,26 @@ def build_assignment_2():
     story.append(Paragraph("PART B: Quantitative Transistor Circuit Analysis [35 Marks]", styles['SecH1']))
     story.append(Paragraph(
         "<b>Question 5 (8 Marks):</b> A 6.8V Zener diode shunt regulator is supplied from an unregulated DC input that fluctuates between 11V and 15V. "
-        "The load resistance varies from 340 Ω to 1.2 kΩ. The Zener diode has ratings: V_Z = 6.8 V, I_ZK = 3 mA, and P_Z(max) = 1.0 W. "
-        "Calculate the permissible range for series current-limiting resistor R_S and select a suitable standard E24 resistor value.",
+        "The load resistance varies from 340 Ω to 1.2 kΩ. The Zener diode has ratings: <i>V</i><sub>Z</sub> = 6.8 V, <i>I</i><sub>ZK</sub> = 3 mA, and <i>P</i><sub>Z(max)</sub> = 1.0 W. "
+        "Calculate the permissible range for series current-limiting resistor <i>R</i><sub>S(min)</sub> and <i>R</i><sub>S(max)</sub> using governing boundary equations and select a suitable standard E24 resistor value.",
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 6 (9 Marks):</b> For a silicon NPN transistor configured in Common-Emitter mode with β = 120 and I_CBO = 50 nA at 25°C, "
-        "(a) Calculate the Common-Base current gain α. (b) Calculate the open-base collector-emitter leakage current I_CEO. "
-        "(c) If the junction temperature rises to 75°C causing I_CBO to increase eight-fold, compute the new value of I_CEO.",
+        "<b>Question 6 (9 Marks):</b> For a silicon NPN transistor configured in Common-Emitter mode with <i>β</i> = 120 and <i>I</i><sub>CBO</sub> = 50 nA at 25°C, "
+        "(a) Calculate the Common-Base current gain <i>α</i> = <i>β</i> / (<i>β</i> + 1). (b) Calculate the open-base collector-emitter leakage current <i>I</i><sub>CEO</sub> = (<i>β</i> + 1) · <i>I</i><sub>CBO</sub>. "
+        "(c) If the junction temperature rises to 75°C causing <i>I</i><sub>CBO</sub> to increase eight-fold, compute the new value of <i>I</i><sub>CEO</sub>.",
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 7 (9 Marks):</b> An N-channel JFET has saturation drain current I_DSS = 14 mA and pinch-off voltage V_P = -4.5 V. "
-        "Using Shockley's equation: (a) Calculate drain current I_D for V_GS = 0V, -1.0V, -2.0V, -3.0V, and -4.5V. "
-        "(b) Calculate maximum transconductance g_m0. (c) Compute operating transconductance g_m at V_GS = -2.0 V.",
+        "<b>Question 7 (9 Marks):</b> An N-channel JFET has saturation drain current <i>I</i><sub>DSS</sub> = 14 mA and pinch-off voltage <i>V</i><sub>P</sub> = -4.5 V. "
+        "Using Shockley's equation <i>I</i><sub>D</sub> = <i>I</i><sub>DSS</sub> · [ 1 - (<i>V</i><sub>GS</sub> / <i>V</i><sub>P</sub>) ]<sup>2</sup>: (a) Calculate drain current <i>I</i><sub>D</sub> for <i>V</i><sub>GS</sub> = 0V, -1.0V, -2.0V, -3.0V, and -4.5V. "
+        "(b) Calculate maximum transconductance <i>g</i><sub>m0</sub> = 2 · <i>I</i><sub>DSS</sub> / |<i>V</i><sub>P</sub>|. (c) Compute operating transconductance <i>g</i><sub>m</sub> at <i>V</i><sub>GS</sub> = -2.0 V.",
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 8 (9 Marks):</b> A Common-Emitter BJT amplifier with voltage-divider bias has circuit values: V_CC = 15 V, R1 = 47 kΩ, R2 = 12 kΩ, "
-        "R_C = 3.3 kΩ, R_E = 1.2 kΩ, and β = 100. (a) Determine the DC quiescent operating point (I_CQ, V_CEQ). "
-        "(b) Calculate the small-signal dynamic emitter resistance r_e. (c) Calculate the AC voltage gain A_v assuming the emitter resistor is bypassed with a large capacitor C_E.",
+        "<b>Question 8 (9 Marks):</b> A Common-Emitter BJT amplifier with voltage-divider bias has circuit values: <i>V</i><sub>CC</sub> = 15 V, <i>R</i><sub>1</sub> = 47 kΩ, <i>R</i><sub>2</sub> = 12 kΩ, "
+        "<i>R</i><sub>C</sub> = 3.3 kΩ, <i>R</i><sub>E</sub> = 1.2 kΩ, and <i>β</i> = 100. (a) Determine the DC quiescent operating point (<i>I</i><sub>CQ</sub>, <i>V</i><sub>CEQ</sub>). "
+        "(b) Calculate the small-signal dynamic emitter resistance <i>r</i><sub>e</sub> = 26 mV / <i>I</i><sub>EQ</sub>. (c) Calculate the AC voltage gain <i>A</i><sub>v</sub> = - (<i>R</i><sub>C</sub> || <i>R</i><sub>L</sub>) / <i>r</i><sub>e</sub> assuming the emitter resistor is bypassed with a large capacitor <i>C</i><sub>E</sub>.",
         styles['DocBody']
     ))
 
@@ -259,41 +259,41 @@ def build_assignment_2():
     story.append(Paragraph(
         "<b>Question 9 (11 Marks) - Solar Array Shading Protection:</b><br/>"
         "A solar-powered borehole water pumping installation comprises three series strings of 400W monocrystalline photovoltaic modules. "
-        "Each module produces a string current I_string = 10.5 A. During dusty dry-season conditions in central Tanzania, acacia tree leaves shade one substring.<br/>"
+        "Each module produces a string current <i>I</i><sub>string</sub> = 10.5 A. During dusty dry-season conditions in central Tanzania, acacia tree leaves shade one substring.<br/>"
         "(a) Explain the electrical and thermal consequences of cell reverse breakdown if bypass diodes are omitted.<br/>"
-        "(b) Compare the power dissipation in a sealed IP67 junction box when using a standard silicon rectifier diode (V_F = 1.0 V at 10.5A) "
-        "versus an MBR1645 Schottky barrier diode (V_F = 0.42 V at 10.5A).<br/>"
-        "(c) If the junction box has a thermal resistance to ambient R_θ = 8.5 °C/W and ambient temperature is 42°C, compute the steady-state temperature inside the enclosure for both diode types.",
+        "(b) Compare the power dissipation in a sealed IP67 junction box when using a standard silicon rectifier diode (<i>V</i><sub>F</sub> = 1.0 V at 10.5 A) "
+        "versus an MBR1645 Schottky barrier diode (<i>V</i><sub>F</sub> = 0.42 V at 10.5 A) using <i>P</i> = <i>I</i> · <i>V</i><sub>F</sub>.<br/>"
+        "(c) If the junction box has a thermal resistance to ambient <i>θ</i><sub>ca</sub> = 8.5 °C/W and ambient temperature is 42°C, compute the steady-state temperature inside the enclosure <i>T</i><sub>case</sub> = <i>T</i><sub>amb</sub> + <i>P</i> · <i>θ</i><sub>ca</sub> for both diode types.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 10 (11 Marks) - BJT Saturated Switch for Grain Aeration Fan:</b><br/>"
         "An automated maize storage silo uses an ESP32 microcontroller (3.3V logic, maximum safe GPIO current = 12 mA) to actuate a 12V, 15W cooling fan relay.<br/>"
-        "(a) Calculate the required collector saturation current I_C(sat).<br/>"
-        "(b) The relay is switched using a BD139 NPN power transistor with minimum saturation gain β_min = 40. "
-        "Using an overdrive factor ODF = 3.0 to ensure solid saturation across temperature extremes, compute the required base current I_B(forced).<br/>"
-        "(c) Sizing the series base resistor R_B (assume V_BE(sat) = 0.85 V) and check whether the ESP32 GPIO pin current rating is respected.<br/>"
+        "(a) Calculate the required collector saturation current <i>I</i><sub>C(sat)</sub> = <i>P</i> / <i>V</i><sub>CC</sub>.<br/>"
+        "(b) The relay is switched using a BD139 NPN power transistor with minimum saturation gain <i>β</i><sub>min</sub> = 40. "
+        "Using an overdrive factor ODF = 3.0 to ensure solid saturation across temperature extremes, compute the required base current <i>I</i><sub>B(forced)</sub> = ODF · [ <i>I</i><sub>C(sat)</sub> / <i>β</i><sub>min</sub> ].<br/>"
+        "(c) Sizing the series base resistor <i>R</i><sub>B</sub> = (<i>V</i><sub>GPIO</sub> - <i>V</i><sub>BE(sat)</sub>) / <i>I</i><sub>B(forced)</sub> (assume <i>V</i><sub>BE(sat)</sub> = 0.85 V) and check whether the ESP32 GPIO pin current rating is respected.<br/>"
         "(d) Explain the necessity of the anti-parallel freewheeling diode across the relay coil and specify an appropriate diode part number.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 11 (11 Marks) - Power MOSFET Thermal Sizing for 24V Solar Irrigation Pump:</b><br/>"
-        "A 24V, 360W DC submersible solar pump (full-load current I_D = 15 A) is speed-controlled via PWM from an agricultural automation board. "
-        "An IRF3205 N-channel Power MOSFET is selected, having on-state resistance R_DS(on) = 8.0 mΩ (0.008 Ω), junction-to-case thermal resistance R_θJC = 0.75 °C/W, "
-        "and maximum rated junction temperature T_j(max) = 175°C. The control box operates in an outdoor shed where ambient temperature reaches T_amb = 45°C.<br/>"
-        "(a) Calculate the static conduction power loss P_cond in the MOSFET at full 15A continuous current.<br/>"
-        "(b) If junction-to-ambient thermal resistance without a heatsink is R_θJA = 62 °C/W, prove that the MOSFET will burn out if operated without a heatsink.<br/>"
-        "(c) Calculate the maximum allowable heatsink thermal resistance R_θ(heatsink) to maintain the MOSFET junction temperature below a safe design limit of T_j = 90°C (assume thermal grease interface R_θ(case-to-sink) = 0.50 °C/W).",
+        "A 24V, 360W DC submersible solar pump (full-load current <i>I</i><sub>D</sub> = 15 A) is speed-controlled via PWM from an agricultural automation board. "
+        "An IRF3205 N-channel Power MOSFET is selected, having on-state resistance <i>R</i><sub>DS(on)</sub> = 8.0 mΩ (0.008 Ω), junction-to-case thermal resistance <i>θ</i><sub>jc</sub> = 0.75 °C/W, "
+        "and maximum rated junction temperature <i>T</i><sub>j(max)</sub> = 175°C. The control box operates in an outdoor shed where ambient temperature reaches <i>T</i><sub>amb</sub> = 45°C.<br/>"
+        "(a) Calculate the static conduction power loss <i>P</i><sub>cond</sub> = <i>I</i><sub>D</sub><sup>2</sup> · <i>R</i><sub>DS(on)</sub> in the MOSFET at full 15A continuous current.<br/>"
+        "(b) If junction-to-ambient thermal resistance without a heatsink is <i>θ</i><sub>ja</sub> = 62 °C/W, prove that the MOSFET will burn out if operated without a heatsink via <i>T</i><sub>j</sub> = <i>T</i><sub>amb</sub> + <i>P</i><sub>cond</sub> · <i>θ</i><sub>ja</sub>.<br/>"
+        "(c) Calculate the maximum allowable heatsink thermal resistance <i>θ</i><sub>sa</sub> = [ (<i>T</i><sub>j</sub> - <i>T</i><sub>amb</sub>) / <i>P</i><sub>cond</sub> ] - <i>θ</i><sub>jc</sub> - <i>θ</i><sub>cs</sub> to maintain the MOSFET junction temperature below a safe design limit of <i>T</i><sub>j</sub> = 90°C (assume thermal grease interface <i>θ</i><sub>cs</sub> = 0.50 °C/W).",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 12 (12 Marks) - High-Impedance Soil pH Transducer Buffer:</b><br/>"
-        "Glass-membrane electrochemical soil pH sensors have an extraordinarily high internal source resistance (R_source ≈ 100 MΩ to 1 GΩ) and output an analog signal "
+        "Glass-membrane electrochemical soil pH sensors have an extraordinarily high internal source resistance (<i>R</i><sub>source</sub> ≈ 100 MΩ to 1 GΩ) and output an analog signal "
         "of approximately 59.2 mV per pH unit at 25°C. Connecting this probe to a standard BJT amplifier causes severe signal attenuation.<br/>"
         "(a) Explain why a standard BJT amplifier cannot be used for direct buffering of a glass pH electrode.<br/>"
-        "(b) Design a Common-Drain (Source Follower) buffer amplifier using a 2N5457 N-channel JFET (I_DSS = 5.0 mA, V_P = -2.5 V). "
-        "Draw the circuit schematic and derive the expression for input resistance R_in and voltage gain A_v.<br/>"
-        "(c) What precautions regarding PCB contamination (humidity, agricultural fertilizer dust, and flux residue) must be taken to maintain 10¹² Ω insulation resistance on the sensor board?",
+        "(b) Design a Common-Drain (Source Follower) buffer amplifier using a 2N5457 N-channel JFET (<i>I</i><sub>DSS</sub> = 5.0 mA, <i>V</i><sub>P</sub> = -2.5 V). "
+        "Draw the circuit schematic and derive the expression for input resistance <i>R</i><sub>in</sub> and voltage gain <i>A</i><sub>v</sub> = (<i>g</i><sub>m</sub> · <i>R</i><sub>S</sub>) / (1 + <i>g</i><sub>m</sub> · <i>R</i><sub>S</sub>).<br/>"
+        "(c) What precautions regarding PCB contamination (humidity, agricultural fertilizer dust, and flux residue) must be taken to maintain 10<sup>12</sup> Ω insulation resistance on the sensor board?",
         styles['DocBody']
     ))
 
@@ -319,14 +319,14 @@ def build_assignment_3():
     ))
     story.append(Paragraph(
         "<b>Question 2 (5 Marks):</b> Perform the following signed 8-bit two's complement additions and subtractions. In each case, state whether an arithmetic "
-        "overflow occurs and verify by checking the sign-bit carry condition V = C_in ⊕ C_out:<br/>"
+        "overflow occurs and verify by checking the sign-bit carry condition <i>V</i> = <i>C</i><sub>in</sub> ⊕ <i>C</i><sub>out</sub>:<br/>"
         "(a) (+54) + (+82)<br/>"
         "(b) (+75) - (+98) [i.e., (+75) + (-98)]",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 3 (5 Marks):</b> Perform the BCD addition of decimal numbers 678 + 485 using 8421 BCD arithmetic. "
-        "Show the binary addition for each decimal digit decade and illustrate where the +6 (0110_2) correction factor must be applied.",
+        "Show the binary addition for each decimal digit decade and illustrate where the +6 (0110<sub>2</sub>) correction factor must be applied.",
         styles['DocBody']
     ))
     story.append(Paragraph(
@@ -350,16 +350,16 @@ def build_assignment_3():
         styles['DocBody']
     ))
     story.append(Paragraph(
-        "<b>Question 7 (9 Marks):</b> A 1-bit binary Full Adder circuit accepts inputs A, B, and C_in. "
-        "(a) Construct the complete 8-row truth table for outputs Sum (S) and Carry-out (C_out). "
-        "(b) Write the minimized Boolean expressions for S and C_out. (c) Draw the logic diagram using two Half Adders and an OR gate.",
+        "<b>Question 7 (9 Marks):</b> A 1-bit binary Full Adder circuit accepts inputs <i>A</i>, <i>B</i>, and <i>C</i><sub>in</sub>. "
+        "(a) Construct the complete 8-row truth table for outputs Sum (<i>S</i>) and Carry-out (<i>C</i><sub>out</sub>). "
+        "(b) Write the minimized Boolean expressions for <i>S</i> and <i>C</i><sub>out</sub>. (c) Draw the logic diagram using two Half Adders and an OR gate.",
         styles['DocBody']
     ))
     story.append(Paragraph(
         "<b>Question 8 (9 Marks):</b> Using Boolean algebra axioms and De Morgan's theorems, algebraically prove the following identities:<br/>"
-        "(a) A + A̅·B = A + B<br/>"
-        "(b) (A + B) · (A + C) = A + B·C<br/>"
-        "(c) (A · B · C)̅ = A̅ + B̅ + C̅",
+        "(a) <i>A</i> + (<i>A</i> · <i>B</i>) = <i>A</i> + <i>B</i><br/>"
+        "(b) (<i>A</i> + <i>B</i>) · (<i>A</i> + <i>C</i>) = <i>A</i> + <i>B</i> · <i>C</i><br/>"
+        "(c) (<i>A</i> · <i>B</i> · <i>C</i>) = <i>A</i> + <i>B</i> + <i>C</i>",
         styles['DocBody']
     ))
 
@@ -368,8 +368,8 @@ def build_assignment_3():
     story.append(Paragraph("PART C: K-Map Minimization & Agricultural Safety Synthesis [45 Marks]", styles['SecH1']))
     story.append(Paragraph(
         "<b>Question 9 (11 Marks) - Automated Silo Fumigation Exhaust Logic:</b><br/>"
-        "A grain silo fumigation system has four safety sensors: P (Phosphine Gas Detected), T (Temperature > 35°C), D (Silo Access Door Closed), and E (Emergency Switch Active). "
-        "The exhaust ventilation blower (B) must turn ON (B = 1) according to the truth function: B(P, T, D, E) = ∑ m(2, 3, 6, 7, 10, 11, 14, 15).<br/>"
+        "A grain silo fumigation system has four safety sensors: <i>P</i> (Phosphine Gas Detected), <i>T</i> (Temperature > 35°C), <i>D</i> (Silo Access Door Closed), and <i>E</i> (Emergency Switch Active). "
+        "The exhaust ventilation blower (<i>B</i>) must turn ON (<i>B</i> = 1) according to the truth function: <i>B</i>(<i>P</i>, <i>T</i>, <i>D</i>, <i>E</i>) = ∑ <i>m</i>(2, 3, 6, 7, 10, 11, 14, 15).<br/>"
         "(a) Plot this function on a 4-variable Karnaugh Map (Gray code ordered).<br/>"
         "(b) Identify all prime implicants and essential prime implicants.<br/>"
         "(c) Derive the minimized Sum of Products (SOP) expression.<br/>"
@@ -378,9 +378,9 @@ def build_assignment_3():
     ))
     story.append(Paragraph(
         "<b>Question 10 (11 Marks) - Grain Dryer Burner Safety Interlock with Don't Cares:</b><br/>"
-        "An automated cross-flow grain dryer burner shutoff circuit F(A, B, C, D) is monitored by four binary inputs: A = High Burner Temp; B = Flame Detected; "
-        "C = Airflow Blower Running; D = Master Control Armed. The shutdown alarm triggers for minterms: F = ∑ m(0, 1, 4, 5, 8, 9, 12). "
-        "Due to mechanical sensor interlocks, input states d = ∑ d(10, 11, 13, 14, 15) can never physically occur.<br/>"
+        "An automated cross-flow grain dryer burner shutoff circuit <i>F</i>(<i>A</i>, <i>B</i>, <i>C</i>, <i>D</i>) is monitored by four binary inputs: <i>A</i> = High Burner Temp; <i>B</i> = Flame Detected; "
+        "<i>C</i> = Airflow Blower Running; <i>D</i> = Master Control Armed. The shutdown alarm triggers for minterms: <i>F</i> = ∑ <i>m</i>(0, 1, 4, 5, 8, 9, 12). "
+        "Due to mechanical sensor interlocks, input states <i>d</i> = ∑ <i>d</i>(10, 11, 13, 14, 15) can never physically occur.<br/>"
         "(a) Map the minterms and Don't Care conditions onto a 4-variable K-map.<br/>"
         "(b) Form the largest possible groups by leveraging the Don't Care terms.<br/>"
         "(c) Write the minimal SOP expression and compare the gate count against a design that treats all Don't Cares as zeros.",
@@ -388,10 +388,10 @@ def build_assignment_3():
     ))
     story.append(Paragraph(
         "<b>Question 11 (11 Marks) - Autonomous Combine Harvester Header Height Controller:</b><br/>"
-        "An autonomous wheat combine harvester uses three ultrasonic height sensors located on the left (L), center (C), and right (R) of the cutting header. "
-        "Each sensor outputs '1' if the cutter bar is too close to the ground (< 10 cm). A hydraulic lift actuator must raise the header (Y = 1) if "
-        "at least two out of the three sensors indicate ground proximity, OR if an obstacle proximity sensor (O = 1) triggers.<br/>"
-        "(a) Formulate the truth table for the 4-variable function Y(O, L, C, R).<br/>"
+        "An autonomous wheat combine harvester uses three ultrasonic height sensors located on the left (<i>L</i>), center (<i>C</i>), and right (<i>R</i>) of the cutting header. "
+        "Each sensor outputs '1' if the cutter bar is too close to the ground (&lt; 10 cm). A hydraulic lift actuator must raise the header (<i>Y</i> = 1) if "
+        "at least two out of the three sensors indicate ground proximity, OR if an obstacle proximity sensor (<i>O</i> = 1) triggers.<br/>"
+        "(a) Formulate the truth table for the 4-variable function <i>Y</i>(<i>O</i>, <i>L</i>, <i>C</i>, <i>R</i>).<br/>"
         "(b) Plot the function on a 4-variable K-map.<br/>"
         "(c) Obtain the minimal SOP expression for hydraulic lift actuation.<br/>"
         "(d) Identify any static-1 hazards and add redundant prime implicants if necessary to guarantee glitch-free hydraulic valve switching.",
@@ -399,8 +399,8 @@ def build_assignment_3():
     ))
     story.append(Paragraph(
         "<b>Question 12 (12 Marks) - Digital Agricultural Dosing Pump Controller:</b><br/>"
-        "A dairy cattle automated parlor dosing system dispenses liquid nutritional supplement based on 3 binary inputs: A (Animal ID Validated), "
-        "W (Animal Weight > 450 kg), and M (Milk Yield > 25 Liters/day). The dispenser valve V operates according to: V = A · (W̅ · M + W · M) + A · W̅ · M̅.<br/>"
+        "A dairy cattle automated parlor dosing system dispenses liquid nutritional supplement based on 3 binary inputs: <i>A</i> (Animal ID Validated), "
+        "<i>W</i> (Animal Weight > 450 kg), and <i>M</i> (Milk Yield > 25 Liters/day). The dispenser valve <i>V</i> operates according to: <i>V</i> = <i>A</i> · (<i>W</i> · <i>M</i> + <i>W</i> · <i>M</i>) + <i>A</i> · <i>W</i> · <i>M</i>.<br/>"
         "(a) Simplify the Boolean expression algebraically to its absolute minimum literal count.<br/>"
         "(b) Verify your algebraic minimization by constructing a 3-variable Karnaugh Map.<br/>"
         "(c) Draw the final simplified circuit using standard logic gates.<br/>"
