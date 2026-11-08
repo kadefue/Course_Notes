@@ -1010,19 +1010,14 @@ def generate_topic_1_story():
     # =========================================================
     story.append(Paragraph("10. RECOMMENDED READINGS AND AUTHENTIC REFERENCES", styles['SecH1']))
     story.append(Paragraph(
-        "To ground your intellectual exploration in verified, established, and genuine scholarly literature, first-year undergraduate students are strongly encouraged to consult the following foundational textbooks available in the Sokoine National Agricultural Library (SNAL) and university departmental collections:",
+        "The following genuine introductory references are suitable for further reading:",
         styles['DocBody']
     ))
     story.append(Spacer(1, 4))
 
     references = [
-        ("Shelly, Gary B., & Vermaat, Misty E. (2012).", "<i>Discovering Computers: Complete — Living in a Digital World</i>. Boston, MA: Cengage Learning. [A globally respected, comprehensive introductory textbook covering microcomputer hardware fundamentals, the information processing cycle, operating system concepts, and societal technological impacts with rich visual illustrations]."),
-        ("Norton, Peter. (2006).", "<i>Introduction to Computers</i> (6th Edition). New York, NY: McGraw-Hill Technology Education. [A classic, authoritative introductory work exploring the internal architecture of microprocessors, bus operations, primary and secondary memory hierarchies, input/output peripherals, and personal computer evolution]."),
-        ("Beekman, George, & Beekman, Ben. (2012).", "<i>Digital Planet: Tomorrow's Technology and You</i> (10th Edition). Upper Saddle River, NJ: Prentice Hall. [An insightful academic exploration of computer history, visionary pioneers, digital convergence, network connectivity, and the ethical/societal implications of computing across agriculture, science, and industry]."),
-        ("Morley, Deborah, & Parker, Charles S. (2017).", "<i>Understanding Computers: Today and Tomorrow, Comprehensive</i> (16th Edition). Boston, MA: Cengage Learning. [An outstanding modern reference detailing microcomputer classifications, mobile form factors, embedded systems, system software, enterprise computing infrastructures, and emerging artificial intelligence paradigms]."),
-        ("Parhami, Behrooz. (2005).", "<i>Computer Architecture: From Microprocessors to Supercomputers</i>. New York, NY: Oxford University Press. [An accessible, rigorous treatise examining the conceptual Von Neumann model, machine cycle execution, memory subsystems, and the architectural taxonomy spanning personal computers to massively parallel supercomputers]."),
-        ("Young, Margaret Levine. (2002).", "<i>Internet: The Complete Reference</i> (Millennium Edition). Berkeley, CA: McGraw-Hill / Osborne. [An authoritative reference covering the history, protocols, architecture, and applications of computer networks, the Internet, and the World Wide Web]."),
-        ("Sokoine University of Agriculture (SUA). (2020).", "<i>Curriculum for Bachelor of Science in Information Technology and Undergraduate Service Courses: BIT 111 Course Syllabus</i>. Department of Informatics and Information Technology (DIIT), Morogoro, Tanzania. [The official institutional course syllabus establishing approved topics, practical laboratory requirements, and continuous assessment regulations at SUA].")
+        ("Smith, J. L., Wang, S., &amp; Mortati, J. (2019).", "<i>Information Systems for Business and Beyond</i>. Open textbook. <a href='https://opentextbook.site/informationsystems2019/'>Read online</a>."),
+        ("Vermaat, M. E., Sebok, S. L., Freund, S. M., Campbell, J. T., &amp; Frydenberg, M. (2018).", "<i>Discovering Computers: Digital Technology, Data, and Devices</i> (16th ed.). Cengage Learning. <a href='https://faculty.cengage.com/works/9781337285100'>Publisher catalog</a>."),
     ]
 
     for author, citation in references:

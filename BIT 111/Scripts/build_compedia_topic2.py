@@ -196,7 +196,7 @@ def generate_topic_2_story():
     story.append(Paragraph("<b>The System Clock and Frequency Concept (Without Equations)</b>", styles['SecH2']))
     story.append(Paragraph(
         "Every digital microcomputer incorporates an internal <b>system clock</b>—a microscopic quartz crystal oscillator circuit located on the motherboard or integrated into the CPU chipset. When an electrical voltage is applied to the quartz crystal, it vibrates at an extraordinarily steady, precise physical frequency, generating continuous electronic square-wave voltage pulses.<br/>"
-        "Conceptually, the system clock acts like the steady, rhythmic beat of a conductor's baton or an orchestra metronome. Every microscopic micro-operation within the CPU—fetching an instruction byte, latching a register, or gating an ALU calculation—must be synchronized to occur during these discrete clock ticks. Clock speed is measured in <b>Gigahertz (GHz)</b>, where one Gigahertz represents one billion electrical clock pulses per second (e.g., a 3.2 GHz processor produces 3.2 billion synchronization pulses every second).<br/>"
+        "Conceptually, the system clock acts like the steady, rhythmic beat of a conductor's baton or an orchestra metronome. Every microscopic micro-operation within the CPU—fetching an instruction byte, latching a register, or gating an ALU calculation—must be synchronized to occur during these discrete clock ticks. Clock speed is measured in <b>Gigahertz (GHz)</b>, a unit used to describe the frequency of those pulses.<br/>"
         "<i>Introductory Conceptual Principle:</i> First-year students should note that while higher clock frequency allows a processor to execute more operational steps per second, clock speed alone does not determine overall computer performance. Architectural efficiency—such as how many instructions a CPU can complete per clock cycle, the size of on-chip cache memory, and the number of physical cores—plays an equally decisive role.",
         styles['DocBody']
     ))
@@ -694,19 +694,14 @@ def generate_topic_2_story():
     # =========================================================
     story.append(Paragraph("12. RECOMMENDED READINGS AND AUTHENTIC REFERENCES", styles['SecH1']))
     story.append(Paragraph(
-        "First-year undergraduate scholars seeking deeper understanding of microcomputer hardware engineering and components are directed to the following genuine academic textbooks:",
+        "The following genuine introductory references provide additional reading on computer systems and hardware:",
         styles['DocBody']
     ))
     story.append(Spacer(1, 4))
 
     references_t2 = [
-        ("Norton, Peter. (2006).", "<i>Introduction to Computers</i> (6th Edition). New York, NY: McGraw-Hill Technology Education. [Authoritative chapters on microprocessor anatomy, primary RAM and ROM types, bus architectures, and the physics of magnetic and optical secondary storage]."),
-        ("Shelly, Gary B., & Vermaat, Misty E. (2012).", "<i>Discovering Computers: Complete</i>. Boston, MA: Cengage Learning. [Richly illustrated coverage of system units, motherboard layouts, input/output peripherals, solid-state storage, and display technologies]."),
-        ("Mueller, Scott. (2015).", "<i>Upgrading and Repairing PCs</i> (22nd Edition). Indianapolis, IN: Que Publishing. [The industry-standard reference manual for PC hardware components, motherboard form factors, power supply specifications, memory timings, and troubleshooting]."),
-        ("Patterson, David A., & Hennessy, John L. (2018).", "<i>Computer Organization and Design: The Hardware/Software Interface</i> (5th Edition). Cambridge, MA: Morgan Kaufmann. [A Nobel-level treatise examining the architectural interaction between processors, memory hierarchies, caches, and storage systems]."),
-        ("Morley, Deborah, & Parker, Charles S. (2017).", "<i>Understanding Computers: Today and Tomorrow, Comprehensive</i> (16th Edition). Boston, MA: Cengage Learning. [Clear, conceptual discussions of multi-core CPUs, solid-state storage architectures, expansion buses, and emerging sensory input technologies]."),
-        ("Parhami, Behrooz. (2005).", "<i>Computer Architecture: From Microprocessors to Supercomputers</i>. New York, NY: Oxford University Press. [Comprehensive analysis of processor arithmetic, memory hierarchies, bus protocols, and comparative hardware structures across computing classes]."),
-        ("Sokoine University of Agriculture (SUA). (2020).", "<i>BIT 111 Course Syllabus: Microcomputers and Applications</i>. Department of Informatics and Information Technology (DIIT), Morogoro, Tanzania. [Official approved curriculum document establishing topic coverage, laboratory exercises, and assessment structures].")
+        ("Smith, J. L., Wang, S., &amp; Mortati, J. (2019).", "<i>Information Systems for Business and Beyond</i>. Open textbook. <a href='https://opentextbook.site/informationsystems2019/chapter/chapter-2-hardware-information-systems-introduction/'>Chapter 2: Hardware</a>."),
+        ("Vermaat, M. E., Sebok, S. L., Freund, S. M., Campbell, J. T., &amp; Frydenberg, M. (2018).", "<i>Discovering Computers: Digital Technology, Data, and Devices</i> (16th ed.). Cengage Learning. <a href='https://faculty.cengage.com/works/9781337285100'>Publisher catalog</a>."),
     ]
 
     for author, citation in references_t2:
@@ -961,3 +956,4 @@ def generate_topic_2_story():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
+    return story

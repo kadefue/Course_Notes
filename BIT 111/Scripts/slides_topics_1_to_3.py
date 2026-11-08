@@ -26,11 +26,11 @@ def get_topic_1_slides():
                 "    - Physical size & processing power: Supercomputers, Mainframes, Micros, Embedded",
                 "    - Signal technology: Analog, Digital, and Hybrid paradigms",
                 "    - Operational purpose & Network roles: General vs Dedicated; Clients vs Servers",
-                "• Quantitative Performance Modeling: Clock Frequency, IPC, MIPS, Amdahl's Law"
+                "• Conceptual factors that influence computer performance"
             ],
             "callout": {
                 "title": "PEDAGOGICAL GOAL",
-                "body": "Understand the physical, mathematical, and historical principles that produced the modern microcomputer, establishing the baseline for systems analysis and software applications."
+                "body": "Understand the historical development, main parts, and everyday uses of computers, establishing a foundation for further study."
             }
         },
         {
@@ -43,7 +43,7 @@ def get_topic_1_slides():
                 "• Explain John von Neumann's stored-program architecture and the 'Von Neumann Bottleneck'.",
                 "• Identify seminal computing pioneers and their engineering contributions to modern IT.",
                 "• Systematically classify any computer by size, signal technology, purpose, and network role.",
-                "• Calculate CPU execution time, clock cycles, MIPS, and theoretical parallel speedup via Amdahl's Law.",
+                "• Describe, without calculations, how processor design, memory, and software affect performance.",
                 "• Formulate appropriate microcomputer infrastructure choices for agricultural and enterprise applications."
             ]
         },
@@ -144,13 +144,13 @@ def get_topic_1_slides():
         {
             "type": "table",
             "title": "Comparative Matrix: The Five Computer Generations",
-            "headers": ["Generation", "Active Device", "Primary Memory", "Programming Level", "Typical Speed", "Key Landmark"],
+            "headers": ["Generation", "Active Device", "Primary Memory", "Programming Level", "Relative Capability", "Key Landmark"],
             "rows": [
-                ["1st (1940-56)", "Vacuum Tubes", "Mercury Delay / Drums", "Machine Language", "10 - 50 KIPS", "ENIAC, UNIVAC I"],
-                ["2nd (1956-63)", "Transistors", "Magnetic Core", "Assembly / FORTRAN", "100 - 500 KIPS", "IBM 7090, PDP-1"],
-                ["3rd (1964-71)", "Integrated Circuits (SSI/MSI)", "Magnetic Core / Semis", "High-Level (COBOL, C)", "1 - 10 MIPS", "IBM System/360"],
-                ["4th (1971-Pres)", "VLSI Microprocessor", "Semiconductor DRAM", "4GL, OOP, Web, Scripting", "100 - 100,000 MIPS", "IBM PC, Apple Mac"],
-                ["5th (Present+)", "ULSI / Multi-Core / NPUs", "3D NAND / HBM / Quantum", "AI, Python, Declarative", "TFLOPS to EFLOPS", "Multi-core, TPU, Rigetti"]
+                ["1st (1940-56)", "Vacuum Tubes", "Mercury Delay / Drums", "Machine Language", "Limited; very large systems", "ENIAC, UNIVAC I"],
+                ["2nd (1956-63)", "Transistors", "Magnetic Core", "Assembly / FORTRAN", "Smaller and more reliable", "IBM 7090, PDP-1"],
+                ["3rd (1964-71)", "Integrated Circuits (SSI/MSI)", "Magnetic Core / Semis", "High-Level (COBOL, C)", "More compact and versatile", "IBM System/360"],
+                ["4th (1971-Pres)", "VLSI Microprocessor", "Semiconductor DRAM", "4GL, OOP, Web, Scripting", "Personal and portable systems", "IBM PC, Apple Mac"],
+                ["5th (Present+)", "ULSI / Multi-Core / NPUs", "3D NAND / HBM / Quantum", "AI, Python, Declarative", "Connected, specialized systems", "Multi-core, TPU, Rigetti"]
             ],
             "col_widths": [1.8, 2.2, 2.2, 2.2, 1.8, 2.1]
         },
@@ -204,7 +204,7 @@ def get_topic_1_slides():
                 "    - Analytical Engine (1837): The true mechanical general-purpose computer design featuring a 'Store' (Memory), a 'Mill' (CPU), punched card input, and sequential control flow with conditional branching.",
                 "• Augusta Ada Lovelace (1815–1852): 'World's First Computer Programmer'.",
                 "    - Translated Menabrea's paper on the Analytical Engine and added extensive 'Notes'.",
-                "    - Created Note G: An algorithm to calculate Bernoulli numbers, universally recognized as the first published computer program.",
+                "    - Created Note G: An algorithm for generating Bernoulli numbers, widely recognized as an early published computer program.",
                 "    - Articulated the visionary concept that machines could manipulate any symbols (including music and graphics), not just numbers."
             ]
         },
@@ -362,47 +362,38 @@ def get_topic_1_slides():
         },
         {
             "type": "bullet",
-            "title": "Microcomputer Performance Metrics & Clock Frequency",
-            "sub_title": "The Physics of Clock Cycles, Cycle Time, and Instructions",
+            "title": "Factors That Influence Computer Performance",
+            "sub_title": "A qualitative introduction for first-year students",
             "bullets": [
-                "• Clock Frequency (f): Rate of oscillating electrical pulses produced by the quartz crystal oscillator, measured in Hertz (Hz).",
-                "    - Relationship: Clock Cycle Time T = 1 / f. (e.g., 4.0 GHz clock has T = 0.25 nanoseconds).",
-                "• Clock Cycles Per Instruction (CPI): Average number of clock cycles required to execute a machine instruction.",
-                "• Instructions Per Cycle (IPC): Mathematical reciprocal of CPI (IPC = 1 / CPI). Superscalar processors execute multiple instructions per cycle (IPC > 1).",
-                "• CPU Execution Time Equation:",
-                "    - CPU Time = Instruction Count (IC) × CPI × Clock Cycle Time (T) = (IC × CPI) / f.",
-                "• Why Frequency Alone is Misleading ('Megahertz Myth'): An efficient processor with high IPC can easily outperform a higher-frequency processor with low IPC."
+                "• Processor design and the number of tasks it can handle at once influence responsiveness.",
+                "• Available memory affects how many programs and data files can be active together.",
+                "• Storage type affects how quickly files and applications open.",
+                "• Software design and unnecessary background programs can affect the user's experience.",
+                "• A single specification does not determine overall performance; consider the intended task and the complete system."
             ]
         },
         {
             "type": "bullet",
-            "title": "MIPS, FLOPS, and Parallel Speedup: Amdahl's Law",
-            "sub_title": "Evaluating Throughput and Theoretical Scalability Limits",
+            "title": "Choosing a Computer for Its Intended Work",
+            "sub_title": "Comparing needs across SUA disciplines",
             "bullets": [
-                "• MIPS (Million Instructions Per Second):",
-                "    - MIPS = Clock Rate / (CPI × 10<sup>6</sup>) = (IC) / (CPU Execution Time × 10<sup>6</sup>).",
-                "• FLOPS (Floating-Point Operations Per Second): Standard benchmark for scientific and mathematical compute capacity (MFLOPS, GFLOPS, TFLOPS).",
-                "• Amdahl's Law (Gene Amdahl, 1967):",
-                "    - Predicts the maximum theoretical speedup S achievable by parallelizing a proportion p of a program across N cores:",
-                "    - S(N) = 1 / [ (1 - p) + (p / N) ]",
-                "    - Critical Takeaway: As N → ∞, the maximum speedup is strictly bounded by the sequential fraction: S_max = 1 / (1 - p).",
-                "    - If 20% of code is sequential (p = 0.8), maximum speedup can never exceed 1 / 0.2 = 5×, regardless of how many CPU cores are added."
+                "• Agricultural researchers may prioritize reliable data handling and compatibility with field equipment.",
+                "• Veterinary and animal-science teams may need dependable access to records, images, and office applications.",
+                "• Tourism and extension staff may prioritize portability, connectivity, and battery life.",
+                "• Engineering, aquaculture, forestry, and food-science teams should match the device to their specialist software and data.",
+                "• Compare whole-system needs rather than relying on one advertised specification."
             ]
         },
         {
             "type": "bullet",
-            "title": "Worked Numerical Example: CPU Execution & Speedup",
-            "sub_title": "Evaluating Compiler Optimizations on Agricultural Satellite Imagery",
+            "title": "Computer Selection Case Study",
+            "sub_title": "A conceptual example from agricultural research",
             "bullets": [
-                "• Problem Statement:",
-                "    - A SUA remote sensing script processes Morogoro vegetation indices.",
-                "    - Baseline: Instruction Count = 2.4 × 10<sup>10</sup> instructions, Average CPI = 1.5, Clock = 3.0 GHz.",
-                "    - Execution Time = (2.4 × 10<sup>10</sup> × 1.5) / (3.0 × 10<sup>9</sup>) = 3.6 × 10<sup>10</sup> / 3.0 × 10<sup>9</sup> = 12.0 seconds.",
-                "• Optimized Compiler Optimization:",
-                "    - Reduces instruction count by 30% to 1.68 × 10<sup>10</sup> instructions.",
-                "    - However, due to complex memory addressing, average CPI increases to 1.6.",
-                "    - New Execution Time = (1.68 × 10<sup>10</sup> × 1.6) / (3.0 × 10<sup>9</sup>) = 2.688 × 10<sup>10</sup> / 3.0 × 10<sup>9</sup> = 8.96 seconds.",
-                "• Speedup Analysis: Speedup S = 12.0 / 8.96 = 1.339 (33.9% performance improvement)."
+                "• A research team collects crop images in the field and reviews them at the university.",
+                "• Field staff need portable devices that can capture and safely transfer image files.",
+                "• Researchers reviewing large image collections may need a desktop with suitable memory and graphics capability.",
+                "• The team should also consider software compatibility, backup, maintenance, and cost.",
+                "• Explain which factors matter most for each role; no performance calculations are required."
             ]
         },
         {
@@ -411,7 +402,7 @@ def get_topic_1_slides():
             "sub_title": "Field Case Studies from Sokoine University of Agriculture",
             "bullets": [
                 "• SUA Mazimbu & Solomon Mahlangu Experimental Farms:",
-                "    - Drip Irrigation Automation: Microcontrollers monitor soil matric potential, calculating evapotranspiration and actuating water solenoids.",
+                "    - Drip Irrigation Automation: Microcontrollers monitor soil conditions and control water solenoids.",
                 "    - Drone Photogrammetry: Rugged microcomputer workstations process multispectral aerial imagery into NDVI crop stress maps.",
                 "    - Dairy Cattle Telemetry: RFID transponders read cow collars at automated feeding stations, logging milk yield into central MySQL databases.",
                 "    - Weather Telemetry Nodes: Solar-powered single-board computers transmit temperature, humidity, and rainfall data over cellular networks to DIIT servers.",
@@ -441,7 +432,7 @@ def get_topic_1_slides():
                 "• Von Neumann Model: Unified memory for data and instructions; performance constrained by the Von Neumann Bottleneck.",
                 "• Pioneers: Babbage (hardware architecture), Lovelace (software algorithm), Turing (computability), von Neumann (stored program), Noyce/Kilby (IC), Hoff (microprocessor).",
                 "• Classifications: Scale (Super > Mainframe > Mini > Micro > Embedded), Signal (Digital vs Analog vs Hybrid), Role (Client vs Server).",
-                "• Performance: Governed by CPU Equation (Time = IC × CPI / f) and bounded by Amdahl's Law for parallel workloads."
+                "• Performance depends on the processor, memory, storage, software, and the task being performed."
             ]
         },
         {
@@ -451,8 +442,8 @@ def get_topic_1_slides():
             "bullets": [
                 "1. Why is the stored-program concept considered the most revolutionary breakthrough in computer design history?",
                 "2. Contrast the physical reasons why magnetic ferrite core memory displaced vacuum delay lines in 2nd generation computers.",
-                "3. A computer processor operates at 3.2 GHz with an average CPI of 1.6. Calculate its MIPS rating. (Ans: 2,000 MIPS).",
-                "4. If 80% of a crop simulation can be parallelized, what is the maximum possible speedup on a 4-core machine? (Ans: 2.5×).",
+                "3. Name two system characteristics that can affect how responsive a computer feels, and explain why one specification alone is not enough.",
+                "4. Why can a program fail to benefit from a computer with multiple processor cores?",
                 "5. What computer classification is optimal for an automated solar-powered irrigation valve controller in Kilosa?"
             ]
         },
@@ -462,12 +453,11 @@ def get_topic_1_slides():
             "sub_title": "Preparation for Next Lecture & Continuous Assessment",
             "bullets": [
                 "• Required Readings:",
-                "    - Stallings, W. - Computer Organization and Architecture (11th Ed.), Chapters 1 & 2.",
-                "    - Patterson & Hennessy - Computer Organization and Design: The Hardware/Software Interface, Chapter 1.",
-                "    - Tanenbaum, A. S. - Structured Computer Organization (6th Ed.), Chapter 1.",
+                "    - Smith, J. L., Wang, S., & Mortati, J. - Information Systems for Business and Beyond (2019), Chapter 1. https://opentextbook.site/informationsystems2019/",
+                "    - Vermaat et al. - Discovering Computers: Digital Technology, Data, and Devices (16th ed.). Cengage. https://faculty.cengage.com/works/9781337285100",
                 "• Homework Assignment 1 Notice:",
                 "    - Available on SUA Moodle / Assignment directory: `BIT_111_Assignment_1.pdf`.",
-                "    - Total Allocation: 100 Marks (Covers Theory, Quantitative Calculations, and Enterprise Design).",
+                "    - Total Allocation: 100 Marks (Covers computer concepts and applied design).",
                 "    - Submission Deadline: End of Week 2 by 17:00 EAT.",
                 "• Next Lecture Preview: Topic 2 — Main Components of a Microcomputer (CPU, Buses, Memory, I/O)."
             ]
@@ -497,7 +487,7 @@ def get_topic_2_slides():
             ],
             "callout": {
                 "title": "TOPIC OBJECTIVE",
-                "body": "Deconstruct the physical and logical anatomy of modern microcomputers, examining bus topologies, memory hierarchies, and storage physics."
+                "body": "Describe the main parts of a microcomputer and how they work together to support common tasks."
             }
         },
         {
@@ -508,7 +498,7 @@ def get_topic_2_slides():
                 "• Detail the internal micro-architecture of the CPU, including CU, ALU, and dedicated registers.",
                 "• Trace the step-by-step micro-operations of the Fetch-Decode-Execute instruction cycle.",
                 "• Evaluate the memory hierarchy in terms of access latency, capacity, and cost per bit.",
-                "• Calculate address bus capacity (2<sup>n</sup>) and theoretical bus bandwidth across PCIe and DDR standards.",
+                "• Explain conceptually how address buses and data buses support communication between computer components.",
                 "• Contrast HDD mechanical physics (seek time, latency) with SSD semiconductor NAND flash architecture.",
                 "• Differentiate between Engineering Workstations, Consumer PCs, Mainframes, and Minicomputers.",
                 "• Integrate agricultural sensor interfaces (ADC, I2C, SPI) into microcomputer data collection pipelines."
@@ -632,23 +622,21 @@ def get_topic_2_slides():
                 "• 2. Address Bus:",
                 "    - Function: Carries the physical memory address or I/O port identifier being selected.",
                 "    - Directionality: Unidirectional (CPU asserts addresses; memory responds).",
-                "    - Capacity Rule: An n-bit address bus can uniquely address 2<sup>n</sup> distinct memory locations.",
+                "    - Address buses identify locations that the processor or another component needs to access.",
                 "• 3. Control Bus:",
                 "    - Function: Transmits operational timing and status signals (Memory Read/Write, I/O Read/Write, Clock, Reset, Interrupt Requests)."
             ]
         },
         {
             "type": "bullet",
-            "title": "Quantitative Address Bus & Bandwidth Calculations",
-            "sub_title": "Deriving Maximum Physical Address Space and Transfer Rates",
+            "title": "Address and Data Bus Concepts",
+            "sub_title": "How computer components locate and exchange information",
             "bullets": [
-                "• Address Space Derivation: Total Memory = 2<sup>n</sup> bytes (for byte-addressable memory):",
-                "    - 16-bit address bus (e.g., Intel 8080): 2<sup>16</sup> = 65,536 bytes = 64 KiB.",
-                "    - 32-bit address bus (e.g., Intel 80386 / Pentium): 2<sup>32</sup> = 4,294,967,296 bytes = 4 GiB.",
-                "    - 64-bit architecture (implementing 48 physical lines): 2<sup>48</sup> = 281,474,976,710,656 bytes = 256 TiB.",
-                "• Memory Bus Bandwidth Formula:",
-                "    - Bandwidth (GB/s) = (Bus Clock Frequency × Transfers per Cycle × Bus Width in Bits) / (8 bits/byte × 10<sup>9</sup>).",
-                "    - Dual-Channel DDR4-3200: 3,200 × 10<sup>6</sup> transfers/s × 128 bits / 8 = 51.2 GB/s peak bandwidth."
+                "• The address bus identifies the location that the processor or another component needs to access.",
+                "• The data bus carries instructions or data between the processor, memory, and other components.",
+                "• The control bus carries signals that coordinate activities such as reading, writing, and responding to an interrupt.",
+                "• Bus width and design affect the amount of information a system can address or transfer, but this course treats the relationship conceptually.",
+                "• Describe the purpose of each bus; numerical capacity and bandwidth calculations are outside this topic."
             ]
         },
         {
@@ -782,18 +770,14 @@ def get_topic_2_slides():
         },
         {
             "type": "bullet",
-            "title": "Worked Engineering Example: HDD Access Time vs SSD",
-            "sub_title": "Mathematical Derivation of Secondary Storage Latency",
+            "title": "Hard Disk Drives and Solid-State Drives",
+            "sub_title": "A qualitative comparison of secondary storage",
             "bullets": [
-                "• Scenario: Read 1,000 randomly scattered 4 KB files from disk.",
-                "• Magnetic HDD Specifications: 7,200 RPM, Average Seek Time = 8.5 ms, Transfer Rate = 150 MB/s.",
-                "    - Rotational Time per rev = 60 / 7200 = 8.33 ms. Average Rotational Latency = 8.33 / 2 = 4.17 ms.",
-                "    - Transfer Time per 4 KB = 0.004 MB / 150 MB/s = 0.027 ms.",
-                "    - Total Time per File = 8.5 + 4.17 + 0.027 ≈ 12.7 ms.",
-                "    - Total Time for 1,000 Random Files = 1,000 × 12.7 ms = 12.7 seconds.",
-                "• NVMe SSD Specifications: Random Read Latency = 0.03 ms.",
-                "    - Total Time for 1,000 Random Files = 1,000 × 0.03 ms = 0.030 seconds (30 milliseconds).",
-                "• Result: The SSD is over 420 times faster for random small-file database operations!"
+                "• Hard disk drives store data on rotating magnetic platters and use moving read/write heads.",
+                "• Solid-state drives store data electronically and have no moving mechanical parts.",
+                "• SSDs generally open files and applications more quickly, while HDDs are commonly used for economical bulk storage.",
+                "• Consider portability, durability, capacity needs, cost, and backup when choosing a storage device.",
+                "• Compare the two device types using their design and appropriate uses; no timing calculations are required."
             ]
         },
         {
@@ -950,11 +934,11 @@ def get_topic_2_slides():
             "sub_title": "Preparation for Next Lecture & Continuous Assessment",
             "bullets": [
                 "• Required Readings:",
-                "    - Stallings, W. - Computer Organization and Architecture (11th Ed.), Chapters 3, 4, 5 & 7.",
-                "    - Hennessy & Patterson - Computer Architecture: A Quantitative Approach, Chapter 2 (Memory Hierarchy).",
+                "    - Smith, J. L., Wang, S., & Mortati, J. - Information Systems for Business and Beyond (2019), Chapter 2: Hardware. https://opentextbook.site/informationsystems2019/chapter/chapter-2-hardware-information-systems-introduction/",
+                "    - Vermaat et al. - Discovering Computers: Digital Technology, Data, and Devices (16th ed.). Cengage. https://faculty.cengage.com/works/9781337285100",
                 "• Homework Assignment 2 Notice:",
                 "    - Available on SUA Moodle / Assignment directory: `BIT_111_Assignment_2.pdf`.",
-                "    - Total Allocation: 100 Marks (Covers Subsystem Calculations, Storage Latency, and Workstation Sizing).",
+                "    - Total Allocation: 100 Marks (Covers hardware concepts, storage, and workstation selection).",
                 "    - Submission Deadline: End of Week 4 by 17:00 EAT.",
                 "• Next Lecture Preview: Topic 3 — Personal Computer (PC) Security Controls (Firmware, TPM, BitLocker, Access Models)."
             ]
@@ -974,7 +958,7 @@ def get_topic_3_slides():
                 "• Section 3.1: Hard Disk & Storage-Level Security Controls",
                 "    - ATA security feature set: User vs Master passwords; Self-Encrypting Drives (SED / Opal)",
                 "    - Whole Disk Encryption (WDE): BitLocker, LUKS, FileVault; Key management hierarchies",
-                "    - Data sanitization standards: NIST SP 800-88 Rev 1 (Clear, Purge, Destroy); Crypto-erase",
+                "    - Data sanitization standards: NIST SP 800-88 Rev. 2 (Clear, Purge, Destroy); cryptographic erase",
                 "• Section 3.2: BIOS & UEFI Firmware Security Controls",
                 "    - Legacy BIOS limitations vs UEFI architecture (GPT, 64-bit mode, modular drivers)",
                 "    - Firmware password hierarchy: Supervisor vs User/Power-On passwords",
@@ -982,7 +966,7 @@ def get_topic_3_slides():
                 "    - Trusted Platform Module (TPM 2.0): EK, SRK, PCR registers, Measured Boot & Attestation",
                 "• Section 3.3: Operating System Login Passwords & User Access Controls",
                 "    - Authentication factors: Something you know, have, and are (Biometrics FAR/FRR)",
-                "    - Password entropy math, hashing algorithms (SHA-256 vs bcrypt/Argon2id)",
+                "    - Password safety, secure storage, and hashing concepts",
                 "    - Access Control Models: Discretionary (DAC - POSIX), Mandatory (MAC - SELinux), and RBAC"
             ],
             "callout": {
@@ -998,8 +982,8 @@ def get_topic_3_slides():
                 "• Differentiate between storage-level ATA passwords, Whole Disk Encryption, and OS login passwords.",
                 "• Analyze UEFI Secure Boot key hierarchies (PK, KEK, db, dbx) and explain the verified boot chain.",
                 "• Explain the cryptographic role of TPM 2.0 in Measured Boot and BitLocker volume key sealing.",
-                "• Calculate password entropy in bits and determine brute-force cracking resistance.",
-                "• Formulate appropriate NIST SP 800-88 sanitization procedures for SSDs versus magnetic HDDs.",
+                "• Recommend password and account-protection practices for personal and university devices.",
+                "• Describe appropriate NIST SP 800-88 media-sanitization choices at a conceptual level.",
                 "• Apply Discretionary (DAC) and Mandatory (MAC) access control models in Windows and Linux environments.",
                 "• Design a hardened microcomputer workstation deployment for confidential university examinations."
             ]
@@ -1048,11 +1032,11 @@ def get_topic_3_slides():
         },
         {
             "type": "bullet",
-            "title": "Data Sanitization Standards (NIST SP 800-88 Rev 1)",
+            "title": "Data Sanitization Standards (NIST SP 800-88 Rev. 2)",
             "sub_title": "Clear, Purge, and Destroy: Preventing Post-Decommissioning Leakage",
             "bullets": [
                 "• The Residual Data Threat: Simple OS file deletion or formatting merely clears filesystem metadata; raw data remains recoverable.",
-                "• NIST SP 800-88 Categories:",
+                "• NIST SP 800-88 Rev. 2 Categories:",
                 "    - 1. Clear: Overwriting storage spaces with logical data patterns via standard read/write commands (e.g., single-pass overwrite for HDDs).",
                 "    - 2. Purge: Applying physical or cryptographic techniques that make data recovery impossible even with laboratory equipment (ATA Secure Erase, Cryptographic Erase).",
                 "    - 3. Destroy: Physical destruction of media (degaussing for magnetic media, shredding, incineration, chemical disintegration).",
@@ -1136,18 +1120,14 @@ def get_topic_3_slides():
         },
         {
             "type": "bullet",
-            "title": "Password Security Engineering & Entropy Mathematics",
-            "sub_title": "Calculating Information Density and Brute-Force Feasibility",
+            "title": "Creating and Protecting Strong Passwords",
+            "sub_title": "Practical account-security habits",
             "bullets": [
-                "• Password Entropy Formula: H = L · log<sub>2</sub>(N) [measured in bits]:",
-                "    - L = Number of characters in password; N = Size of character pool.",
-                "    - Lowercase only (a-z): N = 26; Alphanumeric (a-z, A-Z, 0-9): N = 62; Full ASCII keyboard: N = 95.",
-                "• Entropy Comparison:",
-                "    - 'pass1234' (L=8, N=62): H = 8 · log<sub>2</sub>(62) = 8 · 5.954 = 47.6 bits.",
-                "    - 'Mkulima#Kwanza@2026!' (L=21, N=95): H = 21 · log<sub>2</sub>(95) = 21 · 6.570 = 137.9 bits.",
-                "• Brute-Force Search Space: Total combinations = N<sup>L</sup>.",
-                "    - Modern GPU cluster testing 100 billion SHA-256 hashes/sec cracks 47.6 bits in < 4 minutes.",
-                "    - A 137.9-bit password requires over 10<sup>22</sup> years to exhaust — mathematically uncrackable."
+                "• Use a long, unique passphrase for each important account.",
+                "• Avoid names, birthdays, common phrases, and passwords reused across services.",
+                "• Use a reputable password manager to create and store unique credentials.",
+                "• Enable multi-factor authentication when it is available.",
+                "• Never share passwords in messages or store them in an unprotected document."
             ]
         },
         {
@@ -1367,7 +1347,7 @@ def get_topic_3_slides():
         {
             "type": "bullet",
             "title": "Physical Media Destruction: Degaussing & Disintegration",
-            "sub_title": "NIST SP 800-88 'Destroy' Standards for End-of-Life Assets",
+            "sub_title": "NIST SP 800-88 Rev. 2 'Destroy' guidance for end-of-life assets",
             "bullets": [
                 "• When Logical Sanitization is Insufficient: Decommissioning drives containing classified national research, examination master keys, or personal health records.",
                 "• Degaussing (Magnetic Media Only):",
@@ -1388,7 +1368,7 @@ def get_topic_3_slides():
                 "• UEFI vs BIOS: UEFI provides 64-bit protected execution, GPT partition table (>2TB), and cryptographic Secure Boot.",
                 "• Secure Boot Chain: Platform Key (PK) → Key Exchange Key (KEK) → Allowed Database (db) authenticates bootloader and kernel.",
                 "• TPM 2.0: Hardware Root of Trust providing Platform Configuration Registers (PCRs) for Measured Boot and cryptographic unsealing.",
-                "• Password Engineering: Entropy H = L · log<sub>2</sub>(N); length provides exponentially greater security than complex character shuffling.",
+                "• Password Security: Use long, unique passwords and enable multi-factor authentication."
                 "• Access Control: DAC grants discretionary owner control; MAC (SELinux) enforces kernel-level mandatory labels; RBAC maps to job roles."
             ]
         },
@@ -1399,7 +1379,7 @@ def get_topic_3_slides():
             "bullets": [
                 "1. If a laptop with an unencrypted drive and a Windows login password is stolen, how can an attacker read the files?",
                 "2. What is the fundamental function of the Forbidden Signatures Database (dbx) in UEFI Secure Boot?",
-                "3. Calculate the entropy of a 10-character password using only decimal digits 0-9. (Ans: 10 · log<sub>2</sub>(10) ≈ 33.2 bits).",
+                "3. Name two practices that make an account harder to access without authorization.",
                 "4. Differentiate between Discretionary Access Control (DAC) and Mandatory Access Control (MAC).",
                 "5. Why does modern SSD data sanitization rely on Cryptographic Erase rather than multi-pass magnetic overwriting?"
             ]
@@ -1410,12 +1390,11 @@ def get_topic_3_slides():
             "sub_title": "Preparation for Next Lecture & Continuous Assessment",
             "bullets": [
                 "• Required Readings:",
-                "    - Stallings, W. - Cryptography and Network Security (8th Ed.), Chapters 1, 11 & 18.",
-                "    - NIST Special Publication 800-88 Revision 1: Guidelines for Media Sanitization.",
-                "    - UEFI Specification Version 2.10, Chapter 32 (Secure Boot).",
+                "    - National Institute of Standards and Technology. (2024). The NIST Cybersecurity Framework (CSF) 2.0. https://doi.org/10.6028/NIST.CSWP.29",
+                "    - Chandramouli, R., & Hibbard, E. (2025). Guidelines for Media Sanitization (NIST SP 800-88 Rev. 2). https://doi.org/10.6028/NIST.SP.800-88r2",
                 "• Homework Assignment 3 Notice:",
                 "    - Available on SUA Moodle / Assignment directory: `BIT_111_Assignment_3.pdf`.",
-                "    - Total Allocation: 100 Marks (Covers Storage Security, Entropy Calculations, and Exam Lab Hardening).",
+                "    - Total Allocation: 100 Marks (Covers storage security, account protection, and exam-lab hardening).",
                 "    - Submission Deadline: End of Week 6 by 17:00 EAT.",
                 "• Next Lecture Preview: Topic 4 — Functions and Types of Operating Systems (DOS, Linux, Windows, Scheduling)."
             ]

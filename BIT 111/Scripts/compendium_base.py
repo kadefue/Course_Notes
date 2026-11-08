@@ -142,11 +142,20 @@ class NumberedCanvas(canvas.Canvas):
         self.saveState()
         page_num = self._pageNumber
 
+        if os.path.exists(SUA_LOGO_PATH):
+            page_width, page_height = self._pagesize
+            self.drawImage(
+                SUA_LOGO_PATH,
+                page_width - 36,
+                page_height - 38,
+                width=22,
+                height=22,
+                mask='auto',
+                preserveAspectRatio=True
+            )
+
         # Header on page 2+
         if page_num > 1:
-            if os.path.exists(SUA_LOGO_PATH):
-                self.drawImage(SUA_LOGO_PATH, 46, 11 * inch - 46, width=24, height=24, mask='auto', preserveAspectRatio=True)
-
             self.setFont(FONT_BOLD, 8)
             self.setFillColor(COLOR_SUA_GREEN)
             self.drawString(76, 11 * inch - 36, "SOKOINE UNIVERSITY OF AGRICULTURE")

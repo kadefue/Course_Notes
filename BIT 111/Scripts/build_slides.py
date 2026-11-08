@@ -15,6 +15,7 @@ Converts PPTX to PDF via LibreOffice headless.
 import os
 import sys
 import subprocess
+import json
 
 LOCAL_LIBS = "/home/kadefue/Course_Notes/.python_libs"
 if os.path.exists(LOCAL_LIBS) and LOCAL_LIBS not in sys.path:
@@ -25,9 +26,12 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE
+from PIL import Image as PILImage
 
 LECTURES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Lectures"))
 FIGURES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Figures"))
+INTERNET_FIGURES_DIR = os.path.join(FIGURES_DIR, "Internet")
+ATTRIBUTIONS_FILE = os.path.join(INTERNET_FIGURES_DIR, "attributions.json")
 os.makedirs(LECTURES_DIR, exist_ok=True)
 
 # Official SUA Brand Colors
@@ -355,10 +359,100 @@ def make_table_slide(prs, title, headers, rows, current_idx, total_slides, col_w
 
     add_footer(slide, current_idx, total_slides)
 
+def make_internet_figure_slide(prs, topic_num, figure, current_idx, total_slides):
+    """Adds an online image with creator, license, and source attribution."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    add_header(slide, f"Topic {topic_num}: {figure['title']}")
+
+    image_path = os.path.join(INTERNET_FIGURES_DIR, figure["filename"])
+    with PILImage.open(image_path) as source_image:
+        image_width, image_height = source_image.size
+    max_width, max_height = 6.7, 4.9
+    scale = min(max_width / image_width, max_height / image_height)
+    width, height = image_width * scale, image_height * scale
+    x = 0.5 + (max_width - width) / 2
+    y = 1.35 + (max_height - height) / 2
+    slide.shapes.add_picture(
+        image_path,
+        Inches(x),
+        Inches(y),
+        width=Inches(width),
+        height=Inches(height),
+    )
+
+    panel = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(7.5),
+        Inches(1.35),
+        Inches(5.3),
+        Inches(5.2),
+    )
+    panel.fill.solid()
+    panel.fill.fore_color.rgb = COLOR_WHITE
+    panel.line.color.rgb = SUA_GREEN
+    panel.line.width = Pt(1.2)
+
+    textbox = slide.shapes.add_textbox(
+        Inches(7.75), Inches(1.6), Inches(4.8), Inches(4.7)
+    )
+    frame = textbox.text_frame
+    frame.word_wrap = True
+    frame.clear()
+
+    title = frame.paragraphs[0]
+    title.text = "IMAGE NOTES"
+    title.font.size = Pt(15)
+    title.font.bold = True
+    title.font.color.rgb = SUA_GREEN
+
+    details = [
+        (
+            "Description",
+            (figure.get("description") or figure["title"])[:260],
+        ),
+        ("Creator", figure.get("creator", "Creator not credited on file page")),
+        ("License", figure["license"]),
+    ]
+    for label, value in details:
+        paragraph = frame.add_paragraph()
+        paragraph.text = f"{label}: {value}"
+        paragraph.font.size = Pt(11)
+        paragraph.font.color.rgb = COLOR_TEXT
+        paragraph.space_before = Pt(12)
+
+    source = frame.add_paragraph()
+    source.text = "Source: Wikimedia Commons file page"
+    source.font.size = Pt(11)
+    source.font.color.rgb = SUA_DARKGREEN
+    source.runs[0].hyperlink.address = figure["source_url"]
+
+    license_url = figure.get("license_url")
+    if license_url:
+        license_paragraph = frame.add_paragraph()
+        license_paragraph.text = "License details"
+        license_paragraph.font.size = Pt(11)
+        license_paragraph.font.color.rgb = SUA_DARKGREEN
+        license_paragraph.runs[0].hyperlink.address = license_url
+
+    add_footer(slide, current_idx, total_slides)
+
 def build_topic_slides(topic_num, topic_title, subtopics_str, slides_data):
     """Assembles and saves a >=30 slide deck for a topic."""
+    if not os.path.isfile(ATTRIBUTIONS_FILE):
+        raise FileNotFoundError(
+            "Internet figure attributions are missing. Run "
+            "Scripts/prepare_internet_figures.py first."
+        )
+    with open(ATTRIBUTIONS_FILE, encoding="utf-8") as file:
+        figures = json.load(file).get(str(topic_num), [])
+    if len(figures) < 8:
+        raise RuntimeError(f"Topic {topic_num} has fewer than eight licensed figures.")
+    for figure in figures[:8]:
+        if not os.path.isfile(os.path.join(INTERNET_FIGURES_DIR, figure["filename"])):
+            raise FileNotFoundError(f"Missing internet figure: {figure['filename']}")
+
     prs = init_presentation()
-    total_slides = len(slides_data) + 1  # Title + slides
+    total_slides = len(slides_data) + 1 + 8
 
     # Slide 1: Title
     make_title_slide(prs, topic_num, topic_title, subtopics_str, total_slides)
@@ -382,6 +476,12 @@ def build_topic_slides(topic_num, topic_title, subtopics_str, slides_data):
                 col_widths=s.get("col_widths")
             )
 
+    first_figure_slide = len(slides_data) + 2
+    for idx, figure in enumerate(figures[:8], start=first_figure_slide):
+        make_internet_figure_slide(prs, topic_num, figure, idx, total_slides)
+
+    if len(prs.slides) < 30:
+        raise RuntimeError(f"Topic {topic_num} deck has fewer than 30 slides.")
     pptx_path = os.path.join(LECTURES_DIR, f"BIT_111_Topic_{topic_num}.pptx")
     prs.save(pptx_path)
     print(f"[Success] Saved PPTX: {pptx_path} ({len(prs.slides)} slides)")
@@ -464,4 +564,3 @@ def build_all_slides():
 
 if __name__ == "__main__":
     build_all_slides()
-

@@ -7,13 +7,12 @@ Department of Informatics and Information Technology (DIIT),
 Sokoine University of Agriculture (SUA), Morogoro, Tanzania.
 
 Instructor: Madam Bertha Msuliche Lebalwa (MSc)
-Assessment Note: Continuous Assessment includes Two Assignments (5%), Two Theory Tests (15%),
-Practical Report (10%), and Practical Test (30%), with UE (40%) - subject to adjustment by instructor.
+Assessment note: the course assessment scheme is subject to confirmation by the instructor.
 
-Each assignment is a multi-page, publication-quality academic document with:
-- Part A: Theoretical & Foundational Concepts (25 Marks)
-- Part B: Quantitative, Syntactic & Technical Architecture Problems (35 Marks)
-- Part C: Applied Agricultural & Enterprise Computing Design Scenarios (40 Marks)
+Each assignment is a multi-page academic document with:
+- Part A: Theoretical and foundational concepts (25 marks)
+- Part B: Conceptual and technical applications (35 marks)
+- Part C: Applied agricultural and enterprise scenarios (40 marks)
 Total: 100 Marks per Assignment.
 """
 
@@ -86,8 +85,8 @@ def create_instructions_box():
         "<b>INSTRUCTIONS TO CANDIDATES:</b><br/>"
         "1. This assignment must be solved individually. Plagiarism, peer copying, or unreferenced AI generation will result in an automatic score of zero and disciplinary reporting under SUA Examination Regulations.<br/>"
         "2. Answer <b>ALL questions</b> in Sections A, B, and C. Allocate your effort according to the mark allocations shown in brackets.<br/>"
-        "3. Show all intermediate formulas, binary conversions, architectural diagrams, command syntax, and arithmetic calculations clearly.<br/>"
-        "4. Where design questions require software configurations, provide exact command line syntax (Bash/DOS) or functional formulas (Excel) as specified.<br/>"
+        "3. Support your explanations with clear examples, labeled diagrams, or command syntax where requested.<br/>"
+        "4. Use spreadsheet formulas only where requested in the spreadsheet assignment; no other numerical calculations are required.<br/>"
         "5. Submit your completed work as a clean, stapled technical report or upload the single consolidated PDF to the SUA Virtual Learning Environment (Moodle) before the deadline."
     )
     tbl = Table([[Paragraph(text, styles['CalloutText'])]], colWidths=[7.2 * inch])
@@ -133,7 +132,7 @@ def build_assignment_1():
          "Explain the fundamental architecture proposed by John von Neumann in his 1945 EDVAC report. "
          "What is the 'stored-program concept', and what physical phenomenon constitutes the 'Von Neumann Bottleneck' in contemporary microcomputer processing?"),
         ("Question 5 [5 Marks]",
-         "Distinguish between <i>Analog</i>, <i>Digital</i>, and <i>Hybrid</i> computing systems based on signal representation and mathematical operational behavior. Provide an example where a hybrid computer is strictly superior to a purely digital computer in an agricultural engineering application.")
+         "Distinguish between <i>Analog</i>, <i>Digital</i>, and <i>Hybrid</i> computing systems based on how they represent and process information. Provide an example of a hybrid computer in agricultural engineering.")
     ]
     for q_title, q_body in q_a:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -141,27 +140,17 @@ def build_assignment_1():
 
     story.append(Spacer(1, 8))
     # Section B
-    story.append(Paragraph("SECTION B: QUANTITATIVE & PERFORMANCE ANALYSIS [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: COMPUTER CONCEPTS & APPLICATIONS [35 MARKS]", styles['SecH1']))
     
     q_b = [
         ("Question 6 [10 Marks]",
-         "A microcomputer workstation at the SUA Remote Sensing Laboratory possesses a multi-core processor operating at a base clock frequency of 3.60 GHz. An agricultural image classification algorithm requires the execution of 4.5 × 10<sup>10</sup> machine instructions.<br/>"
-         "(a) If the average Cycles Per Instruction (CPI) for this benchmark program is 1.25, calculate the total CPU execution time in seconds. [4 Marks]<br/>"
-         "(b) Compute the effective MIPS (Million Instructions Per Second) rating of the processor running this specific workload. [3 Marks]<br/>"
-         "(c) If architectural compiler optimizations reduce the required instruction count to 3.2 × 10<sup>10</sup> while increasing the CPI slightly to 1.30 due to cache branch misses, calculate the percentage speedup achieved. [3 Marks]"),
+         "Describe how a processor, memory, storage, and operating-system software work together when a student opens and edits a document. [10 Marks]"),
         ("Question 7 [10 Marks]",
-         "The Department of Informatics and Information Technology is profiling a crop yield simulation code. Currently, 75% of the total execution time is spent in a matrix multiplication routine that can be parallelized across multi-core processors, while the remaining 25% consists of strictly sequential I/O operations.<br/>"
-         "(a) Using Amdahl's Law, derive and compute the theoretical maximum speedup achievable if the matrix routine is executed across an 8-core CPU. [4 Marks]<br/>"
-         "(b) Calculate the absolute asymptotic maximum speedup possible on an infinite number of processor cores (N → ∞). [3 Marks]<br/>"
-         "(c) Explain two physical overhead factors that prevent real-world multi-core microcomputers from reaching the theoretical Amdahl speedup. [3 Marks]"),
+         "Compare general-purpose, special-purpose, and embedded computers. Give an appropriate example from agriculture, animal science, tourism, engineering, or food science for each type. [10 Marks]"),
         ("Question 8 [8 Marks]",
-         "Analyze the evolution of semiconductor scaling as described by Moore's Law and Dennard Scaling.<br/>"
-         "(a) Formulate Gordon Moore's empirical 1965/1975 observation regarding transistor density and economic cost per transistor. [3 Marks]<br/>"
-         "(b) Explain why processor manufacturers shifted from aggressive clock frequency scaling (which peaked around 3.8–4.0 GHz in the mid-2000s) to multi-core architectures. Reference the 'Power Wall' formula P = C · V<sup>2</sup> · f in your explanation. [5 Marks]"),
+         "Explain the stored-program concept and describe one way it changed the design and use of computers. [8 Marks]"),
         ("Question 9 [7 Marks]",
-         "Perform the following technical data representation and bus capacity calculations:<br/>"
-         "(a) A 32-bit address bus can uniquely address a maximum physical memory space. Calculate this theoretical limit in exact Gibibytes (GiB). [3 Marks]<br/>"
-         "(b) A modern 64-bit microcomputer system implements 48 physical address lines. Calculate the maximum physical RAM addressable by the CPU hardware in Terabytes (TB) and Tebibytes (TiB). [4 Marks]")
+         "Choose a suitable computer type for an agricultural extension team working both in an office and in the field. Explain your choice using portability, connectivity, software needs, and data protection. [7 Marks]")
     ]
     for q_title, q_body in q_b:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -186,7 +175,7 @@ def build_assignment_1():
          "Terminal Diagnostics & Operating Environment Analysis:<br/>"
          "A systems technician at SUA is auditing a microcomputer laboratory running Ubuntu Linux.<br/>"
          "(a) Provide the exact terminal commands required to display: (i) Detailed CPU architecture and cache topology, (ii) Total and available RAM in human-readable megabytes/gigabytes, (iii) Motherboard BIOS/firmware vendor and version, and (iv) Storage block device hierarchy. [5 Marks]<br/>"
-         "(b) Interpret the hypothetical output from `lscpu` showing 'Model name: Intel Core i7-12700K', 'Thread(s) per core: 2', 'Core(s) per socket: 12', 'Socket(s): 1'. Calculate the total number of logical processors (threads) exposed to the operating system scheduler. [5 Marks]")
+         "(b) Explain what the processor model, core, and thread entries in `lscpu` describe, and why an operating system may report more logical processors than physical processor packages. [5 Marks]")
     ]
     for q_title, q_body in q_c:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -227,29 +216,16 @@ def build_assignment_2():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
-    story.append(Paragraph("SECTION B: QUANTITATIVE HARDWARE & BUS CALCULATIONS [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: HARDWARE CONCEPTS & COMPARISONS [35 MARKS]", styles['SecH1']))
     q_b = [
         ("Question 6 [10 Marks]",
-         "A magnetic enterprise hard disk drive spins at 7,200 revolutions per minute (RPM). It has an average seek time of 8.5 ms and a sustained track transfer rate of 180 MB/s.<br/>"
-         "(a) Calculate the rotational latency for one complete disk revolution in milliseconds. [3 Marks]<br/>"
-         "(b) Compute the average rotational latency (defined as half of one revolution) in milliseconds. [2 Marks]<br/>"
-         "(c) Determine the total average time required to locate and read a single 64 KB sequential data block from the disk. [5 Marks]"),
+         "Describe the fetch, decode, and execute stages of the processor instruction cycle. Explain how the control unit, arithmetic logic unit, and registers contribute. [10 Marks]"),
         ("Question 7 [10 Marks]",
-         "Compute the theoretical peak bandwidth for the following microcomputer expansion buses:<br/>"
-         "(a) A legacy 32-bit PCI bus operating at 33.33 MHz. Express your answer in Megabytes per second (MB/s). [3 Marks]<br/>"
-         "(b) A modern PCI Express 4.0 expansion slot with 16 physical lanes (x16). (Note: PCIe 4.0 transfers at 16.0 GT/s per lane using 128b/130b encoding). Express bandwidth in both Gigatransfers per second and Gigabytes per second (GB/s). [4 Marks]<br/>"
-         "(c) A dual-channel DDR4 memory subsystem operating at a clock rate of 3,200 MT/s (MegaTransfers/sec) with a 64-bit bus per channel. Calculate peak bandwidth in GB/s. [3 Marks]"),
+         "Compare RAM, ROM, cache, and secondary storage by purpose, volatility, and typical use. Give one example of when each is relevant to a student or researcher. [10 Marks]"),
         ("Question 8 [8 Marks]",
-         "A microcomputer processor features a three-level cache hierarchy:<br/>"
-         "- L1 Cache: Access latency = 1.2 ns, Hit rate = 92%<br/>"
-         "- L2 Cache: Access latency = 4.5 ns, Hit rate = 97% (local hit rate of misses from L1)<br/>"
-         "- L3 Cache: Access latency = 12.0 ns, Hit rate = 90% (local hit rate of misses from L2)<br/>"
-         "- Main DRAM Memory: Access latency = 65.0 ns<br/>"
-         "Calculate the Effective Memory Access Time (EMAT) for this microcomputer memory hierarchy. [8 Marks]"),
+         "Explain the difference between a hard disk drive and a solid-state drive. Discuss durability, moving parts, and suitable uses without performing capacity or speed calculations. [8 Marks]"),
         ("Question 9 [7 Marks]",
-         "Solid-State Storage Engineering:<br/>"
-         "(a) Contrast Single-Level Cell (SLC), Multi-Level Cell (MLC), Triple-Level Cell (TLC), and Quad-Level Cell (QLC) NAND flash memory in terms of bit storage density, access latency, and write endurance (P/E cycles). [4 Marks]<br/>"
-         "(b) Explain why the operating system TRIM command and wear-leveling algorithms are essential for maintaining SSD write performance and preventing premature drive failure. [3 Marks]")
+         "Describe the purpose of the address, data, and control buses. Explain how an input device and an output device communicate with a computer system. [7 Marks]")
     ]
     for q_title, q_body in q_b:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -263,7 +239,7 @@ def build_assignment_2():
          "The Department of Soil and Geological Sciences at SUA requires a high-performance computer for running 3D digital elevation models (DEM) and hyperspectral soil GIS simulations.<br/>"
          "(a) Contrast an engineering workstation with an ordinary consumer desktop PC across: Processor architecture (e.g., AMD Threadripper/Intel Xeon vs Core i5), Memory architecture (ECC vs non-ECC), GPU capabilities (Nvidia RTX Ada Generation vs consumer GeForce), and Storage interfaces. [7 Marks]<br/>"
          "(b) What is Error-Correcting Code (ECC) memory? Explain the physical Hamming code mechanism that enables single-bit error correction and double-bit error detection (SEC-DED). Why is this critical for long-running scientific simulations? [5 Marks]<br/>"
-         "(c) Provide a cost-benefit recommendation for the department head justifying whether to purchase 1 workstation ($4,500) or 3 standard desktop PCs ($1,500 each). [3 Marks]"),
+         "(c) Recommend a workstation or a standard desktop for this research task. Justify your choice using software needs, reliability, support, and expected use. [3 Marks]"),
         ("Question 11 [15 Marks]",
          "Comparative Analysis: Microcomputers vs Mainframes and Minicomputers:<br/>"
          "(a) Construct an exhaustive comparison matrix evaluating Microcomputers, Minicomputers (Midrange systems), and Mainframes across: Typical user concurrency, I/O processor subsystem architecture, operating system complexity, physical footprints, and fault-tolerant hardware redundancy. [8 Marks]<br/>"
@@ -273,7 +249,7 @@ def build_assignment_2():
          "Peripheral Interface & Agricultural Sensor Integration:<br/>"
          "An engineering student at SUA is designing an automated greenhouse control unit based on an embedded microcomputer (Raspberry Pi 4B) connected to soil moisture sensors, temperature probes, and irrigation solenoid relays.<br/>"
          "(a) Differentiate between Analog-to-Digital Conversion (ADC) and Digital I/O (GPIO). Why does the microcomputer require an external ADC (such as the ADS1115) to read analog resistive soil sensors? [4 Marks]<br/>"
-         "(b) Contrast the I2C, SPI, and UART serial communication protocols in terms of wiring complexity, maximum data rate, and multi-device addressing. Recommend the most appropriate protocol for connecting 6 identical digital environmental sensors. [6 Marks]")
+         "(b) Contrast the I2C, SPI, and UART serial communication protocols in terms of wiring complexity, general communication speed, and multi-device addressing. Recommend a suitable protocol for connecting identical environmental sensors. [6 Marks]")
     ]
     for q_title, q_body in q_c:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -314,28 +290,16 @@ def build_assignment_3():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
-    story.append(Paragraph("SECTION B: QUANTITATIVE SECURITY & CRYPTOGRAPHIC ANALYSIS [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: SECURITY CONCEPTS & PRACTICES [35 MARKS]", styles['SecH1']))
     q_b = [
         ("Question 6 [10 Marks]",
-         "Password Entropy and Brute-Force Mechanics:<br/>"
-         "(a) Formulate the equation for password entropy H in bits: H = L · log<sub>2</sub>(N). [2 Marks]<br/>"
-         "(b) Calculate the entropy for Candidate Password A ('sua2026') consisting of 7 lowercase alphanumeric characters (N = 36). [3 Marks]<br/>"
-         "(c) Calculate the entropy for Candidate Password B ('Mkulima#Kwanza@2026!') consisting of 21 characters drawn from uppercase, lowercase, digits, and special symbols (N = 95). [3 Marks]<br/>"
-         "(d) Assuming an offline GPU cracking cluster capable of testing 1.0 × 10<sup>11</sup> SHA-256 hashes per second, calculate the expected average cracking time (50% keyspace) for both passwords. [2 Marks]"),
+         "Explain why long, unique passwords and multi-factor authentication help protect university accounts. Describe how a password manager can support safe password use. [10 Marks]"),
         ("Question 7 [10 Marks]",
-         "Whole Disk Encryption (WDE) Architecture:<br/>"
-         "Analyze Microsoft BitLocker and Linux LUKS (Linux Unified Key Setup).<br/>"
-         "(a) Explain the cryptographic hierarchy utilized in BitLocker: Full Volume Encryption Key (FVEK), Volume Master Key (VMK), and TPM sealing key. Why does the system avoid encrypting sector data directly with the user password? [5 Marks]<br/>"
-         "(b) Describe a 'Cold Boot Attack' against RAM. How does memory remanence allow physical attackers to extract encryption keys, and what hardware mitigations (e.g., TME - Total Memory Encryption) exist in modern CPUs? [5 Marks]"),
+         "Describe how full-disk encryption protects information on a lost or stolen laptop. Explain the roles of the user account and trusted hardware at a conceptual level. [10 Marks]"),
         ("Question 8 [8 Marks]",
-         "UEFI Secure Boot Chain of Trust:<br/>"
-         "A new microcomputer workstation is powered on with Secure Boot enabled.<br/>"
-         "(a) Trace the complete cryptographic chain of trust from the hardware Root of Trust (Platform Key - PK) down to the operating system kernel execution. Define the roles of Key Exchange Key (KEK), db (Allowed Signatures Database), and dbx (Revoked Signatures Database). [5 Marks]<br/>"
-         "(b) Explain what happens when a user attempts to boot an unsigned Linux live distribution on a Secure Boot enabled system. How does the 'shim' bootloader signed by Microsoft 3rd Party UEFI CA solve this for major Linux distributions? [3 Marks]"),
+         "Explain the purpose of Secure Boot and describe how it helps ensure that a computer starts trusted system software. [8 Marks]"),
         ("Question 9 [7 Marks]",
-         "Data Sanitization Standards (NIST SP 800-88 Rev 1):<br/>"
-         "(a) Contrast the three levels of sanitization: Clear, Purge, and Destroy. [3 Marks]<br/>"
-         "(b) Why is a traditional 7-pass zero-fill overwrite (DoD 5220.22-M) completely ineffective and destructive when applied to Solid-State Drives (SSDs)? Explain how Cryptographic Erase (crypto-shredding) and ATA Enhanced Secure Erase solve this problem without degrading NAND cells. [4 Marks]")
+         "Compare secure erasure, cryptographic erasure, and physical destruction as ways to handle storage media that is no longer needed. [7 Marks]")
     ]
     for q_title, q_body in q_b:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -353,7 +317,7 @@ def build_assignment_3():
         ("Question 11 [15 Marks]",
          "Linux Access Control & Sudoers Security Engineering:<br/>"
          "A shared departmental research server at SUA DIIT hosts 40 student users and 4 research staff.<br/>"
-         "(a) Explain the permission triplet (Owner, Group, Others) and special permission bits (SetUID, SetGID, Sticky Bit). Give the numeric octal representation for a shared project directory where all group members can read/write files, but cannot delete each other's files. [6 Marks]<br/>"
+         "(a) Explain the permission groups (Owner, Group, Others) and the purpose of the sticky bit. Describe how an administrator can support shared work while preventing users from deleting one another's files. [6 Marks]<br/>"
          "(b) Write the exact Linux commands to: (i) Create a group called `agric_research`, (ii) Add users `bertha` and `baraka` to the group, (iii) Set ownership and permissions on `/opt/crop_data` to ensure group collaboration with sticky bit protection. [5 Marks]<br/>"
          "(c) Explain why granting `ALL=(ALL:ALL) ALL` in `/etc/sudoers` violates the Principle of Least Privilege. Show how to restrict a user to running only `/usr/bin/systemctl restart apache2` without a password prompt. [4 Marks]"),
         ("Question 12 [10 Marks]",
@@ -402,18 +366,10 @@ def build_assignment_4():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
-    story.append(Paragraph("SECTION B: PROCESS SCHEDULING & COMMAND SCRIPTS [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: OPERATING-SYSTEM CONCEPTS & COMMANDS [35 MARKS]", styles['SecH1']))
     q_b = [
         ("Question 6 [12 Marks]",
-         "CPU Process Scheduling Problem:<br/>"
-         "Consider four processes arriving in the ready queue with the following arrival times and CPU burst times (in milliseconds):<br/>"
-         "- Process P1: Arrival = 0 ms, Burst = 8 ms<br/>"
-         "- Process P2: Arrival = 2 ms, Burst = 4 ms<br/>"
-         "- Process P3: Arrival = 4 ms, Burst = 9 ms<br/>"
-         "- Process P4: Arrival = 5 ms, Burst = 2 ms<br/>"
-         "(a) Draw a Gantt chart illustrating process execution under First-Come, First-Served (FCFS) scheduling. Calculate the average waiting time and average turnaround time. [4 Marks]<br/>"
-         "(b) Draw a Gantt chart illustrating process execution under Preemptive Shortest Remaining Time First (SRTF). Calculate the average waiting time and average turnaround time. [5 Marks]<br/>"
-         "(c) Compare both algorithms and explain why SRTF minimizes average waiting time but introduces the risk of process starvation. [3 Marks]"),
+         "Explain what a process is and describe how the operating system creates, runs, pauses, and ends processes. Compare First-Come, First-Served and Round Robin scheduling conceptually, including one advantage and limitation of each. [12 Marks]"),
         ("Question 7 [11 Marks]",
          "MS-DOS Command Architecture and Batch Scripting:<br/>"
          "(a) Explain the fundamental difference between an Internal DOS Command and an External DOS Command in terms of memory residency and file execution. [3 Marks]<br/>"
@@ -441,7 +397,7 @@ def build_assignment_4():
         ("Question 9 [15 Marks]",
          "Enterprise File Systems Comparison: FAT32 vs NTFS vs ext4:<br/>"
          "(a) Construct a technical comparison matrix evaluating FAT32, NTFS, and Linux ext4 across: Maximum single file size, Maximum volume size, Journaling support, File-level access control permissions (ACLs), File-level encryption, and Compression capabilities. [8 Marks]<br/>"
-         "(b) Explain why a 64 GB USB flash drive formatted with FAT32 cannot store a single 5.2 GB disk image file of a SUA digital library archive, despite having 58 GB of free space. How does formatting with exFAT or NTFS resolve this limitation? [4 Marks]<br/>"
+         "(b) Explain why a file system's maximum single-file size can matter even when a storage device has free space. Describe how choosing a suitable file system can avoid this problem. [4 Marks]<br/>"
          "(c) What is a 'Journaling File System'? Trace the three-step sequence of journal commit, file system update, and checkpointing, explaining how journaling prevents file corruption during an abrupt power outage. [3 Marks]"),
         ("Question 10 [15 Marks]",
          "System Management and Troubleshooting: Windows Administrative Utilities:<br/>"
@@ -471,8 +427,8 @@ def build_assignment_5():
     styles = get_custom_stylesheet()
     story = []
     story.append(create_assignment_header(
-        5, 5, "Microcomputer Applications: Word Processing, Advanced Spreadsheets & Internet Protocols",
-        "Subtopic 5.1 (Word Processors & Formatting), Subtopic 5.2 (Spreadsheets & Formulas), Subtopic 5.3 (Web Browsing & Email Protocols)",
+        5, 5, "Microcomputer Applications: Word Processing, Simple Spreadsheets & Internet Protocols",
+        "Subtopic 5.1 (Word Processors & Formatting), Subtopic 5.2 (Spreadsheets & Simple Formulas), Subtopic 5.3 (Web Browsing & Email Protocols)",
         "End of Week 10 by 17:00 EAT"
     ))
     story.append(Spacer(1, 8))
@@ -486,9 +442,9 @@ def build_assignment_5():
         ("Question 2 [5 Marks]",
          "Explain the mechanical architecture of Mail Merge. Identify the three principal components involved in any mail merge pipeline and explain how conditional fields (`IF...THEN...ELSE`) enable dynamic document customization."),
         ("Question 3 [5 Marks]",
-         "In spreadsheet modeling (e.g., Microsoft Excel), explain the fundamental distinction between: (a) Relative Cell Referencing (`A1`), (b) Absolute Cell Referencing (`$A$1`), and (c) Mixed Cell Referencing (`$A1` and `A$1`). Give a mathematical formula example illustrating where mixed referencing is required."),
+         "In a spreadsheet, explain how a cell reference such as `B2` identifies a value by its column and row. Describe why a formula can refer to a cell rather than repeat a value."),
         ("Question 4 [5 Marks]",
-         "Explain the architectural difference between the `VLOOKUP` function and the modern `INDEX` + `MATCH` combination in Excel. Detail two major structural limitations of `VLOOKUP` that `INDEX-MATCH` and `XLOOKUP` eliminate."),
+         "Explain the difference between typing a value directly into a cell and using a simple formula that refers to other cells. Give one classroom example of when a formula is useful."),
         ("Question 5 [5 Marks]",
          "Contrast the two primary electronic mail retrieval protocols: POP3 (Post Office Protocol v3) and IMAP4 (Internet Message Access Protocol v4). Under what operational conditions is IMAP4 strictly required for university staff and students?")
     ]
@@ -497,23 +453,12 @@ def build_assignment_5():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
-    story.append(Paragraph("SECTION B: ADVANCED SPREADSHEET ALGORITHMS & PROTOCOL ANALYSIS [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: SIMPLE SPREADSHEET FORMULAS & PROTOCOLS [35 MARKS]", styles['SecH1']))
     q_b = [
         ("Question 6 [15 Marks]",
-         "Spreadsheet Mathematical & Statistical Modeling:<br/>"
-         "The SUA Farm Manager records monthly milk production data for 200 dairy cows in an Excel worksheet `MilkYield`. The columns are arranged as follows: Column A = Cow ID (`C001` to `C200`), Column B = Breed (`Friesian`, `Ayrshire`, `Boran`), Column C = Age in Years, Column D = Daily Yield (Liters), Column E = Feed Cost (TZS), Column F = Health Status (`Healthy`, `Treated`, `Quarantine`).<br/>"
-         "Write the exact, syntactically correct Excel formulas to compute each of the following: [3 Marks each]<br/>"
-         "(a) The total milk yield produced exclusively by `Friesian` cows.<br/>"
-         "(b) The average daily milk yield of cows that are both `Ayrshire` breed AND have a Health Status of `Healthy`.<br/>"
-         "(c) The count of cows whose Age is greater than or equal to 4 years AND whose daily yield exceeds 18.5 Liters.<br/>"
-         "(d) A formula in Column G that categorizes daily yield: If Yield ≥ 20 Liters, display 'High Producer'; if Yield is between 12 and 19.9 Liters, display 'Moderate Producer'; otherwise display 'Low Producer - Cull Review'.<br/>"
-         "(e) A lookup formula that searches for a user-input Cow ID in cell `J2` and returns that cow's Breed and Feed Cost using `INDEX` and `MATCH`."),
+         "A farm records daily milk yields in cells B2 through B6. Write spreadsheet formulas to add the yields with `SUM`, find their mean with `AVERAGE`, and calculate the value in a row by multiplying quantity in cell C2 by price in cell D2. Explain what each formula does. [15 Marks]"),
         ("Question 7 [10 Marks]",
-         "Financial Spreadsheet Modeling: Capital Budgeting for Agro-Processing Equipment:<br/>"
-         "SUA Agricultural Investment Directorate is evaluating the purchase of a commercial solar grain dryer costing 45,000,000 TZS. The machine generates the following net cash inflows over a 5-year operational lifecycle: Year 1 = 12,000,000 TZS; Year 2 = 14,500,000 TZS; Year 3 = 16,000,000 TZS; Year 4 = 15,000,000 TZS; Year 5 = 11,000,000 TZS. The university discount rate is 10.5% per annum.<br/>"
-         "(a) Formulate the mathematical equation for Net Present Value (NPV). [3 Marks]<br/>"
-         "(b) Write the exact Excel formula using the `NPV` function to calculate the Net Present Value of this investment. [4 Marks]<br/>"
-         "(c) Explain how the `IRR` (Internal Rate of Return) function is used in conjunction with the discount rate to make an accept/reject investment decision. [3 Marks]"),
+         "A forestry class records seedling counts in one column and planted counts in another. Explain how to enter a simple addition formula and use `SUM` to find a column total. State how copying a formula to another row changes its cell references. [10 Marks]"),
         ("Question 8 [10 Marks]",
          "Web Protocols & HTTP/HTTPS Security Cycle:<br/>"
          "(a) Dissect the components of the Uniform Resource Locator (URL): `https://www.sua.ac.tz:443/academics/courses?dept=diit&term=2#syllabus`. Identify: Protocol/Scheme, Fully Qualified Domain Name (FQDN), Port, Path, Query String, and Anchor/Fragment. [4 Marks]<br/>"
@@ -546,11 +491,10 @@ def build_assignment_5():
          "    3. DMARC (Domain-based Message Authentication, Reporting, and Conformance): How policy enforcement and reporting align SPF and DKIM results.<br/>"
          "(c) Construct a valid DNS TXT record for SPF that authorizes the mail server with IP `196.216.180.15` to send email for `sua.ac.tz` and instructs receiving servers to hard-fail (`-all`) all other sources. [3 Marks]"),
         ("Question 11 [10 Marks]",
-         "Pivot Table Business Intelligence for Agricultural Cooperatives:<br/>"
-         "A Morogoro sugarcane cooperative collects harvest deliveries from 1,500 outgrowers across 6 geographical zones. The transactional ledger contains 25,000 rows with: Delivery ID, Date, Farmer ID, Zone, Tons Delivered, Sugar Content (Brix %), and Payment Status.<br/>"
-         "(a) Explain how an Excel Pivot Table can be constructed to summarize total tonnage and average Brix percentage per agricultural zone. Specify which fields are dragged to: Rows, Columns, Values, and Filters. [5 Marks]<br/>"
-         "(b) Describe how to insert a Slicer and a PivotChart to create an interactive management dashboard for the cooperative board of directors. [3 Marks]<br/>"
-         "(c) What is a 'Calculated Field' in a Pivot Table? Give an example formula to calculate Gross Farmer Payment based on `Tons Delivered * 85000 TZS * (Brix / 10)`. [2 Marks]")
+         "A class records seedling types and quantities in a spreadsheet.<br/>"
+         "(a) Describe how to label columns and enter one record per row. [3 Marks]<br/>"
+         "(b) Explain how to sort the records by seedling type and make a simple chart to compare categories. [4 Marks]<br/>"
+         "(c) Write a simple `SUM` formula for adding the quantities in cells B2 through B6. [3 Marks]")
     ]
     for q_title, q_body in q_c:
         story.append(Paragraph(f"<b>{q_title}:</b> {q_body}", styles['DocBody']))
@@ -591,26 +535,12 @@ def build_assignment_6():
         story.append(Spacer(1, 4))
 
     story.append(Spacer(1, 8))
-    story.append(Paragraph("SECTION B: QUANTITATIVE SECURITY & POWER SIZING [35 MARKS]", styles['SecH1']))
+    story.append(Paragraph("SECTION B: SECURITY CONCEPTS & RESPONSE [35 MARKS]", styles['SecH1']))
     q_b = [
         ("Question 6 [12 Marks]",
-         "Datacenter Power & Uninterruptible Power Supply (UPS) Engineering:<br/>"
-         "The Department of Informatics and Information Technology at SUA is designing a microcomputer server room. The connected IT load consists of:<br/>"
-         "- 6 Rack Servers: 450 W each, Power Factor = 0.90<br/>"
-         "- 4 Network Core Switches: 120 W each, Power Factor = 0.85<br/>"
-         "- 2 Network Attached Storage (NAS) units: 250 W each, Power Factor = 0.92<br/>"
-         "- 1 Fiber Gateway Router: 80 W, Power Factor = 0.80<br/>"
-         "(a) Calculate the total Real Power load in Watts (W) and the total Apparent Power load in Volt-Amperes (VA). [5 Marks]<br/>"
-         "(b) If the department mandates a 30% sizing headroom for future equipment expansion, calculate the minimum required UPS rating in kVA. [3 Marks]<br/>"
-         "(c) Compare Standby (Offline), Line-Interactive, and Online Double-Conversion UPS topologies. Why is an Online Double-Conversion UPS strictly mandatory for sensitive enterprise server infrastructure subjected to frequent Tanzanian national grid power fluctuations? [4 Marks]"),
+         "Explain the purpose of an uninterruptible power supply (UPS) for a computer. Compare standby, line-interactive, and online UPS designs by describing how each responds to power interruptions or irregular supply. [12 Marks]"),
         ("Question 7 [11 Marks]",
-         "Backup Schedule Optimization & Recovery Metrics:<br/>"
-         "An agricultural research institute generates 800 GB of base research imagery. The daily rate of new and modified data is 25 GB. The institute evaluates two backup topologies over a 7-day operational cycle (Sunday through Saturday):<br/>"
-         "- Strategy 1: Full Backup on Sunday at 01:00, followed by Daily Differential Backups Monday through Saturday at 23:00.<br/>"
-         "- Strategy 2: Full Backup on Sunday at 01:00, followed by Daily Incremental Backups Monday through Saturday at 23:00.<br/>"
-         "(a) Calculate the total storage volume consumed on disk by each strategy across the full 7-day week. [5 Marks]<br/>"
-         "(b) Suppose a catastrophic ransomware attack encrypts all production storage on Thursday at 14:00. Detail the exact restoration sequence and number of backup sets required to restore data under Strategy 1 versus Strategy 2. [4 Marks]<br/>"
-         "(c) Define Recovery Point Objective (RPO) and Recovery Time Objective (RTO). Which backup strategy offers a superior RTO and why? [2 Marks]"),
+         "Compare full, differential, and incremental backups in terms of what they copy and the general steps needed to restore files. Explain why an organization should keep an offline or offsite backup. [11 Marks]"),
         ("Question 8 [12 Marks]",
          "Applied Cryptographic Protocol Analysis: Hybrid Encryption & Digital Signatures:<br/>"
          "(a) Explain how TLS/HTTPS implements 'Hybrid Cryptography' combining asymmetric RSA/ECC and symmetric AES-GCM during a secure web session. Why is asymmetric encryption used during handshake negotiation but discarded in favor of symmetric encryption for bulk payload data transmission? [5 Marks]<br/>"

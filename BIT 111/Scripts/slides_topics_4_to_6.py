@@ -41,7 +41,7 @@ def get_topic_4_slides():
             "bullets": [
                 "• Explain the dual roles of an operating system: Extended Machine (Abstraction) and Resource Arbiter.",
                 "• Contrast Monolithic kernels, Microkernels, and Hybrid kernels in performance and fault isolation.",
-                "• Trace process state transitions across the 5-state lifecycle and calculate CPU scheduling metrics.",
+                "• Explain process states and compare operating-system scheduling approaches conceptually.",
                 "• Detail virtual memory address translation using the MMU, Page Tables, and TLB.",
                 "• Distinguish internal MS-DOS commands from external disk executables and write automated batch scripts.",
                 "• Evaluate file systems (FAT32, NTFS, ext4) regarding journaling, volume limits, and permissions.",
@@ -121,33 +121,26 @@ def get_topic_4_slides():
         },
         {
             "type": "bullet",
-            "title": "CPU Scheduling Algorithms & Metrics",
-            "sub_title": "Optimizing Processor Utilization and Response Time",
+            "title": "CPU Scheduling Approaches",
+            "sub_title": "How the operating system shares processor time",
             "bullets": [
-                "• Performance Metrics: Turnaround Time (Completion - Arrival), Waiting Time (Turnaround - Burst), Response Time, Throughput.",
-                "• Common CPU Scheduling Algorithms:",
-                "    - 1. First-Come, First-Served (FCFS): Non-preemptive; simple FIFO queue; suffers from severe 'Convoy Effect' if a long process arrives first.",
-                "    - 2. Shortest Job First (SJF): Non-preemptive; mathematically optimal for minimum average waiting time; requires predicting future burst times.",
-                "    - 3. Shortest Remaining Time First (SRTF): Preemptive version of SJF; interrupts currently running process if a shorter job arrives.",
-                "    - 4. Round Robin (RR): Preemptive; each process allocated a fixed time quantum q; cycles circularly through ready queue; ideal for interactive timesharing."
+                "• The operating system chooses which ready process can use the processor.",
+                "• First-Come, First-Served runs processes in the order they arrive.",
+                "• Shortest Job First gives priority to work expected to finish sooner.",
+                "• Round Robin gives each ready process a brief turn in sequence and is useful for interactive systems.",
+                "• Scheduling approaches make different trade-offs between fairness, responsiveness, and simplicity."
             ]
         },
         {
             "type": "bullet",
-            "title": "Worked Scheduling Problem: FCFS vs SRTF",
-            "sub_title": "Comparative Analysis of CPU Waiting and Turnaround Times",
+            "title": "Comparing Scheduling Approaches",
+            "sub_title": "A conceptual example from a shared computer lab",
             "bullets": [
-                "• Scenario: Processes P1 (Arrival=0ms, Burst=8ms), P2 (Arrival=2ms, Burst=4ms), P3 (Arrival=4ms, Burst=2ms).",
-                "• FCFS Execution Order: P1 [0–8ms] → P2 [8–12ms] → P3 [12–14ms]:",
-                "    - P1: Waiting = 0 - 0 = 0 ms; Turnaround = 8 - 0 = 8 ms.",
-                "    - P2: Waiting = 8 - 2 = 6 ms; Turnaround = 12 - 2 = 10 ms.",
-                "    - P3: Waiting = 12 - 4 = 8 ms; Turnaround = 14 - 4 = 10 ms.",
-                "    - Average Waiting Time = (0 + 6 + 8) / 3 = 4.67 ms. Average Turnaround = 9.33 ms.",
-                "• SRTF Execution Order: P1 [0–2ms, rem 6] → P2 [2–4ms, rem 2] → P3 [4–6ms, finishes] → P2 [6–8ms, finishes] → P1 [8–14ms, finishes]:",
-                "    - P3: Waiting = 4 - 4 = 0 ms; Turnaround = 6 - 4 = 2 ms.",
-                "    - P2: Waiting = (2-2) + (6-4) = 2 ms; Turnaround = 8 - 2 = 6 ms.",
-                "    - P1: Waiting = (0-0) + (8-2) = 6 ms; Turnaround = 14 - 0 = 14 ms.",
-                "    - Average Waiting Time = (0 + 2 + 6) / 3 = 2.67 ms (43% faster waiting than FCFS!)."
+                "• In a shared laboratory, several users may open applications at the same time.",
+                "• First-Come, First-Served is simple to understand, but a long task can delay later tasks.",
+                "• Round Robin gives each ready process a turn, helping interactive applications remain responsive.",
+                "• A scheduling policy should balance responsiveness and fair access.",
+                "• Compare the approaches by describing their behavior; no timing calculations are required."
             ]
         },
         {
@@ -452,7 +445,7 @@ def get_topic_4_slides():
             "bullets": [
                 "• OS Foundations: Resource Arbiter and Extended Machine; Kernel Mode (Ring 0) protects hardware from User Mode (Ring 3).",
                 "• Kernels: Monolithic (fast, single address space) vs Microkernel (modular, IPC-based, isolated drivers).",
-                "• Process Scheduling: Managed via PCB; SRTF minimizes average waiting time; Round Robin prevents starvation.",
+                "• Process Scheduling: Managed through process information; algorithms differ in order, fairness, and responsiveness.",
                 "• Memory & Storage: Paging enables virtual memory via MMU/TLB; Journaling (NTFS/ext4) prevents metadata corruption during sudden power cuts.",
                 "• MS-DOS: Driven by `IO.SYS`, `MSDOS.SYS`, and `COMMAND.COM`; internal commands resident in RAM, external commands on disk.",
                 "• Systems Administration: Windows leverages PowerShell object pipelines; Linux leverages Bash text streams and FHS hierarchy."
@@ -476,13 +469,13 @@ def get_topic_4_slides():
             "sub_title": "Preparation for Next Lecture & Continuous Assessment",
             "bullets": [
                 "• Required Readings:",
-                "    - Silberschatz, Galvin & Gagne - Operating System Concepts (10th Ed.), Chapters 1, 3, 5, 8 & 9.",
-                "    - Tanenbaum & Bos - Modern Operating Systems (4th Ed.), Chapters 1, 2 & 4.",
+                "    - Silberschatz, A., Galvin, P. B., & Gagne, G. - Operating System Concepts (10th ed.). Wiley. https://www.wiley.com/en-ie/Operating+System+Concepts%2C+10th+Edition-p-9781119320913",
+                "    - Smith, J. L., Wang, S., & Mortati, J. - Information Systems for Business and Beyond (2019), Chapter 3: Software. https://opentextbook.site/informationsystems2019/",
                 "• Homework Assignment 4 Notice:",
                 "    - Available on SUA Moodle / Assignment directory: `BIT_111_Assignment_4.pdf`.",
                 "    - Total Allocation: 100 Marks (Covers Process Scheduling, Batch Scripting, and Administrative Utilities).",
                 "    - Submission Deadline: End of Week 8 by 17:00 EAT.",
-                "• Next Lecture Preview: Topic 5 — Microcomputer Applications (Word Processing, Advanced Spreadsheets, Internet Protocols)."
+                "• Next Lecture Preview: Topic 5 — Microcomputer Applications (Word Processing, Simple Spreadsheets, Internet Protocols)."
             ]
         }
     ]
@@ -501,10 +494,10 @@ def get_topic_5_slides():
                 "    - Structural document architecture: Character/paragraph formatting, section breaks, margins",
                 "    - Advanced automation: Heading styles, automated Table of Contents (TOC), cross-references",
                 "    - Mail merge architecture: Data sources, merge fields, and conditional rule filters (`IF...THEN`)",
-                "• Section 5.2: Spreadsheet Applications & Quantitative Systems",
-                "    - Electronic grid architecture: Cell addressing modes (Relative, Absolute, Mixed, 3D references)",
-                "    - Function syntax & modeling: Mathematical, Logical (`IF`, `IFS`, `AND`, `OR`), Lookups (`INDEX-MATCH`, `XLOOKUP`)",
-                "    - Financial and statistical functions (`NPV`, `IRR`, `COUNTIF`, `SUMIFS`); Pivot Tables & PivotCharts",
+                "• Section 5.2: Spreadsheet Applications & Simple Calculations",
+                "    - Worksheet layout: rows, columns, cells, and cell references",
+                "    - Simple arithmetic formulas and introductory `SUM` and `AVERAGE` functions",
+                "    - Organizing information with clear labels, basic sorting, and charts",
                 "• Section 5.3: Web Browsing, Internet Protocols & Electronic Mail Architecture",
                 "    - World Wide Web: URLs, HTTP/HTTPS request-response cycles, status codes, and TLS certificates",
                 "    - Email protocols: SMTP (message submission/relay), POP3 vs IMAP4 (retrieval and sync)",
@@ -512,7 +505,7 @@ def get_topic_5_slides():
             ],
             "callout": {
                 "title": "APPLICATION FOCUS",
-                "body": "Master the quantitative algorithms and document automation workflows required for academic research, farm operations, and enterprise data analysis at SUA."
+                "body": "Use common productivity applications and communicate information clearly in academic and workplace settings."
             }
         },
         {
@@ -522,9 +515,9 @@ def get_topic_5_slides():
             "bullets": [
                 "• Engineer complex multi-section academic documents with dynamic numbering and automated tables of contents.",
                 "• Design automated mail merge pipelines for dynamic reporting and student notifications.",
-                "• Apply relative, absolute, mixed, and 3D cell referencing in complex spreadsheet calculations.",
-                "• Formulate nested logical tests, multi-condition statistical formulas, and robust lookup architectures.",
-                "• Construct dynamic business intelligence dashboards utilizing Pivot Tables, Slicers, and PivotCharts.",
+                "• Identify rows, columns, cells, and cell references in a worksheet.",
+                "• Enter simple addition, subtraction, multiplication, and division formulas and use `SUM` or `AVERAGE`.",
+                "• Organize small worksheets using clear headings, basic sorting, and simple charts.",
                 "• Dissect Uniform Resource Locators (URLs) and trace HTTP/HTTPS client-server request-response cycles.",
                 "• Contrast POP3 and IMAP4 mail retrieval protocols and formulate SPF/DKIM anti-spoofing policies."
             ]
@@ -573,75 +566,63 @@ def get_topic_5_slides():
         },
         {
             "type": "figure",
-            "title": "Spreadsheet Cell Addressing Paradigms",
+            "title": "Spreadsheet Rows, Columns, and Cells",
             "img": "fig5_1_spreadsheet_addressing.png",
-            "caption": "Relative, Absolute, Mixed, and 3D Spreadsheet Referencing Mechanisms.",
+            "caption": "A worksheet is organized as columns, rows, and individual cells.",
             "bullets": [
-                "• Relative Referencing (`A1`): Offset-based; shifts row and column coordinates dynamically when copied across cells.",
-                "• Absolute Referencing (`$A$1`): Locked coordinates via `$` anchors; remains fixed regardless of copy destination.",
-                "• Mixed Referencing (`$A1` or `A$1`): Column locked and row floating, or row locked and column floating; vital for 2D multiplication tables and matrix multipliers.",
-                "• 3D Referencing (`Sheet1:Sheet4!B5`): Aggregates identical cell coordinates across multiple consecutive worksheet tabs."
+                "• Columns are identified by letters and rows by numbers.",
+                "• A cell reference combines its column and row, such as `B2`.",
+                "• A formula can refer to values in other cells rather than repeating the values.",
+                "• When a simple formula is copied to another row, its cell references normally adjust to that row.",
+                "• Use clear headings so users can identify what each cell contains."
             ]
         },
         {
             "type": "bullet",
-            "title": "Advanced Spreadsheet Functions: Logical Modeling",
-            "sub_title": "Automating Multi-Condition Agricultural Decisions",
+            "title": "Simple Spreadsheet Formulas",
+            "sub_title": "A first calculation using farm data",
             "bullets": [
-                "• Single `IF` Statement: `=IF(logical_test, value_if_true, value_if_false)`.",
-                "• Boolean Operators: `=AND(condition1, condition2)` and `=OR(condition1, condition2)`.",
-                "• Nested `IF` & Modern `IFS`:",
-                "    - Example: Cattle Weight Gain Evaluation:",
-                "    `=IFS(D2 >= 1.2, \"Superior Gain\", D2 >= 0.8, \"Normal Gain\", TRUE, \"Suboptimal - Review Feed\")`.",
-                "• Multi-Condition Aggregations:",
-                "    - `=COUNTIFS(Breed_Range, \"Friesian\", Yield_Range, \">=20\")`.",
-                "    - `=SUMIFS(Milk_Liters, Farm_Block, \"Mazimbu\", Lactation_Stage, \"Mid\")`.",
-                "    - `=AVERAGEIFS(Soil_Nitrogen, Zone, \"Uruguru\", Crop, \"Maize\")`."
+                "• A formula begins with an equals sign and uses cell references.",
+                "• Addition: `=B2+C2`; subtraction: `=B2-C2`.",
+                "• Multiplication: `=B2*C2`; division: `=B2/C2`.",
+                "• Example: if B2 contains harvested kilograms and C2 contains the number of containers, `=B2/C2` gives the average per container.",
+                "• Press Enter to display the result. Check that the selected cells contain the intended values."
             ]
         },
         {
             "type": "bullet",
-            "title": "Lookup Architectures: VLOOKUP vs INDEX-MATCH vs XLOOKUP",
-            "sub_title": "The Evolution of Relational Data Retrieval in Spreadsheets",
+            "title": "Using SUM and AVERAGE",
+            "sub_title": "Built-in functions for introductory spreadsheet tasks",
             "bullets": [
-                "• `VLOOKUP` (`lookup_val, table_array, col_index, [range_lookup]`):",
-                "    - Severe Limitations: Can only search left-to-right (lookup column MUST be first); breaks if columns are inserted/deleted.",
-                "• `INDEX` + `MATCH` Architectural Combination:",
-                "    - `=INDEX(return_range, MATCH(lookup_val, lookup_range, 0))`.",
-                "    - Advantages: Unrestricted left-to-right or right-to-left retrieval; immune to column insertions; faster calculation on large datasets.",
-                "• `XLOOKUP` (Modern Excel Standard):",
-                "    - `=XLOOKUP(lookup_val, lookup_range, return_range, [if_not_found], [match_mode])`.",
-                "    - Combines advantages of INDEX-MATCH with concise syntax and native exact-match default."
+                "• `=SUM(B2:B6)` adds the values in the selected range.",
+                "• `=AVERAGE(B2:B6)` finds the mean of the values in the selected range.",
+                "• Select the data range carefully and keep a clear label beside each result.",
+                "• A spreadsheet updates a result when a value used by its formula changes.",
+                "• Use these functions with small class examples such as crop yields, seedling counts, or animal feed records."
             ]
         },
         {
             "type": "bullet",
-            "title": "Financial Modeling: Capital Budgeting Functions",
-            "sub_title": "Evaluating Agricultural Machinery Investments at SUA",
+            "title": "Checking and Presenting Spreadsheet Results",
+            "sub_title": "Simple review habits for class data",
             "bullets": [
-                "• Net Present Value (`NPV`): Calculates current value of future cash inflows discounted at capital interest rate r:",
-                "    - Formula: `=NPV(rate, cash_flow_range) + initial_outlay` (Note: Initial outlay in Year 0 is added outside NPV).",
-                "• Internal Rate of Return (`IRR`):",
-                "    - Formula: `=IRR(values_range)`.",
-                "    - Calculates the exact discount rate where Net Present Value equals zero; if IRR > Cost of Capital, project is viable.",
-                "• Loan Amortization (`PMT`):",
-                "    - Formula: `=PMT(rate, nper, pv, [fv], [type])`.",
-                "    - Computes periodic loan payment for agricultural tractor financing based on constant interest rate and fixed installments."
+                "• Confirm that headings identify the information in each column.",
+                "• Use Sort to arrange records by a field such as date, crop, or animal ID.",
+                "• Use a simple chart to show a small set of values clearly.",
+                "• Check formulas and source data before sharing or printing a worksheet.",
+                "• Do not use a chart to imply a conclusion that the data does not support."
             ]
         },
         {
             "type": "bullet",
-            "title": "Business Intelligence: Pivot Tables & PivotCharts",
-            "sub_title": "Multidimensional Summarization of Enterprise Datasets",
+            "title": "Sorting and Charting Small Data Sets",
+            "sub_title": "Basic ways to organize and present worksheet information",
             "bullets": [
-                "• Pivot Table: High-speed analytical engine that groups, aggregates, cross-tabulates, and pivots large transactional records without writing complex formulas.",
-                "• Four Core Functional Quadrants:",
-                "    1. Rows: Categorical variables defining horizontal row headers (e.g., Agricultural Region).",
-                "    2. Columns: Categorical variables defining vertical column headers (e.g., Crop Variety).",
-                "    3. Values: Numerical fields to aggregate (Sum, Average, Count, Max, Min).",
-                "    4. Filters: Global dataset criteria (e.g., Harvest Year).",
-                "• Slicers & Timelines: Interactive graphical filtering buttons enabling one-click exploratory data dashboards.",
-                "• Calculated Fields: Custom mathematical formulas operating on aggregated pivot table metrics."
+                "• Arrange related values in a labeled table, with one record on each row.",
+                "• Use the Sort command to arrange records by a chosen column.",
+                "• Use a basic chart when it helps communicate a small set of worksheet values.",
+                "• Keep a copy of the original data before reorganizing a worksheet.",
+                "• Explain what the chart shows and identify any limitations in the data."
             ]
         },
         {
@@ -747,89 +728,74 @@ def get_topic_5_slides():
         },
         {
             "type": "bullet",
-            "title": "Spreadsheet Data Validation & Input Sanitization",
-            "sub_title": "Preventing Garbage-In Garbage-Out at the Data Entry Layer",
+            "title": "Entering and Checking Spreadsheet Data",
+            "sub_title": "Simple ways to reduce data-entry mistakes",
             "bullets": [
-                "• Data Validation Engine: Enforces strict data-entry rules on worksheet cells before values are committed.",
-                "• Validation Rule Categories:",
-                "    - Whole Number / Decimal: Constrains numerical ranges (e.g., Soil pH must be between 3.5 and 9.5).",
-                "    - In-Cell Dropdown List: Restricts entries to predefined lookup tables (e.g., `Maize, Rice, Cassava, Sorghum`), eliminating typographical spelling variations.",
-                "    - Date Constraints: Ensures transaction dates fall within the active academic semester.",
-                "    - Custom Formulas: Uses boolean formulas (e.g., `=ISNUMBER(SEARCH(\"@sua.ac.tz\", C2))` enforcing valid university email addresses).",
-                "• Error Alert Styles: Stop (blocks input completely), Warning (prompts confirmation), Information."
+                "• Use consistent headings and units for each column.",
+                "• Use a drop-down list when the class has a short set of approved labels, such as crop type.",
+                "• Check spelling, missing values, and unexpected entries before using a worksheet.",
+                "• Keep a protected copy of the original records before editing them.",
+                "• Ask a lecturer or data owner when an entry is unclear; do not guess."
             ]
         },
         {
             "type": "bullet",
-            "title": "Conditional Formatting: Dynamic Visual Analytics",
-            "sub_title": "Automating Visual Anomaly Detection in Experimental Data",
+            "title": "Formatting a Readable Worksheet",
+            "sub_title": "Presenting records clearly",
             "bullets": [
-                "• Core Concept: Automatically changes cell background color, font formatting, or border based on cell values or custom evaluation formulas.",
-                "• Visualization Types:",
-                "    - Data Bars: In-cell horizontal bars proportional to cell value, creating instant mini-histograms.",
-                "    - Color Scales (Heatmaps): Multi-color gradients (e.g., Green-Yellow-Red) highlighting temperature or yield distribution across 100 farm plots.",
-                "    - Icon Sets: Directional arrows, checkmarks, and flags indicating performance above or below benchmark thresholds.",
-                "• Formula-Driven Formatting: Highlighting an entire row if a dairy cow's status is 'Quarantine':",
-                "    - Rule Formula: `=$F2 = \"Quarantine\"` (applies format across all columns A:G)."
+                "• Use a clear font and readable column widths.",
+                "• Distinguish headings from data using consistent formatting.",
+                "• Use borders or light shading sparingly to separate sections.",
+                "• Keep colors high-contrast and do not rely on color alone to convey meaning.",
+                "• Preview the worksheet before printing or sharing."
             ]
         },
         {
             "type": "bullet",
-            "title": "What-If Analysis: Goal Seek & Scenario Manager",
-            "sub_title": "Decision Support and Sensitivity Modeling for Agribusiness",
+            "title": "Reviewing and Sorting Worksheet Records",
+            "sub_title": "Keeping small class datasets understandable",
             "bullets": [
-                "• Goal Seek (Backwards Optimization):",
-                "    - Calculates the specific input value required to achieve a desired target output value in a formula cell.",
-                "    - Example: Determine the maximum tractor loan interest rate allowable to keep monthly payments below 2,500,000 TZS.",
-                "• Data Tables (Sensitivity Tables):",
-                "    - 1-Variable Table: Shows how varying one input (e.g., fertilizer price) impacts multiple output metrics (profit, ROI, yield).",
-                "    - 2-Variable Table: Shows how simultaneously varying two inputs (e.g., rainfall volume vs fertilizer rate) impacts total farm revenue.",
-                "• Scenario Manager: Stores multiple named sets of input assumptions (e.g., 'Drought Worst-Case', 'Average Rain', 'Abundant Harvest') and generates comparative summary reports."
+                "• Sort records by a meaningful field, such as date, animal ID, or crop name.",
+                "• Use a filter to temporarily show records that match a label.",
+                "• Confirm that each row stays together when sorting.",
+                "• Clear filters before reporting the full dataset.",
+                "• Save a separate copy before making substantial changes."
             ]
         },
         {
             "type": "bullet",
-            "title": "Date and Time Arithmetic in Spreadsheets",
-            "sub_title": "Serial Day Numbers and Chronological Calculations",
+            "title": "Dates and Text in a Worksheet",
+            "sub_title": "Entering information consistently without date calculations",
             "bullets": [
-                "• The Underlying Storage Model: Excel stores dates as sequential serial integers starting from January 1, 1900 (Day 1). Today's date is an integer ~46,000.",
-                "• Time Storage: Stored as fractional decimal days (e.g., `0.5` = 12:00 PM noon; `0.75` = 6:00 PM).",
-                "• Essential Date Functions:",
-                "    - `=TODAY()`: Returns current system date (volatile function).",
-                "    - `=NOW()`: Returns current system date and exact time.",
-                "    - `=DATEDIF(start_date, end_date, \"Y\")`: Computes complete elapsed years between dates (useful for animal ages or employee service length).",
-                "    - `=NETWORKDAYS(start_date, end_date, [holidays])`: Calculates exact working business days, automatically excluding weekends and Tanzanian national holidays."
+                "• Use one consistent date format throughout a worksheet.",
+                "• Label text fields clearly, such as animal ID, crop, or location.",
+                "• Avoid mixing dates, notes, and measurements in the same column.",
+                "• Check that imported text has not been split or joined incorrectly.",
+                "• Use simple headings so another student can understand the records."
             ]
         },
         {
             "type": "bullet",
-            "title": "String Manipulation & Data Cleaning Formulas",
-            "sub_title": "Parsing, Cleansing, and Standardizing Raw Text Datasets",
+            "title": "Saving and Sharing a Spreadsheet",
+            "sub_title": "Protecting class and research records",
             "bullets": [
-                "• The Raw Data Problem: Imported government or lab text files frequently contain irregular leading spaces, mixed capitalization, and concatenated identifiers.",
-                "• Text Cleansing Functions:",
-                "    - `=TRIM(text)`: Strips all leading, trailing, and duplicate inner spaces.",
-                "    - `=PROPER(text)` / `=UPPER(text)` / `=LOWER(text)`: Standardizes capitalization.",
-                "• Substring Extraction:",
-                "    - `=LEFT(text, num_chars)` and `=RIGHT(text, num_chars)`.",
-                "    - `=MID(text, start_pos, num_chars)`: Extracts middle tokens (e.g., extracting year from `SUA-2026-AGR`).",
-                "    - `=LEN(text)`: Returns exact character length.",
-                "• Delimited Concatenation:",
-                "    - `=TEXTJOIN(\", \", TRUE, A2:D2)`: Concatenates ranges with commas, automatically skipping blank cells."
+                "• Give the file a clear name that identifies the topic and date.",
+                "• Save the worksheet in an approved location and make a backup copy.",
+                "• Share only with people who are authorized to view the information.",
+                "• Avoid putting personal or sensitive information in a public workbook.",
+                "• Close or protect the workbook when using a shared computer."
             ]
         },
         {
             "type": "bullet",
-            "title": "Modern Dynamic Arrays & The Spill Engine",
-            "sub_title": "Next-Generation Formula Execution in Microsoft Excel",
+            "title": "Simple Charts from Worksheet Data",
+            "sub_title": "Choosing a clear visual for a small dataset",
             "bullets": [
-                "• Dynamic Array Revolution: A single formula written in one cell can automatically return multiple values that 'spill' into neighboring cells.",
-                "• The `#SPILL!` Error: Occurs when the anticipated output range is blocked by existing text or values in any of the destination cells.",
-                "• Essential Dynamic Array Functions:",
-                "    - `=UNIQUE(array)`: Extracts deduplicated list of unique values (e.g., unique farmer names from 5,000 delivery rows).",
-                "    - `=FILTER(array, include_criteria, [if_empty])`: Returns rows matching specific criteria without creating pivot tables.",
-                "    - `=SORT(array, [sort_index], [sort_order])`: Sorts ranges dynamically.",
-                "    - `=SEQUENCE(rows, [cols], [start], [step])`: Generates arithmetic integer sequences instantly."
+                "• Select a small, labeled data range before inserting a chart.",
+                "• Use a column chart to compare categories, such as crop types.",
+                "• Use a line chart to show a trend across time when observations are ordered.",
+                "• Add a title and axis labels so the chart can be understood on its own.",
+                "• Check that the selected chart type does not hide important information."
             ]
         },
         {
@@ -889,7 +855,7 @@ def get_topic_5_slides():
                 "• TLS 1.3 Rapid Handshake Sequence (1-RTT Round Trip Time):",
                 "    1. `ClientHello`: Client sends supported cipher suites and ephemeral Diffie-Hellman public key share.",
                 "    2. `ServerHello`: Server selects cipher suite, sends its own key share, its X.509 certificate, and digital signature.",
-                "    3. Session Key Derivation: Both parties independently calculate the shared symmetric Master Secret using Diffie-Hellman math.",
+                "    3. Session Key Derivation: Both parties use the key-exchange process to establish a shared session key.",
                 "    4. Encrypted Transmission: All subsequent HTTP requests and responses encrypted with high-speed AES-256-GCM.",
                 "• Perfect Forward Secrecy (PFS): Even if the server's master private key is stolen years later, past recorded encrypted sessions cannot be decrypted."
             ]
@@ -914,7 +880,7 @@ def get_topic_5_slides():
             "bullets": [
                 "• Document Engineering: Section breaks isolate independent formatting; heading styles empower dynamic tables of contents; mail merge automates mass communications.",
                 "• Spreadsheet Referencing: Relative (`A1`) shifts dynamically; Absolute (`$A$1`) stays locked; Mixed (`$A1`/`A$1`) locks one coordinate.",
-                "• Advanced Formulas: Logical `IFS`/`COUNTIFS`/`SUMIFS` automate multi-criteria decisions; `INDEX-MATCH` and `XLOOKUP` provide flexible relational lookups.",
+                "• Simple Spreadsheet Work: Cell references, basic arithmetic formulas, `SUM`, and `AVERAGE` support introductory class tasks.",
                 "• Web Infrastructure: URLs specify protocol, host, port, path, and query; HTTP request-response cycle handles stateless web interactions.",
                 "• Email Architecture: SMTP relays messages server-to-server; IMAP4 provides multi-device synchronized retrieval; SPF/DKIM/DMARC eliminate domain spoofing."
             ]
@@ -926,7 +892,7 @@ def get_topic_5_slides():
             "bullets": [
                 "1. Why is a Section Break mandatory if you need Chapter 4 of a thesis in Landscape and Chapter 5 in Portrait?",
                 "2. When copying formula `=$C$2 * D5` from cell E5 to E6, what will the resulting formula be? (Ans: `=$C$2 * D6`).",
-                "3. Explain two major technical reasons why `INDEX` + `MATCH` is superior to `VLOOKUP` in Excel.",
+                "3. Name a suitable chart for comparing crop types and explain how you would label it.",
                 "4. Differentiate between POP3 and IMAP4 regarding multi-device message synchronization.",
                 "5. What does the `-all` mechanism at the end of an SPF DNS TXT record instruct receiving mail servers to do?"
             ]
@@ -937,11 +903,11 @@ def get_topic_5_slides():
             "sub_title": "Preparation for Next Lecture & Continuous Assessment",
             "bullets": [
                 "• Required Readings:",
-                "    - Walkenbach, J. - Microsoft Excel 2019 Bible, Chapters 3, 5, 8, 11 & 14.",
-                "    - Kurose & Ross - Computer Networking: A Top-Down Approach (8th Ed.), Chapter 2 (Application Layer).",
+                "    - Microsoft Support. Overview of formulas in Excel. https://support.microsoft.com/en-us/excel/get-started/overview-of-formulas-in-excel",
+                "    - Smith, J. L., Wang, S., & Mortati, J. - Information Systems for Business and Beyond (2019), Chapter 5: Networking and Communication. https://opentextbook.site/informationsystems2019/",
                 "• Homework Assignment 5 Notice:",
                 "    - Available on SUA Moodle / Assignment directory: `BIT_111_Assignment_5.pdf`.",
-                "    - Total Allocation: 100 Marks (Covers Academic Document Structuring, Advanced Excel Models, and Email Protocols).",
+                "    - Total Allocation: 100 Marks (Covers document structuring, simple spreadsheet use, and email protocols).",
                 "    - Submission Deadline: End of Week 10 by 17:00 EAT.",
                 "• Next Lecture Preview: Topic 6 — Data Security and Malware Defense (Physical Protection, Cryptography, Anti-Malware)."
             ]
@@ -984,7 +950,7 @@ def get_topic_6_slides():
             "sub_title": "Core Information Assurance Competencies",
             "bullets": [
                 "• Formulate comprehensive physical and environmental security controls for institutional datacenters.",
-                "• Calculate UPS power sizing requirements (Watts vs VA) and evaluate UPS circuit topologies.",
+                "• Describe why computers need power protection and compare common UPS types conceptually.",
                 "• Design enterprise backup schedules meeting strict Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).",
                 "• Contrast Symmetric (AES) and Asymmetric (RSA/ECC) encryption in key management and throughput.",
                 "• Explain the cryptographic mechanism of digital signatures in guaranteeing authenticity and non-repudiation.",
@@ -1039,19 +1005,14 @@ def get_topic_6_slides():
         },
         {
             "type": "bullet",
-            "title": "Quantitative UPS Power Sizing Calculations",
-            "sub_title": "Real Power (Watts) versus Apparent Power (Volt-Amperes)",
+            "title": "Choosing Power Protection for Computers",
+            "sub_title": "A conceptual comparison of UPS options",
             "bullets": [
-                "• Real Power (P, Watts): Actual electrical power consumed by hardware performing work: P = V · I · cos(θ).",
-                "• Apparent Power (S, Volt-Amperes): Total power flowing through the circuit: S = V · I.",
-                "• Power Factor (PF): Ratio of Real Power to Apparent Power: PF = P / S = cos(θ) (typically 0.8 to 0.95 for modern IT).",
-                "• Sizing Equation: Required UPS Rating (VA) = Total Connected Watts / Power Factor.",
-                "• Worked Sizing Example for SUA DIIT Lab:",
-                "    - Connected Load: 20 Microcomputers @ 250 W each = 5,000 W.",
-                "    - Power Factor of switched-mode power supplies = 0.85.",
-                "    - Apparent Power = 5,000 W / 0.85 = 5,882 VA ≈ 5.88 kVA.",
-                "    - Applying 25% safety expansion headroom = 5.88 kVA × 1.25 = 7.35 kVA.",
-                "    - Specification Recommendation: Procure an 8 kVA or 10 kVA Online Double-Conversion UPS."
+                "• A UPS provides temporary backup power and can help protect equipment during interruptions.",
+                "• Standby models switch to battery when utility power fails.",
+                "• Line-interactive models also respond to some voltage fluctuations.",
+                "• Online models continuously condition power before it reaches connected equipment.",
+                "• Select a UPS with help from a qualified technician, using the equipment requirements and manufacturer guidance."
             ]
         },
         {
@@ -1085,7 +1046,7 @@ def get_topic_6_slides():
         {
             "type": "bullet",
             "title": "Disaster Recovery Metrics: RTO and RPO",
-            "sub_title": "Defining Quantitative Tolerances for Downtime and Data Loss",
+            "sub_title": "Setting recovery goals for downtime and data loss",
             "bullets": [
                 "• Recovery Point Objective (RPO):",
                 "    - The maximum acceptable age of files that must be recovered from backup storage for normal operations to resume.",
@@ -1142,7 +1103,7 @@ def get_topic_6_slides():
                 "• Digital Signature Mechanics:",
                 "    1. Sender hashes document: H = SHA-256(Doc).",
                 "    2. Sender encrypts hash with their PRIVATE KEY to produce the Digital Signature.",
-                "    3. Recipient decrypts signature using sender's PUBLIC KEY, recalculates hash, and compares. Matching hashes proves Authenticity, Integrity, and Non-Repudiation."
+                "    3. Recipient's software checks the signature with the sender's PUBLIC KEY and confirms that the signed content has not changed."
             ]
         },
         {
