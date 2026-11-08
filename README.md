@@ -391,20 +391,20 @@ Course_Notes/
 
 ---
 
-#### 6. [`ABE 715: Advanced Computer Programming`](file:///home/kadefue/Course_Notes/ABE%20715)
+#### 7. [`ABE 715: Advanced Computer Programming`](file:///home/kadefue/Course_Notes/ABE%20715)
 * **Target Audience**: Master of Science Students (**MSc in Irrigation Engineering and Management [MSc IEM]** & **MSc in Agricultural and Biosystems Engineering [MSc ABE]**)
 * **Syllabus Highlights**: Python programming, NumPy matrix operations, Pandas tabular data pipelines, numerical integration (Trapezoidal, Simpson's rule), root finding (Newton-Raphson, Bisection), OpenCV computer vision for biometrics, IoT data streaming, and geospatial spatial raster analysis.
 
 ---
 
-#### 7. [`ABE 721: Agricultural Systems Modelling and Simulation`](file:///home/kadefue/Course_Notes/ABE%20721)
+#### 8. [`ABE 721: Agricultural Systems Modelling and Simulation`](file:///home/kadefue/Course_Notes/ABE%20721)
 * **Target Audience**: Master of Science Students (**MSc in Irrigation Engineering and Management [MSc IEM]** & **MSc in Agricultural and Biosystems Engineering [MSc ABE]**)
 * **Modules & Syllabi**: [Official Course Syllabus & Reading List](file:///home/kadefue/Course_Notes/ABE%20721/ABE%20721%20Syllabus.pdf)
 * **Key Content**: System dynamics, dynamic crop models (CERES, DSSAT concepts), plant-water relations, soft computing & fuzzy inference in water resources, Computer Aided Design (CAD), and Finite Element Analysis (FEA) using MATLAB.
 
 ---
 
-#### 8. [`AEC 813: AI, IoT, and GIS Application in Agriculture`](file:///home/kadefue/Course_Notes/AEC%20813)
+#### 9. [`AEC 813: AI, IoT, and GIS Application in Agriculture`](file:///home/kadefue/Course_Notes/AEC%20813)
 * **Target Audience**: PhD in Agroecology / Doctoral Engineering Candidates
 * **Key Content**: 15 lecture compendia in LaTeX formatting covering advanced IoT communication architectures, GIS spatial modeling, deep learning architectures in agriculture, and edge-computing implementations.
 
