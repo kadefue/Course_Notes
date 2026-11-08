@@ -104,11 +104,17 @@ def add_online_figure_pages(story, topic, figures, styles):
         creator = html.escape(figure.get("creator", "Creator not credited"))
         license_name = html.escape(figure["license"])
         url = html.escape(figure["source_url"], quote=True)
+        license_url = html.escape(figure.get("license_url", ""), quote=True)
+        license_text = (
+            f"<a href='{license_url}' color='#005a24'>{license_name}</a>"
+            if license_url
+            else license_name
+        )
         story.append(
             Paragraph(
                 f"<b>Attribution:</b> {creator}. "
                 f"<a href='{url}' color='#005a24'>Wikimedia Commons source page</a>. "
-                f"License: {license_name}.",
+                f"License: {license_text}.",
                 styles["FigCaption"],
             )
         )

@@ -248,6 +248,7 @@ Below is an exhaustive inventory of the course directories maintained in this re
 
 ```
 Course_Notes/
+├── BIT 111/   🖥️ BIT 111: Microcomputers and Applications (Year 1 Undergraduate Service Course)
 ├── AGE 214/   ⚡ AEN 214 / AGE 214: Introduction to Electronics (New Code: AEN 214)
 ├── AGE 219/   💻 AGE 219: Basics of Computer Programming (Year 2)
 ├── AGE 310/   📡 AGE 310: Instrumentation and Measurements (Year 3)
@@ -260,7 +261,38 @@ Course_Notes/
 
 ### Detailed Course Folders:
 
-#### 1. [`AEN 214 / AGE 214: Introduction to Electronics`](file:///home/kadefue/Course_Notes/AGE%20214)
+#### 1. [`BIT 111: Microcomputers and Applications`](file:///home/kadefue/Course_Notes/BIT%20111/README.md)
+* **Department**: Department of Informatics and Information Technology (DIIT), School of Engineering and Technology (SET) / CoNAS
+* **Instructor**: **Madam Bertha Msuliche Lebalwa (MSc)**
+* **Target Audience**: First-Year Undergraduate Students across all SUA degree programs (Agronomy, Animal Science, Veterinary Medicine, Wildlife Management, Tourism, Agricultural Engineering, Extension, Aquaculture, Forestry, Wood Science, Food Science, Consumer Studies).
+* **Pedagogical Design**: Introductory, strictly conceptual, **ZERO calculations** in Topics 1, 2, 3, 4, 6. Simple spreadsheet calculations exclusively in Topic 5. Inclusive SUA agricultural, biological, and natural science examples throughout.
+* **Assessment Scheme**: Two Assignments (5%), Two Theory Tests (15%), Practical Report (10%), Practical Test (30%), University Examination (40%)* (*subject to adjustment by the course instructor).
+* **Course Documentation**:
+  * [Course Outline PDF (3 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Course_Outline.pdf)
+  * [BIT 111 Comprehensive Readme](file:///home/kadefue/Course_Notes/BIT%20111/README.md)
+* **Complete Lecture Compendia (ReportLab PDFs, All $\ge 35$ Pages with 40 Q&A & Model Answers)**:
+  * [Topic 1: Introduction to Microcomputers (65 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_1_Compendium.pdf)
+  * [Topic 2: Main Components of a Microcomputer (40 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_2_Compendium.pdf)
+  * [Topic 3: PC Security Controls (41 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_3_Compendium.pdf)
+  * [Topic 4: Functions & Types of Operating Systems (43 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_4_Compendium.pdf)
+  * [Topic 5: Microcomputer Applications & Spreadsheets (41 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_5_Compendium.pdf)
+  * [Topic 6: Data Security and Malware Defense (42 Pages)](file:///home/kadefue/Course_Notes/BIT%20111/Notes/BIT_111_Topic_6_Compendium.pdf)
+* **Lecture Presentation Slide Decks (PPTX + PDF, All $\ge 30$ Slides)**:
+  * [Topic 1 Slide Deck (42 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_1.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_1.pptx)
+  * [Topic 2 Slide Deck (42 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_2.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_2.pptx)
+  * [Topic 3 Slide Deck (40 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_3.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_3.pptx)
+  * [Topic 4 Slide Deck (42 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_4.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_4.pptx)
+  * [Topic 5 Slide Deck (40 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_5.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_5.pptx)
+  * [Topic 6 Slide Deck (41 Slides)](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_6.pdf) \| [PPTX](file:///home/kadefue/Course_Notes/BIT%20111/Lectures/BIT_111_Topic_6.pptx)
+* **Take-Home Homework Assignments (PDF, 100 Marks Each)**:
+  * [Assignment 1: Introduction, Generations & Pioneers (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_1.pdf)
+  * [Assignment 2: CPU, Memory, Storage & I/O Components (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_2.pdf)
+  * [Assignment 3: PC Security Controls & Research Data Protection (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_3.pdf)
+  * [Assignment 4: Operating System Functions, DOS & GUI Tools (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_4.pdf)
+  * [Assignment 5: Word Processing, Spreadsheets & Calculations (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_5.pdf)
+  * [Assignment 6: Data Defense, Malware Taxonomy & Backups (100 Marks)](file:///home/kadefue/Course_Notes/BIT%20111/Assignment/BIT_111_Assignment_6.pdf)
+
+#### 2. [`AEN 214 / AGE 214: Introduction to Electronics`](file:///home/kadefue/Course_Notes/AGE%20214)
 * **Curriculum Note**: Coded as **AEN 214** under the new curriculum (active for 1st & 2nd Years in 2026/2027) and **AGE 214** under the continuing legacy curriculum.
 * **Instructor**: Dr. Kadeghe Goodluck Fue (Electronics and Precision Agriculture Lab - EPAL)
 * **Complete Compendia (LaTeX Generated PDFs)**:
@@ -284,7 +316,7 @@ Course_Notes/
 
 ---
 
-#### 2. [`AGE 219: Basics of Computer Programming`](file:///home/kadefue/Course_Notes/AGE%20219)
+#### 3. [`AGE 219: Basics of Computer Programming`](file:///home/kadefue/Course_Notes/AGE%20219)
 * **Instructor**: Dr. Kadeghe Fue | **Toolchain**: Python 3.x, Google Colaboratory
 * **Course Syllabus & Contract**: [Official Course Outline & Learning Contract](file:///home/kadefue/Course_Notes/AGE%20219/Course%20Outline.pdf)
 * **Lecture Modules & Compendia**:
@@ -302,7 +334,7 @@ Course_Notes/
 
 ---
 
-#### 3. [`AGE 310: Instrumentation and Measurements`](file:///home/kadefue/Course_Notes/AGE%20310)
+#### 4. [`AGE 310: Instrumentation and Measurements`](file:///home/kadefue/Course_Notes/AGE%20310)
 * **Instructor**: Dr. Kadeghe Fue | **Facility**: Electronics & Precision Agriculture Lab (EPAL)
 * **Compendia & Lecture Summaries**:
   * [Lecture 1: Intro & Generalized Measurement System](file:///home/kadefue/Course_Notes/AGE%20310/AGE%20310%20Compendium%20-%20Lecture%201.pdf)
@@ -324,7 +356,7 @@ Course_Notes/
 
 ---
 
-#### 4. [`AGE 316: Microcomputer Systems`](file:///home/kadefue/Course_Notes/AGE%20316)
+#### 5. [`AGE 316: Microcomputer Systems`](file:///home/kadefue/Course_Notes/AGE%20316)
 * **Instructor**: Dr. Kadeghe Fue | **Target**: BSc AE (Year 3) & BSc BPHE (Year 3)
 * **Core Topics**:
   * Microcomputer Architecture: CPU, ALU, registers, memory hierarchy (RAM, ROM, EEPROM, Flash), address/data/control buses.
@@ -338,7 +370,7 @@ Course_Notes/
 
 ---
 
-#### 5. [`AGE 418: Sensors and Controls in Precision Agriculture`](file:///home/kadefue/Course_Notes/AGE%20418)
+#### 6. [`AGE 418: Sensors and Controls in Precision Agriculture`](file:///home/kadefue/Course_Notes/AGE%20418)
 * **Instructor**: Dr. Kadeghe Fue | **Lab**: Electronics and Precision Agriculture Lab (EPAL)
 * **Compendia & Lecture Presentations**:
   * [Lecture 1: Introduction to Precision Agriculture](file:///home/kadefue/Course_Notes/AGE%20418/AGE418Lecture1Compendium.tex.pdf)
