@@ -235,10 +235,10 @@ def get_custom_stylesheet():
         'SecH1',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=12.5,
-        leading=16,
-        spaceBefore=10,
-        spaceAfter=4,
+        fontSize=13.5,
+        leading=17,
+        spaceBefore=14,
+        spaceAfter=6,
         textColor=COLOR_SUA_GREEN,
         keepWithNext=True
     ))
@@ -247,10 +247,10 @@ def get_custom_stylesheet():
         'SecH2',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=10.5,
-        leading=14,
-        spaceBefore=7,
-        spaceAfter=3,
+        fontSize=11.5,
+        leading=15,
+        spaceBefore=10,
+        spaceAfter=4,
         textColor=COLOR_SUA_DARKGREEN,
         keepWithNext=True
     ))
@@ -259,10 +259,10 @@ def get_custom_stylesheet():
         'SecH3',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=9.2,
-        leading=12,
-        spaceBefore=5,
-        spaceAfter=2,
+        fontSize=10.0,
+        leading=13.5,
+        spaceBefore=8,
+        spaceAfter=3,
         textColor=COLOR_TEXT,
         keepWithNext=True
     ))
@@ -271,10 +271,10 @@ def get_custom_stylesheet():
         'DocBody',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=8.5,
-        leading=12,
-        spaceBefore=2,
-        spaceAfter=4,
+        fontSize=9.5,
+        leading=14.0,
+        spaceBefore=3,
+        spaceAfter=5,
         alignment=TA_JUSTIFY,
         textColor=COLOR_TEXT
     ))
@@ -289,10 +289,10 @@ def get_custom_stylesheet():
         'DocBullet',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=8.5,
-        leading=11.5,
-        spaceBefore=1,
-        spaceAfter=2,
+        fontSize=9.2,
+        leading=13.5,
+        spaceBefore=2,
+        spaceAfter=3,
         leftIndent=14,
         textColor=COLOR_TEXT
     ))
@@ -301,8 +301,8 @@ def get_custom_stylesheet():
         'TblHdr',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=8.0,
-        leading=10.5,
+        fontSize=8.5,
+        leading=11.5,
         alignment=TA_CENTER,
         textColor=COLOR_WHITE
     ))
@@ -311,8 +311,8 @@ def get_custom_stylesheet():
         'TblCell',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=7.8,
-        leading=10.5,
+        fontSize=8.5,
+        leading=11.5,
         textColor=COLOR_TEXT
     ))
 
@@ -326,8 +326,8 @@ def get_custom_stylesheet():
         'CalloutTitle',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=8.8,
-        leading=11.5,
+        fontSize=9.5,
+        leading=13,
         textColor=COLOR_SUA_DARKGREEN
     ))
 
@@ -335,8 +335,8 @@ def get_custom_stylesheet():
         'CalloutText',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=8.0,
-        leading=11,
+        fontSize=8.8,
+        leading=12.5,
         alignment=TA_JUSTIFY,
         textColor=COLOR_TEXT
     ))
@@ -345,8 +345,8 @@ def get_custom_stylesheet():
         'CodeText',
         parent=styles['Normal'],
         fontName="Courier",
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=8.0,
+        leading=10.5,
         textColor=COLOR_CODE_TEXT
     ))
 
@@ -354,8 +354,8 @@ def get_custom_stylesheet():
         'FigCaption',
         parent=styles['Normal'],
         fontName=FONT_OBLIQUE,
-        fontSize=7.8,
-        leading=10,
+        fontSize=8.5,
+        leading=11,
         alignment=TA_CENTER,
         textColor=COLOR_MUTED
     ))
