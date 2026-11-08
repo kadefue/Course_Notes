@@ -65,7 +65,7 @@ def create_assignment_header(asn_num, title, topics_covered, due_info):
         "1. This assignment is an open engineering coursework assessment designed to develop analytical and practical circuit design competence.<br/>"
         "2. Answer <b>ALL twelve (12) questions</b>. Questions are tiered into Part A (Foundational Concepts), Part B (Quantitative Circuit Analysis), and Part C (Agricultural Engineering Systems Design).<br/>"
         "3. Show all mathematical derivations, state all engineering assumptions clearly, sketch labeled schematics where applicable, and cite proper SI units.<br/>"
-        "4. Neatness, logical presentation, and clear engineering justification contribute to the final grade."
+        "4. Neatness, logical presentation, and clear engineering justification contribute to technical mastery and exam preparation."
     )
     inst_tbl = Table([[Paragraph(instructions, styles['DocBody'])]], colWidths=[7.2 * inch])
     inst_tbl.setStyle(TableStyle([

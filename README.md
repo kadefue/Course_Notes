@@ -280,6 +280,7 @@ Course_Notes/
   * [Lecture 14: Basic Op-Amp Circuits & Applications](file:///home/kadefue/Course_Notes/AGE%20214/AGE214Lecture14Compendium.tex.pdf)
   * [Lecture 15: Digital Electronics, Transducers & DAQ](file:///home/kadefue/Course_Notes/AGE%20214/AGE214Lecture15CompendiumFixed.tex.pdf)
 * **Presentation Slide Decks**: Lectures 1 to 15 in `.pptx` format.
+* **Assessment Scheme**: Continuous Assessment Theory Tests (2 Tests) = **40%**, University Examination (UE) = **60%** (Total = 100%).
 
 ---
 

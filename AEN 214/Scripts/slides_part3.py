@@ -865,12 +865,12 @@ def build_lecture_9_deck(prs):
     ], current_slide=25, total_slides=total)
 
     # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Coursework Capstone Defense", [
+    add_bullet_slide(prs, "Prescribed References & Coursework Review", [
         "Mano, M. M., & Ciletti, M. D. (2018). Digital Design: With an Introduction to Verilog HDL (6th ed.). Pearson.",
         "Roth, C. H., & Kinney, L. L. (2020). Fundamentals of Logic Design (7th ed.). Cengage Learning.",
         "Floyd, T. L. (2015). Digital Fundamentals (11th ed.). Pearson.",
-        "Final Capstone Project Defense: Multi-disciplinary groups will present their autonomous agricultural prototypes next week.",
-        "Coursework Submissions: Ensure Assignment 1, 2, and 3 are finalized and submitted via SUA LMS before the final examination."
+        "Continuous Assessment (CA): Theory Tests 1 and 2 account for 40% of the overall course mark (20% each).",
+        "University Examination (UE): Comprehensive final examination covers Modules 1 through 9 (60% final weighting)."
     ], current_slide=26, total_slides=total)
 
     print(f"[Done] Built Lecture {lec_num} deck ({len(prs.slides)} slides).")

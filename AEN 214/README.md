@@ -136,6 +136,20 @@ AEN 214/
 
 ---
 
+## 📊 Assessment & Grading Scheme
+
+In accordance with Sokoine University of Agriculture (SUA) engineering degree regulations, the course assessment for **AEN 214: Introduction to Electronics** is partitioned into **Continuous Assessment (40%)** and the final **University Examination (60%)**:
+
+| Assessment Component | Topic Coverage / Scope | Weighting (%) | Assessment Mode / Deliverable |
+| :--- | :--- | :---: | :--- |
+| **Theory Test 1** | Topics 1 – 4 (Passive Components, Semiconductor Physics, Diodes & Special Diodes) | **20%** | In-semester closed-book written engineering theory test |
+| **Theory Test 2** | Topics 5 – 9 (BJTs, FETs/MOSFETs, Number Systems, Digital Logic & K-Maps) | **20%** | In-semester closed-book written engineering theory test |
+| **Continuous Assessment (CA)** | **Two Theory Tests Combined (Test 1 + Test 2)** | **40%** | **Continuous Assessment Subtotal** |
+| **University Examination (UE)** | **Comprehensive Course Coverage (Topics 1 through 9)** | **60%** | **Formal 3-hour theoretical & circuit design university examination** |
+| **Total Course Mark** | **Continuous Assessment (40%) + University Examination (UE 60%)** | **100%** | **SUA Scale (A: 70%+, B+: 60–69%, B: 50–59%, C: 40–49%)** |
+
+---
+
 ## 🛠️ Execution & Build Pipeline
 
 All course notes, assignments, figures, and presentations are completely reproducible via the automated Python scripts in `Scripts/`:

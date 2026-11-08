@@ -69,6 +69,14 @@ The curriculum covers semiconductor physics, discrete active and passive compone
 
 ---
 
+## 📊 Course Assessment Structure
+
+* **Continuous Assessment (40%)**: Two In-Semester Theory Tests (**Theory Test 1 (20%)** and **Theory Test 2 (20%)**).
+* **University Examination (60%)**: Comprehensive written University Examination (**UE 60%**) at the end of the semester.
+* **Total Final Grade (100%)**: CA (40%) + UE (60%).
+
+---
+
 ## 👨‍🏫 Laboratory Leadership & Teaching Staff
 
 * **Teaching Laboratory**: **Electronics and Precision Agriculture Lab (EPAL)** ([**www.epalab.org**](https://www.epalab.org))

@@ -102,8 +102,7 @@ def build_course_outline():
         "<b>i. Interactive Lectures & Discussions:</b> Interactive lectures covering passive components, semiconductor physics, and digital logic with live mathematical derivations and circuit simulations.<br/>"
         "<b>ii. Hands-on Laboratory Experiments:</b> Practical bench sessions in the Electronics and Precision Agriculture Lab: breadboard circuit assembly, oscilloscope waveform measurement, rectifier diode testing, BJT/MOSFET switching, and digital logic gate verification.<br/>"
         "<b>iii. Guest Lectures & Industry Insights:</b> Guest lectures from agricultural automation and sensor systems specialists covering tractor electronic control units (ECUs) and solar irrigation installations.<br/>"
-        "<b>iv. Group Capstone Project & Presentations:</b> Multi-disciplinary student groups design, prototype, and demonstrate a complete functional electronic circuit solving an authentic agricultural challenge (e.g., smart greenhouse misting controller, automated poultry brooder temperature regulator, grain level monitor).<br/>"
-        "<b>v. Self-Directed Problem Sets:</b> Three tiered open assignments reinforcing analytical calculations, component selection, and safety derating.",
+        "<b>iv. Self-Directed Problem Sets & Open Coursework:</b> Tiered engineering problem sets and design exercises reinforcing analytical calculations, component selection, and safety derating in preparation for theory assessments.",
         styles['DocBody']
     ))
 
@@ -113,12 +112,11 @@ def build_course_outline():
     
     grade_headers = ["Assessment Component", "Scope / Topic Coverage", "Weighting (%)", "Format / Deliverable"]
     grade_rows = [
-        ["Continuous Assessment Tests (CATs)", "CAT 1 (Topics 1-4); CAT 2 (Topics 5-9)", "20%", "Closed-book written engineering examinations"],
-        ["Practical Laboratory Reports", "Experiments 1 through 6 (Laboratory logbook)", "15%", "Formal bench reports, circuit schematics, and oscilloscope plots"],
-        ["Open Coursework Assignments", "Assignment 1 (Topics 1-3), Assignment 2 (Topics 4-6), Assignment 3 (Topics 7-9)", "10%", "Take-home comprehensive problem sets (3 assignments)"],
-        ["Group Project & Defense", "Autonomous agricultural circuit prototype", "15%", "Working hardware prototype, technical report, and oral presentation"],
-        ["University Final Examination", "Comprehensive coverage (Topics 1 through 9)", "40%", "Formal 3-hour theoretical and design university examination"],
-        ["Total Final Grade", "All Course Components", "100%", "SUA Grading Scale (A: 70%+, B+: 60-69%, B: 50-59%, C: 40-49%)"]
+        ["Theory Test 1", "Topics 1 through 4 (Passive Components, Semiconductor Physics, Diodes & Special Diodes)", "20%", "Closed-book written engineering theory examination"],
+        ["Theory Test 2", "Topics 5 through 9 (BJTs, FETs/MOSFETs, Number Systems, Digital Logic & Boolean Algebra)", "20%", "Closed-book written engineering theory examination"],
+        ["Continuous Assessment (CA) Subtotal", "Two Theory Tests (Test 1 + Test 2 Combined)", "40%", "Cumulative Continuous Assessment (CA) component"],
+        ["University Examination (UE)", "Comprehensive Course Coverage (Topics 1 through 9)", "60%", "Formal 3-hour theoretical and design university examination"],
+        ["Total Final Grade", "Theory Tests (40%) + University Examination (60%)", "100%", "SUA Grading Scale (A: 70%+, B+: 60-69%, B: 50-59%, C: 40-49%)"]
     ]
     story.append(create_custom_table(grade_headers, grade_rows, [1.8*inch, 2.2*inch, 1.0*inch, 2.2*inch]))
 
