@@ -271,10 +271,10 @@ def get_custom_stylesheet():
         'DocBody',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=9.5,
-        leading=14.0,
-        spaceBefore=3,
-        spaceAfter=5,
+        fontSize=10.0,
+        leading=14.8,
+        spaceBefore=4,
+        spaceAfter=6,
         alignment=TA_JUSTIFY,
         textColor=COLOR_TEXT
     ))
@@ -289,11 +289,11 @@ def get_custom_stylesheet():
         'DocBullet',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=9.2,
-        leading=13.5,
-        spaceBefore=2,
-        spaceAfter=3,
-        leftIndent=14,
+        fontSize=9.8,
+        leading=14.2,
+        spaceBefore=3,
+        spaceAfter=4,
+        leftIndent=16,
         textColor=COLOR_TEXT
     ))
 
@@ -301,8 +301,8 @@ def get_custom_stylesheet():
         'TblHdr',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=8.5,
-        leading=11.5,
+        fontSize=9.0,
+        leading=12.5,
         alignment=TA_CENTER,
         textColor=COLOR_WHITE
     ))
@@ -311,8 +311,8 @@ def get_custom_stylesheet():
         'TblCell',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=8.5,
-        leading=11.5,
+        fontSize=9.0,
+        leading=12.5,
         textColor=COLOR_TEXT
     ))
 
@@ -326,8 +326,8 @@ def get_custom_stylesheet():
         'CalloutTitle',
         parent=styles['Normal'],
         fontName=FONT_BOLD,
-        fontSize=9.5,
-        leading=13,
+        fontSize=9.8,
+        leading=13.5,
         textColor=COLOR_SUA_DARKGREEN
     ))
 
@@ -335,8 +335,8 @@ def get_custom_stylesheet():
         'CalloutText',
         parent=styles['Normal'],
         fontName=FONT_NORMAL,
-        fontSize=8.8,
-        leading=12.5,
+        fontSize=9.2,
+        leading=13.5,
         alignment=TA_JUSTIFY,
         textColor=COLOR_TEXT
     ))
@@ -393,9 +393,11 @@ def create_custom_table(headers, rows, col_widths=None):
     ]))
     return tbl
 
-def create_callout_box(title, text, kind="info"):
-    """Creates a highlighted callout box (Green for info/takeaway, Amber for warning)."""
+def create_callout_box(title, text, *args, kind="info", box_type=None, **kwargs):
+    """Creates a highlighted callout box (Green for info/takeaway/sua, Amber for warning)."""
     styles = get_custom_stylesheet()
+    if box_type:
+        kind = "info" if box_type in ("info", "sua", "note") else "warning"
     bg = COLOR_CALLOUT_BG if kind == "info" else COLOR_WARN_BG
     border = COLOR_CALLOUT_BORDER if kind == "info" else COLOR_WARN_BORDER
 
