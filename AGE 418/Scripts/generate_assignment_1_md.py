@@ -28,7 +28,7 @@ content = """<div align="center">
 | :--- | :--- |
 | **Assignment Title** | **Integrated Sentinel-1 and Sentinel-2 Remote Sensing for Assessing Seasonal Cropping Patterns, Vegetation Dynamics, and Climate–Crop Interactions in Kondoa and Bahi Districts, Dodoma Region, Tanzania (2016–2026)** |
 | **Study Area** | **Kondoa and Bahi Districts, Dodoma Region, Tanzania** |
-| **Target Degree Programs** | **BSc in Agricultural Engineering (BSc AE — Year 4) & BSc in Irrigation and Water Resources Engineering (BSc IWRE — Year 4)** |
+| **Target Degree Programs** | **BSc in Agricultural Engineering (BSc AGE — Year 4) & BSc in Irrigation and Water Resources Engineering (BSc IWRE — Year 4)** |
 | **Assignment Character** | **Research-Oriented Practical Exercise & Reproducible Scientific Workflow** |
 | **Submission Deadline** | **8 December 2026** |
 | **Submission Channel** | **Individual GitHub Repository (URL Submission; Invited Collaborator: `@kadefue`)** |
@@ -39,7 +39,7 @@ content = """<div align="center">
 ## 🎯 Programmatic Context & Engineering Relevance
 
 This practical assignment is tailored for fourth-year undergraduate engineering students enrolled in:
-* **BSc in Agricultural Engineering (BSc AE)**: Focuses on precision crop monitoring, seasonal cropping pattern mapping, crop canopy development, Sentinel-1 radar backscatter ($VV$, $VH$, $VH/VV$) sensitivity to canopy architecture and soil surface roughness, and foundational spatial analytics for Variable Rate Technology (VRT).
+* **BSc in Agricultural Engineering (BSc AGE)**: Focuses on precision crop monitoring, seasonal cropping pattern mapping, crop canopy development, Sentinel-1 radar backscatter ($VV$, $VH$, $VH/VV$) sensitivity to canopy architecture and soil surface roughness, and foundational spatial analytics for Variable Rate Technology (VRT).
 * **BSc in Irrigation and Water Resources Engineering (BSc IWRE)**: Focuses on agricultural climatology, empirical rainfall calendar identification (unimodal *Msimu* dynamics), CHIRPS rainfall onset/cessation and dry spell frequency, ERA5-Land temperature dynamics, vegetation water content and moisture stress indices (NDMI, MSI, NDWI), and crop water resilience in semi-arid environments.
 
 ---
@@ -313,9 +313,7 @@ The assignment will be assessed based on:
 
 files_to_update = [
     os.path.join(base_dir, "AGE 418", "Assignment 2026-2027", "Assignment 1.md"),
-    os.path.join(base_dir, "AGE 418", "Assignment 2026-2027", "README.md"),
-    os.path.join(base_dir, "AGE 418", "Assignment 2026", "2027", "Assignment 1.md"),
-    os.path.join(base_dir, "AGE 418", "Assignment 2026", "2027", "README.md")
+    os.path.join(base_dir, "AGE 418", "Assignment 2026-2027", "README.md")
 ]
 
 for fp in files_to_update:

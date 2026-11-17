@@ -481,7 +481,7 @@ Course_Notes/
     * 📂 [Assignment 2026-2027 Folder README](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/README.md)
     * 🛠️ [Assignment Generation Scripts](file:///Users/kadefue/Course%20Notes/AGE%20418/Scripts/README.md)
     * **Deadline**: 8 December 2026 | **Submission**: Individual GitHub repository submitted to [`@kadefue`](https://github.com/kadefue) (no email submissions).
-    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AE)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE)** (Year 4)
+    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AGE)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE)** (Year 4)
     * *Notice to Students*: Research-oriented exercise requiring empirical climate calendars (do not force Masika/Vuli in unimodal Dodoma), at least 8 optical indices + radar indicators (quality over quantity), and verifiable GitHub collaborator access.
 * **Continuous Assessments & University Examinations**:
   * [Test 2 (2023–2024)](file:///Users/kadefue/Course%20Notes/AGE%20418/AE%20418%20Test%202%202023-2024.docx)

@@ -2,7 +2,7 @@
 ### Sokoine University of Agriculture (SUA) | Department of Agricultural Engineering
 
 [![Course Level](https://img.shields.io/badge/Level-Undergraduate%20(Year%204)-blue.svg)](#)
-[![Target Programs](https://img.shields.io/badge/Target%20Programs-BSc%20AE%20%7C%20BSc%20IWRE%20%7C%20BSc%20BPHE-forestgreen.svg)](#target-audience--degree-program-competencies)
+[![Target Programs](https://img.shields.io/badge/Target%20Programs-BSc%20AGE%20%7C%20BSc%20IWRE%20%7C%20BSc%20BPHE-forestgreen.svg)](#target-audience--degree-program-competencies)
 [![Lab](https://img.shields.io/badge/Lab-Electronics%20%26%20Precision%20Agriculture%20(EPAL)-purple.svg)](#)
 
 ---
@@ -17,7 +17,7 @@ The curriculum integrates satellite positioning (GNSS/RTK), Geographic Informati
 
 ## 🎯 Target Audience & Degree Program Competencies
 
-1. **BSc in Agricultural Engineering (BSc AE — Year 4)**:
+1. **BSc in Agricultural Engineering (BSc AGE — Year 4)**:
    * **Machine Auto-Guidance**: Working with Real-Time Kinematic (RTK) GNSS for sub-centimeter automated steering and implement hitch control.
    * **Variable Rate Application (VRT)**: Engineering prescription-driven rate controllers with pulse-width modulation (PWM) nozzles for site-specific fertilizer and herbicide application.
    * **Yield Monitoring & Mapping**: Operating and calibrating impact plate mass flow sensors, optical grain volume sensors, and moisture compensation sensors on combine harvesters.
@@ -60,7 +60,7 @@ The curriculum integrates satellite positioning (GNSS/RTK), Geographic Informati
 
 * **Coursework & Practical Assignments**:
   * **Assignment 2026/2027 — Practical Assignment 1**: *Integrated Sentinel-1 and Sentinel-2 Remote Sensing for Assessing Seasonal Cropping Patterns, Vegetation Dynamics, and Climate–Crop Interactions in Kondoa and Bahi Districts, Dodoma Region, Tanzania (2016–2026)*:
-    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AE — Year 4)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE — Year 4)**
+    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AGE — Year 4)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE — Year 4)**
     * 📄 [Read Full Assignment & Guidelines (Markdown)](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.md)
     * 📑 [Download Official Assignment PDF with SUA Header](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.pdf)
     * 📁 [Folder Assignment 2026-2027 README](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/README.md)

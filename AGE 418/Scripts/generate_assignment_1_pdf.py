@@ -200,16 +200,16 @@ builder.add_spacer(6)
 # SECTION 2
 builder.add_h1("2. EXPECTED OUTPUTS AND DELIVERABLES")
 builder.add_paragraph("Students are expected to produce the following ten (10) tangible deliverables:")
-builder.add_numbered("1.", "District and ward-level administrative maps of Kondoa and Bahi.", bold_prefix="Study area maps: ")
-builder.add_numbered("2.", "Processed Sentinel-1 and Sentinel-2 datasets.", bold_prefix="Satellite data products: ")
-builder.add_numbered("3.", "Spatial maps and temporal profiles of at least eight optical vegetation indices and relevant radar-derived indicators.", bold_prefix="Vegetation index products: ")
-builder.add_numbered("4.", "Comparative assessment of Masika and Vuli vegetation dynamics.", bold_prefix="Seasonal analysis: ")
-builder.add_numbered("5.", "CHIRPS-derived rainfall maps, seasonal totals, anomalies, and temporal trends.", bold_prefix="Rainfall analysis: ")
-builder.add_numbered("6.", "ERA5-Land-derived temperature maps, seasonal patterns, and temporal trends.", bold_prefix="Temperature analysis: ")
-builder.add_numbered("7.", "Analysis of vegetation recovery, decline, and potential moisture stress.", bold_prefix="Vegetation recovery assessment: ")
-builder.add_numbered("8.", "Statistical and spatial investigation of climate–vegetation relationships.", bold_prefix="Integrated analysis: ")
-builder.add_numbered("9.", "At least 10 high-quality figures, tables, and maps collectively presenting the major findings.", bold_prefix="Scientific visualisations: ")
-builder.add_numbered("10.", "A comprehensive scientific report documenting the background, objectives, study area, datasets, methodology, results, discussion, conclusions, and recommendations.", bold_prefix="Technical report: ")
+builder.add_numbered("1.", "District and ward-level administrative maps of Kondoa and Bahi.", bold_title="Study area maps: ")
+builder.add_numbered("2.", "Processed Sentinel-1 and Sentinel-2 datasets.", bold_title="Satellite data products: ")
+builder.add_numbered("3.", "Spatial maps and temporal profiles of at least eight optical vegetation indices and relevant radar-derived indicators.", bold_title="Vegetation index products: ")
+builder.add_numbered("4.", "Comparative assessment of Masika and Vuli vegetation dynamics.", bold_title="Seasonal analysis: ")
+builder.add_numbered("5.", "CHIRPS-derived rainfall maps, seasonal totals, anomalies, and temporal trends.", bold_title="Rainfall analysis: ")
+builder.add_numbered("6.", "ERA5-Land-derived temperature maps, seasonal patterns, and temporal trends.", bold_title="Temperature analysis: ")
+builder.add_numbered("7.", "Analysis of vegetation recovery, decline, and potential moisture stress.", bold_title="Vegetation recovery assessment: ")
+builder.add_numbered("8.", "Statistical and spatial investigation of climate–vegetation relationships.", bold_title="Integrated analysis: ")
+builder.add_numbered("9.", "At least 10 high-quality figures, tables, and maps collectively presenting the major findings.", bold_title="Scientific visualisations: ")
+builder.add_numbered("10.", "A comprehensive scientific report documenting the background, objectives, study area, datasets, methodology, results, discussion, conclusions, and recommendations.", bold_title="Technical report: ")
 builder.add_paragraph(
     "All figures, tables, and maps must have appropriate titles, captions, legends, units, and data sources. "
     "Results should be interpreted scientifically rather than presented as images or numerical outputs without explanation."
@@ -243,9 +243,9 @@ builder.add_callout(
     "This assignment is designed as a research-oriented practical exercise, not simply a collection of satellite image processing tasks. Students must demonstrate that they can acquire, process, integrate, analyse, interpret, and document multi-source remote sensing and climate data using reproducible, version-controlled workflows."
 )
 builder.add_paragraph("Students must pay particular attention to the following three critical instructions:")
-builder.add_numbered("1.", "Students should establish the actual seasonal rainfall and cropping calendar for Kondoa and Bahi through empirical CHIRPS/ERA5 data and local literature. In central Tanzania (semi-arid Dodoma), rainfall is predominantly unimodal (Msimu, Dec–April). Students must explicitly address whether the classic bimodal Masika/Vuli framework applies, and explain local seasonal definitions rather than forcing unverified assumptions.", bold_prefix="Do Not Force Masika and Vuli Assumptions: ")
-builder.add_numbered("2.", "The 23 vegetation indices listed in Section 1.3 are candidates. Students are required to select, compute, and evaluate at least eight (8) optical indices and relevant Sentinel-1 dual-polarization radar indicators. The quality of index selection, physical justification, sensitivity comparison, and agricultural interpretation is far more important than the absolute number calculated.", bold_prefix="Quality over Quantity of Vegetation Indices: ")
-builder.add_numbered("3.", "Public repositories are the recommended submission mode. If choosing a private repository, students must formally invite the instructor (@kadefue) as a collaborator with read access before the deadline. Simply sharing a username or referencing @kadefue in markdown is not a valid submission.", bold_prefix="Verifiable GitHub Submission Protocol: ")
+builder.add_numbered("1.", "Students should establish the actual seasonal rainfall and cropping calendar for Kondoa and Bahi through empirical CHIRPS/ERA5 data and local literature. In central Tanzania (semi-arid Dodoma), rainfall is predominantly unimodal (Msimu, Dec–April). Students must explicitly address whether the classic bimodal Masika/Vuli framework applies, and explain local seasonal definitions rather than forcing unverified assumptions.", bold_title="Do Not Force Masika and Vuli Assumptions: ")
+builder.add_numbered("2.", "The 23 vegetation indices listed in Section 1.3 are candidates. Students are required to select, compute, and evaluate at least eight (8) optical indices and relevant Sentinel-1 dual-polarization radar indicators. The quality of index selection, physical justification, sensitivity comparison, and agricultural interpretation is far more important than the absolute number calculated.", bold_title="Quality over Quantity of Vegetation Indices: ")
+builder.add_numbered("3.", "Public repositories are the recommended submission mode. If choosing a private repository, students must formally invite the instructor (@kadefue) as a collaborator with read access before the deadline. Simply sharing a username or referencing @kadefue in markdown is not a valid submission.", bold_title="Verifiable GitHub Submission Protocol: ")
 
 builder.add_spacer(6)
 
@@ -274,8 +274,7 @@ builder.add_paragraph(
 pdf_bytes = builder.build_pdf_bytes()
 
 destinations = [
-    os.path.join(base_dir, "AGE 418", "Assignment 2026-2027", "Assignment 1.pdf"),
-    os.path.join(base_dir, "AGE 418", "Assignment 2026", "2027", "Assignment 1.pdf")
+    os.path.join(base_dir, "AGE 418", "Assignment 2026-2027", "Assignment 1.pdf")
 ]
 
 for dst in destinations:
