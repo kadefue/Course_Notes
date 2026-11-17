@@ -177,8 +177,11 @@ python3 build_slides.py
 The slide generator requires `python-pptx`, Pillow, the DejaVu Sans fonts, and
 LibreOffice. Lecture content uses 28-point body text and automatically flows
 onto continuation slides, so the resulting decks contain more than the 26
-source topics. Slide numbers reflect the final deck. To generate files in a
-different directory without replacing the published decks, run
+source topics. Equation markers in the source, such as `V_GS`, `10^-3`,
+`B_{i+1}`, and `T^(3/2)`, are rendered as editable subscripts and superscripts
+in the presentations and as formatted text in the PDFs. Slide numbers reflect
+the final deck. To generate files in a different directory without replacing the
+published decks, run
 `python3 build_slides.py --output-dir /path/to/output`.
 
 ---

@@ -4,6 +4,7 @@
 import argparse
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 
@@ -33,6 +34,35 @@ BODY_TOP = 1.43
 BODY_BOTTOM = 6.85
 FONT_REGULAR = ImageFont.truetype("DejaVuSans.ttf", BODY_SIZE * 4)
 FONT_BOLD = ImageFont.truetype("DejaVuSans-Bold.ttf", BODY_SIZE * 4)
+SCRIPT_PATTERN = re.compile(
+    r"(?P<marker>[_^])(?:\{(?P<braced>[^{}]+)\}|\((?P<parenthesized>[^()]+)\)"
+    r"|(?P<simple>[+-]?[A-Za-z0-9]+(?:[+-][0-9]+)?))"
+)
+
+
+def notation_runs(text):
+    """Convert source equation markers to (text, baseline) presentation runs."""
+    runs = []
+    position = 0
+    for match in SCRIPT_PATTERN.finditer(text):
+        ordinary = text[position:match.start()]
+        if "_" in ordinary or "^" in ordinary:
+            raise ValueError(f"Invalid equation notation: {text!r}")
+        if ordinary:
+            runs.append((ordinary, 0))
+        value = match.group("braced") or match.group("parenthesized") or match.group("simple")
+        baseline = -25000 if match.group("marker") == "_" else 30000
+        if runs and not ordinary and baseline == -25000 and runs[-1][1] == baseline:
+            previous, _ = runs.pop()
+            value = previous + "," + value
+        runs.append((value, baseline))
+        position = match.end()
+    ordinary = text[position:]
+    if "_" in ordinary or "^" in ordinary:
+        raise ValueError(f"Invalid equation notation: {text!r}")
+    if ordinary:
+        runs.append((ordinary, 0))
+    return runs
 
 
 def wrapped_lines(text, width_inches, size, bold=False):
@@ -69,7 +99,6 @@ def text_box(slide, left, top, width, height, text, size, color=TEXT,
     frame.margin_top = frame.margin_bottom = 0
     frame.vertical_anchor = MSO_ANCHOR.TOP
     paragraph = frame.paragraphs[0]
-    paragraph.text = text
     paragraph.font.name = FONT_NAME
     paragraph.font.size = Pt(size)
     paragraph.font.bold = bold
@@ -77,6 +106,15 @@ def text_box(slide, left, top, width, height, text, size, color=TEXT,
     paragraph.alignment = align
     if line_height is not None:
         paragraph.line_spacing = Pt(line_height)
+    for line_index, line in enumerate(text.split("\n")):
+        if line_index:
+            paragraph.add_line_break()
+        for value, baseline in notation_runs(line):
+            run = paragraph.add_run()
+            run.text = value
+            if baseline:
+                # python-pptx does not expose DrawingML's baseline attribute.
+                run._r.get_or_add_rPr().set("baseline", str(baseline))
     return shape
 
 
