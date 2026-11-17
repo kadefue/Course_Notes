@@ -64,6 +64,7 @@ The curriculum integrates satellite positioning (GNSS/RTK), Geographic Informati
     * 📄 [Read Full Assignment & Guidelines (Markdown)](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.md)
     * 📑 [Download Official Assignment PDF with SUA Header](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.pdf)
     * 📁 [Folder Assignment 2026-2027 README](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/README.md)
+    * 🛠️ [Assignment Generation Scripts](file:///Users/kadefue/Course%20Notes/AGE%20418/Scripts/README.md) (Python scripts to generate the PDF and Markdown deliverables)
     * **Submission Deadline**: **8 December 2026**
     * **Submission Channel**: Dedicated GitHub repository submitted to instructor [`@kadefue`](https://github.com/kadefue) (No email submissions).
 
