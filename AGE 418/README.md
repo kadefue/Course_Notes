@@ -58,6 +58,22 @@ The curriculum integrates satellite positioning (GNSS/RTK), Geographic Informati
 
 ## 🗂️ Materials in this Directory
 
+* **Coursework & Practical Assignments**:
+  * **Assignment 2026/2027 — Practical Assignment 1**: *Integrated Sentinel-1 and Sentinel-2 Remote Sensing for Assessing Seasonal Cropping Patterns, Vegetation Dynamics, and Climate–Crop Interactions in Kondoa and Bahi Districts, Dodoma Region, Tanzania (2016–2026)*:
+    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AE — Year 4)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE — Year 4)**
+    * 📄 [Read Full Assignment & Guidelines (Markdown)](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.md)
+    * 📑 [Download Official Assignment PDF with SUA Header](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.pdf)
+    * 📁 [Folder Assignment 2026-2027 README](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/README.md)
+    * **Submission Deadline**: **8 December 2026**
+    * **Submission Channel**: Dedicated GitHub repository submitted to instructor [`@kadefue`](https://github.com/kadefue) (No email submissions).
+
+> [!IMPORTANT]
+> ### 🎓 Student Guidance & Recommendations for Practical Assignment 1
+>
+> 1. **Research-Oriented Practical Exercise**: This assignment is designed as a scientific, research-oriented investigation rather than routine satellite image processing. Students must demonstrate proficiency in acquiring, integrating, processing, analysing, interpreting, and documenting multi-source remote sensing and climate data using reproducible workflows.
+> 2. **Do Not Force Masika and Vuli Assumptions**: Students should establish the actual seasonal rainfall and cropping calendar for Kondoa and Bahi through empirical CHIRPS/ERA5 data and regional literature. In central Tanzania (semi-arid Dodoma), rainfall is predominantly unimodal (*Msimu*, Dec–April). Students must explicitly address whether the classic bimodal *Masika/Vuli* framework applies and explain local seasonal definitions rather than forcing unverified assumptions.
+> 3. **Quality Over Quantity of Vegetation Indices**: The 23 indices listed across Section 1.3 are candidates. Students are required to select, compute, and evaluate **at least eight (8) optical indices** from Sentinel-2 and **relevant Sentinel-1 dual-polarization radar indicators**. The quality of index selection, physical justification, sensitivity comparison, and agricultural interpretation is far more important than the absolute number calculated.
+> 4. **Verifiable GitHub Submission Protocol**: Each student must create a dedicated repository (e.g. `AGE418_Practical_Assignment_1`). Public repositories are recommended. For private repositories, students **must invite `@kadefue` as a collaborator** with read access before the deadline. Submitting a GitHub username alone or mentioning `@kadefue` in a README does not constitute a valid submission. All submissions must be accompanied by the repository URL via the designated submission portal.
 * **Lecture Compendia (`.pdf`)**: 15 complete academic compendia typeset in $\LaTeX$ (`AGE418Lecture1Compendium.tex.pdf` through `AGE418Lecture15Compendium.tex.pdf`).
 * **Lecture Presentations (`.pptx`)**: 15 slide decks covering each lecture module.
 * **Continuous Assessment Tests**:

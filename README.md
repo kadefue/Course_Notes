@@ -474,6 +474,14 @@ Course_Notes/
   * [Compendium 15: Future Trends & Frontier Challenges](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE418Lecture15Compendium.tex.pdf)
 * **Lecture Presentation Slide Decks (PPTX)**:
   * Complete 15 lecture slide decks covering [Lecture 1: Introduction](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%201%20-%20Introduction%20to%20Precision%20Agriculture.pptx), [Lecture 2: GIS & GPS](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%202%20-%20GIS%20and%20GPS%20Basics.pptx), [Lecture 8: VRT Controls](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%208%20-%20Control%20Systems%20and%20VRT.pptx), [Lecture 11: DSS & AI](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%2011%20-%20DSS%20and%20AI%20in%20Precision%20Agriculture.pptx), [Lecture 12: Precision Irrigation](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%2012%20-%20Precision%20Irrigation%20and%20Water%20Management.pptx), [Lecture 13: Ag Robotics](file:///Users/kadefue/Course%20Notes/AGE%20418/AGE%20418%20-%20Lecture%2013%20-%20Agricultural%20Robotics%20and%20Automation.pptx).
+* **Coursework & Practical Assignments**:
+  * **Practical Assignment 1 (2026/2027)**: *Integrated Sentinel-1 and Sentinel-2 Remote Sensing for Assessing Seasonal Cropping Patterns, Vegetation Dynamics, and Climate–Crop Interactions in Kondoa and Bahi Districts, Dodoma Region, Tanzania (2016–2026)*:
+    * 📄 [Assignment 1 Document (Markdown)](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.md)
+    * 📑 [Official Assignment PDF with SUA Logo & Heading](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/Assignment%201.pdf)
+    * 📂 [Assignment 2026-2027 Folder README](file:///Users/kadefue/Course%20Notes/AGE%20418/Assignment%202026-2027/README.md)
+    * **Deadline**: 8 December 2026 | **Submission**: Individual GitHub repository submitted to [`@kadefue`](https://github.com/kadefue) (no email submissions).
+    * 🎓 **Target Degree Programs**: **BSc in Agricultural Engineering (BSc AE)** and **BSc in Irrigation and Water Resources Engineering (BSc IWRE)** (Year 4)
+    * *Notice to Students*: Research-oriented exercise requiring empirical climate calendars (do not force Masika/Vuli in unimodal Dodoma), at least 8 optical indices + radar indicators (quality over quantity), and verifiable GitHub collaborator access.
 * **Continuous Assessments & University Examinations**:
   * [Test 2 (2023–2024)](file:///Users/kadefue/Course%20Notes/AGE%20418/AE%20418%20Test%202%202023-2024.docx)
   * [Test 1 (2024–2025)](file:///Users/kadefue/Course%20Notes/AGE%20418/AE%20418%20Test%201%202024-25.docx)
