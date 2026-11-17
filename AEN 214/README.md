@@ -174,6 +174,13 @@ python3 build_assignments.py
 python3 build_slides.py
 ```
 
+The slide generator requires `python-pptx`, Pillow, the DejaVu Sans fonts, and
+LibreOffice. Lecture content uses 28-point body text and automatically flows
+onto continuation slides, so the resulting decks contain more than the 26
+source topics. Slide numbers reflect the final deck. To generate files in a
+different directory without replacing the published decks, run
+`python3 build_slides.py --output-dir /path/to/output`.
+
 ---
 
 ## 📚 Prescribed Textbooks & Reading List

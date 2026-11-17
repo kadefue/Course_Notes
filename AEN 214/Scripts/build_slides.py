@@ -1,617 +1,308 @@
 #!/usr/bin/env python3
-"""
-build_slides.py
-Generates comprehensive, professional 16:9 widescreen PowerPoint (.pptx) presentations
-and converts them to PDF for all 9 lectures of:
-AEN 214: INTRODUCTION TO ELECTRONICS
-Department of Agricultural Engineering, Sokoine University of Agriculture (SUA).
+"""Build readable, paginated AEN 214 lecture presentations and PDFs."""
 
-Specifications:
-- Strictly >= 25 slides per lecture (26 structured slides per lecture).
-- Official SUA Brand Identity: SUA Green (#008836), Black/Charcoal, and White.
-- Official SUA.png logo embedded on every slide header.
-- Zero black spots: Standard unicode engineering symbols (Ω, μ, π, τ, ±, ², ³, °, α, β, γ, λ, √).
-- Grounded in Tanzanian agricultural engineering scenarios.
-- Integrated schematics and real hardware images from Figures/ directory.
-- Automated headless conversion from PPTX to PDF via LibreOffice.
-"""
-
+import argparse
 import os
-import sys
+from pathlib import Path
 import subprocess
+import tempfile
+
+from PIL import Image, ImageFont
 from pptx import Presentation
-from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE, PP_ALIGN
+from pptx.util import Inches, Pt
 
-LECTURES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Lectures"))
-FIGURES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Figures"))
-os.makedirs(LECTURES_DIR, exist_ok=True)
+ROOT = Path(__file__).resolve().parent.parent
+FIGURES_DIR = ROOT / "Figures"
+LECTURES_DIR = ROOT / "Lectures"
+GREEN = RGBColor(0, 136, 54)
+DARK_GREEN = RGBColor(0, 90, 36)
+TEXT = RGBColor(17, 24, 39)
+MUTED = RGBColor(75, 85, 99)
+WHITE = RGBColor(255, 255, 255)
+LIGHT_GREEN = RGBColor(240, 253, 244)
+BORDER = RGBColor(209, 213, 219)
+FONT_NAME = "DejaVu Sans"
+BODY_SIZE = 28
+BODY_LINE = 36
+HEADING_SIZE = 24
+HEADING_LINE = 32
+BODY_TOP = 1.43
+BODY_BOTTOM = 6.85
+FONT_REGULAR = ImageFont.truetype("DejaVuSans.ttf", BODY_SIZE * 4)
+FONT_BOLD = ImageFont.truetype("DejaVuSans-Bold.ttf", BODY_SIZE * 4)
 
-# SUA Brand Colors
-SUA_GREEN = RGBColor(0, 136, 54)         # #008836 Official SUA Logo Green
-SUA_DARKGREEN = RGBColor(0, 90, 36)      # #005a24 Dark Forest Green
-SUA_LIGHT_BG = RGBColor(248, 250, 248)   # Crisp light background
-COLOR_TEXT = RGBColor(17, 24, 39)        # Charcoal dark text
-COLOR_MUTED = RGBColor(75, 85, 99)       # Medium slate gray
-COLOR_WHITE = RGBColor(255, 255, 255)
-COLOR_CARD_BG = RGBColor(240, 253, 244)  # Light green tint card
-COLOR_BORDER = RGBColor(209, 213, 219)   # Light gray border
 
-SUA_LOGO_PATH = os.path.join(FIGURES_DIR, "SUA.png")
-if not os.path.exists(SUA_LOGO_PATH):
-    SUA_LOGO_PATH = "/home/kadefue/Course_Notes/SUA.png"
+def wrapped_lines(text, width_inches, size, bold=False):
+    """Wrap using conservative font metrics; the resulting breaks are explicit."""
+    font = FONT_BOLD if bold else FONT_REGULAR
+    max_width = width_inches * 72 * 4 * 0.94
+    lines = []
+    for source_line in text.split("\n"):
+        words = source_line.split()
+        if not words:
+            lines.append("")
+            continue
+        line = words[0]
+        for word in words[1:]:
+            candidate = line + " " + word
+            if font.getlength(candidate) * size / BODY_SIZE <= max_width:
+                line = candidate
+            else:
+                lines.append(line)
+                line = word
+        if font.getlength(line) * size / BODY_SIZE > max_width:
+            raise ValueError(f"Word is too wide for a slide: {line!r}")
+        lines.append(line)
+    return lines
+
+
+def text_box(slide, left, top, width, height, text, size, color=TEXT,
+             bold=False, align=PP_ALIGN.LEFT, line_height=None):
+    shape = slide.shapes.add_textbox(Inches(left), Inches(top), Inches(width), Inches(height))
+    frame = shape.text_frame
+    frame.word_wrap = False
+    frame.auto_size = MSO_AUTO_SIZE.NONE
+    frame.margin_left = frame.margin_right = 0
+    frame.margin_top = frame.margin_bottom = 0
+    frame.vertical_anchor = MSO_ANCHOR.TOP
+    paragraph = frame.paragraphs[0]
+    paragraph.text = text
+    paragraph.font.name = FONT_NAME
+    paragraph.font.size = Pt(size)
+    paragraph.font.bold = bold
+    paragraph.font.color.rgb = color
+    paragraph.alignment = align
+    if line_height is not None:
+        paragraph.line_spacing = Pt(line_height)
+    return shape
+
+
+def rectangle(slide, left, top, width, height, fill, border=None):
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE, Inches(left), Inches(top), Inches(width), Inches(height)
+    )
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = fill
+    if border is None:
+        shape.line.fill.background()
+    else:
+        shape.line.color.rgb = border
+    return shape
+
+
+def add_picture_fit(slide, path, left, top, width, height):
+    with Image.open(path) as image:
+        image_width, image_height = image.size
+    scale = min(width / image_width, height / image_height)
+    actual_width, actual_height = image_width * scale, image_height * scale
+    slide.shapes.add_picture(
+        str(path), Inches(left + (width - actual_width) / 2),
+        Inches(top + (height - actual_height) / 2),
+        width=Inches(actual_width), height=Inches(actual_height),
+    )
+
 
 def create_base_slide(prs):
-    """Creates a blank 16:9 slide."""
-    slide = prs.slides.add_slide(prs.slide_layouts[6])
-    return slide
+    return prs.slides.add_slide(prs.slide_layouts[6])
 
-def add_header(slide, title_text, category_text="AEN 214: INTRODUCTION TO ELECTRONICS"):
-    """Adds standard SUA Green header banner, course subtitle, slide title, and SUA logo."""
-    # Top banner background
-    banner = slide.shapes.add_shape(
-        MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(1.1)
-    )
-    banner.fill.solid()
-    banner.fill.fore_color.rgb = SUA_GREEN
-    banner.line.color.rgb = SUA_DARKGREEN
-    banner.line.width = Pt(1.5)
 
-    # Accent underline
-    line = slide.shapes.add_shape(
-        MSO_SHAPE.RECTANGLE, Inches(0), Inches(1.1), Inches(13.333), Inches(0.04)
-    )
-    line.fill.solid()
-    line.fill.fore_color.rgb = RGBColor(0, 60, 20)
-    line.line.fill.background()
+def add_header(slide, title, continuation=False):
+    rectangle(slide, 0, 0, 13.333, 1.18, GREEN)
+    text_box(slide, 0.5, 0.08, 10.8, 0.22,
+             "AEN 214: INTRODUCTION TO ELECTRONICS", 11, WHITE, True)
+    if continuation:
+        title += " (continued)"
+    size = 23
+    lines = wrapped_lines(title, 10.9, size, bold=True)
+    while len(lines) > 2 and size > 16:
+        size -= 1
+        lines = wrapped_lines(title, 10.9, size, bold=True)
+    if len(lines) > 2:
+        raise ValueError(f"Slide title does not fit: {title}")
+    text_box(slide, 0.5, 0.34, 10.9, 0.78, "\n".join(lines),
+             size, WHITE, True, line_height=size + 2)
+    add_picture_fit(slide, FIGURES_DIR / "SUA.png", 11.9, 0.10, 0.95, 0.94)
 
-    # Category Text
-    tb_cat = slide.shapes.add_textbox(Inches(0.6), Inches(0.12), Inches(10.5), Inches(0.3))
-    tf_cat = tb_cat.text_frame
-    tf_cat.word_wrap = True
-    p_cat = tf_cat.paragraphs[0]
-    p_cat.text = category_text.upper()
-    p_cat.font.size = Pt(10)
-    p_cat.font.bold = True
-    p_cat.font.color.rgb = RGBColor(220, 252, 231) # Light green text
 
-    # Title Text
-    tb_title = slide.shapes.add_textbox(Inches(0.6), Inches(0.40), Inches(10.8), Inches(0.6))
-    tf_title = tb_title.text_frame
-    tf_title.word_wrap = True
-    p_title = tf_title.paragraphs[0]
-    p_title.text = title_text
-    p_title.font.size = Pt(21)
-    p_title.font.bold = True
-    p_title.font.color.rgb = COLOR_WHITE
+def add_footer(slide, current_slide, total_slides):
+    rectangle(slide, 0.5, 7.03, 12.33, 0.015, BORDER)
+    text_box(slide, 0.5, 7.11, 9.8, 0.22,
+             "Sokoine University of Agriculture | Department of Agricultural Engineering",
+             10, MUTED)
+    text_box(slide, 10.5, 7.11, 2.3, 0.22,
+             f"Slide {current_slide} of {total_slides}", 10, GREEN, True,
+             align=PP_ALIGN.RIGHT)
 
-    # SUA Logo
-    if os.path.exists(SUA_LOGO_PATH):
-        slide.shapes.add_picture(SUA_LOGO_PATH, Inches(12.0), Inches(0.12), height=Inches(0.85))
-
-def add_footer(slide, current_slide, total_slides=26):
-    """Adds standard footer bar with institutional metadata and slide number."""
-    # Footer line
-    line = slide.shapes.add_shape(
-        MSO_SHAPE.RECTANGLE, Inches(0.6), Inches(7.05), Inches(12.133), Inches(0.02)
-    )
-    line.fill.solid()
-    line.fill.fore_color.rgb = COLOR_BORDER
-    line.line.fill.background()
-
-    # Left footer text
-    tb_left = slide.shapes.add_textbox(Inches(0.6), Inches(7.08), Inches(9.0), Inches(0.35))
-    tf_left = tb_left.text_frame
-    p_l = tf_left.paragraphs[0]
-    p_l.text = "Sokoine University of Agriculture | School of Engineering & Technology | Department of Agricultural Engineering"
-    p_l.font.size = Pt(8.5)
-    p_l.font.color.rgb = COLOR_MUTED
-
-    # Right footer text (Slide number)
-    tb_right = slide.shapes.add_textbox(Inches(10.5), Inches(7.08), Inches(2.2), Inches(0.35))
-    tf_right = tb_right.text_frame
-    p_r = tf_right.paragraphs[0]
-    p_r.text = f"Slide {current_slide} of {total_slides}"
-    p_r.alignment = PP_ALIGN.RIGHT
-    p_r.font.size = Pt(9)
-    p_r.font.bold = True
-    p_r.font.color.rgb = SUA_GREEN
 
 def add_title_slide(prs, lecture_num, title, subtitle, current_slide=1, total_slides=26):
-    """Constructs the master title slide."""
     slide = create_base_slide(prs)
-
-    # Background banner
-    bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(7.5))
-    bg.fill.solid()
-    bg.fill.fore_color.rgb = SUA_LIGHT_BG
-    bg.line.fill.background()
-
-    # Header Card
-    hdr_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(0.6), Inches(11.733), Inches(2.2))
-    hdr_card.fill.solid()
-    hdr_card.fill.fore_color.rgb = SUA_GREEN
-    hdr_card.line.color.rgb = SUA_DARKGREEN
-    hdr_card.line.width = Pt(2)
-
-    # SUA Logo inside card
-    if os.path.exists(SUA_LOGO_PATH):
-        slide.shapes.add_picture(SUA_LOGO_PATH, Inches(1.1), Inches(0.85), height=Inches(1.7))
-
-    tb_univ = slide.shapes.add_textbox(Inches(2.7), Inches(0.75), Inches(9.5), Inches(0.4))
-    p_u = tb_univ.text_frame.paragraphs[0]
-    p_u.text = "SOKOINE UNIVERSITY OF AGRICULTURE"
-    p_u.font.size = Pt(17)
-    p_u.font.bold = True
-    p_u.font.color.rgb = COLOR_WHITE
-
-    tb_dept = slide.shapes.add_textbox(Inches(2.7), Inches(1.15), Inches(9.5), Inches(0.35))
-    p_d = tb_dept.text_frame.paragraphs[0]
-    p_d.text = "School of Engineering and Technology | Department of Agricultural Engineering"
-    p_d.font.size = Pt(12)
-    p_d.font.color.rgb = RGBColor(220, 252, 231)
-
-    tb_code = slide.shapes.add_textbox(Inches(2.7), Inches(1.55), Inches(9.5), Inches(0.45))
-    p_c = tb_code.text_frame.paragraphs[0]
-    p_c.text = f"AEN 214: INTRODUCTION TO ELECTRONICS — LECTURE {lecture_num}"
-    p_c.font.size = Pt(15)
-    p_c.font.bold = True
-    p_c.font.color.rgb = RGBColor(254, 240, 138) # Light yellow accent
-
-    # Lecture Title & Subtitle Card
-    title_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(3.0), Inches(11.733), Inches(2.5))
-    title_card.fill.solid()
-    title_card.fill.fore_color.rgb = COLOR_WHITE
-    title_card.line.color.rgb = COLOR_BORDER
-    title_card.line.width = Pt(1)
-
-    tb_t = slide.shapes.add_textbox(Inches(1.2), Inches(3.2), Inches(11.0), Inches(1.0))
-    tf_t = tb_t.text_frame
-    tf_t.word_wrap = True
-    p_t = tf_t.paragraphs[0]
-    p_t.text = title
-    p_t.font.size = Pt(28)
-    p_t.font.bold = True
-    p_t.font.color.rgb = SUA_DARKGREEN
-
-    tb_sub = slide.shapes.add_textbox(Inches(1.2), Inches(4.3), Inches(11.0), Inches(0.8))
-    tf_sub = tb_sub.text_frame
-    tf_sub.word_wrap = True
-    p_s = tf_sub.paragraphs[0]
-    p_s.text = subtitle
-    p_s.font.size = Pt(15)
-    p_s.font.color.rgb = COLOR_MUTED
-
-    # Instructor Card
-    inst_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(5.7), Inches(11.733), Inches(1.0))
-    inst_card.fill.solid()
-    inst_card.fill.fore_color.rgb = COLOR_CARD_BG
-    inst_card.line.color.rgb = SUA_GREEN
-    inst_card.line.width = Pt(1)
-
-    tb_inst = slide.shapes.add_textbox(Inches(1.2), Inches(5.75), Inches(11.0), Inches(0.8))
-    tf_inst = tb_inst.text_frame
-    p_i = tf_inst.paragraphs[0]
-    p_i.text = "Course Instructor: Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T)"
-    p_i.font.size = Pt(12)
-    p_i.font.bold = True
-    p_i.font.color.rgb = COLOR_TEXT
-
-    p_i2 = tf_inst.add_paragraph()
-    p_i2.text = "Electronics & Precision Agriculture Laboratory | Academic Year 2025/2026 | Sokoine University of Agriculture"
-    p_i2.font.size = Pt(10)
-    p_i2.font.color.rgb = COLOR_MUTED
-
-    add_footer(slide, current_slide, total_slides)
+    rectangle(slide, 0, 0, 13.333, 7.5, RGBColor(248, 250, 248))
+    rectangle(slide, 0.5, 0.4, 12.33, 2.05, GREEN)
+    add_picture_fit(slide, FIGURES_DIR / "SUA.png", 0.8, 0.7, 1.3, 1.4)
+    text_box(slide, 2.4, 0.65, 9.9, 0.4,
+             "SOKOINE UNIVERSITY OF AGRICULTURE", 24, WHITE, True)
+    text_box(slide, 2.4, 1.16, 9.9, 0.75,
+             "School of Engineering and Technology\nDepartment of Agricultural Engineering",
+             18, WHITE, line_height=23)
+    text_box(slide, 2.4, 2.0, 9.9, 0.35,
+             f"AEN 214: INTRODUCTION TO ELECTRONICS — LECTURE {lecture_num}",
+             19, WHITE, True)
+    rectangle(slide, 0.5, 2.7, 12.33, 2.55, WHITE, BORDER)
+    title_lines = wrapped_lines(title, 11.3, 32, bold=True)
+    subtitle_lines = wrapped_lines(subtitle, 11.3, 23)
+    if len(title_lines) > 2 or len(subtitle_lines) > 3:
+        raise ValueError(f"Title slide content does not fit: {title}")
+    text_box(slide, 0.9, 2.95, 11.3, 1.15, "\n".join(title_lines),
+             32, DARK_GREEN, True, line_height=38)
+    text_box(slide, 0.9, 4.12, 11.3, 1.0, "\n".join(subtitle_lines),
+             23, MUTED, line_height=28)
+    rectangle(slide, 0.5, 5.5, 12.33, 1.35, LIGHT_GREEN, GREEN)
+    text_box(slide, 0.9, 5.7, 11.3, 0.35,
+             "Course Instructor: Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T)",
+             19, TEXT, True)
+    text_box(slide, 0.9, 6.15, 11.3, 0.52,
+             "Electronics & Precision Agriculture Laboratory | Academic Year 2025/2026\n"
+             "Sokoine University of Agriculture",
+             16, MUTED, line_height=20)
     return slide
+
+
+def add_content_slides(prs, title, blocks, image_file=None):
+    """Lay out (text, is_heading) blocks, spilling onto as many slides as needed."""
+    image_path = FIGURES_DIR / image_file if image_file else None
+    if image_path is not None and not image_path.is_file():
+        raise FileNotFoundError(f"Slide image not found: {image_path}")
+    remaining = list(blocks)
+    first_slide = None
+    continuation = False
+    while remaining:
+        slide = create_base_slide(prs)
+        if first_slide is None:
+            first_slide = slide
+        add_header(slide, title, continuation)
+        with_image = image_path is not None and not continuation
+        width = 7.0 if with_image else 11.9
+        rectangle(slide, 0.5, 1.28, 7.4 if with_image else 12.33, 5.64, WHITE, BORDER)
+        if with_image:
+            rectangle(slide, 8.05, 1.28, 4.78, 5.64, WHITE, BORDER)
+            add_picture_fit(slide, image_path, 8.2, 1.43, 4.48, 5.34)
+        y = BODY_TOP
+        last_was_heading = False
+        while remaining:
+            content, heading = remaining[0]
+            size = HEADING_SIZE if heading else BODY_SIZE
+            line_height = HEADING_LINE if heading else BODY_LINE
+            lines = wrapped_lines(content, width, size, bold=heading)
+            available = int(((BODY_BOTTOM - y) * 72 + 0.01) // line_height)
+            if (heading and len(remaining) > 1
+                    and y + (len(lines) * line_height + BODY_LINE) / 72 + 0.10 > BODY_BOTTOM):
+                break
+            if available < 1:
+                break
+            if len(lines) > available and y > BODY_TOP and not last_was_heading:
+                break
+            count = min(len(lines), available)
+            chunk = lines[:count]
+            height = count * line_height / 72
+            text_box(slide, 0.7, y, width, height, "\n".join(chunk), size,
+                     DARK_GREEN if heading else TEXT, heading, line_height=line_height)
+            y += height + 0.10
+            if count == len(lines):
+                remaining.pop(0)
+                last_was_heading = heading
+            else:
+                remaining[0] = (" ".join(lines[count:]), heading)
+                break
+        if y == BODY_TOP:
+            raise ValueError(f"Cannot fit content on slide: {title}")
+        continuation = True
+    return first_slide
+
 
 def add_bullet_slide(prs, title, bullets, image_file=None, current_slide=2, total_slides=26):
-    """Creates a structured content slide with bullet points and optional side figure."""
-    slide = create_base_slide(prs)
-    add_header(slide, title)
+    return add_content_slides(prs, title, [("• " + bullet, False) for bullet in bullets], image_file)
 
-    has_img = False
-    img_path = None
-    if image_file:
-        full_path = os.path.join(FIGURES_DIR, image_file)
-        if os.path.exists(full_path):
-            has_img = True
-            img_path = full_path
-
-    # Layout dimensions
-    if has_img:
-        text_width = Inches(7.2)
-        img_left = Inches(8.1)
-        img_top = Inches(1.4)
-        img_width = Inches(4.6)
-    else:
-        text_width = Inches(12.133)
-
-    # Card background for text
-    card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), text_width, Inches(5.5))
-    card.fill.solid()
-    card.fill.fore_color.rgb = COLOR_WHITE
-    card.line.color.rgb = COLOR_BORDER
-    card.line.width = Pt(1)
-
-    tb = slide.shapes.add_textbox(Inches(0.8), Inches(1.45), text_width - Inches(0.4), Inches(5.1))
-    tf = tb.text_frame
-    tf.word_wrap = True
-
-    for i, bullet in enumerate(bullets):
-        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-        p.space_after = Pt(10)
-        p.font.size = Pt(14)
-        p.font.color.rgb = COLOR_TEXT
-
-        # Bold highlight prefix before colon if present
-        if ":" in bullet:
-            parts = bullet.split(":", 1)
-            p.text = "• " + parts[0] + ":"
-            p.font.bold = True
-            p.font.color.rgb = SUA_DARKGREEN
-            
-            run = p.add_run()
-            run.text = parts[1]
-            run.font.bold = False
-            run.font.color.rgb = COLOR_TEXT
-        else:
-            p.text = "• " + bullet
-
-    if has_img:
-        # Card border for image
-        img_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, img_left - Inches(0.1), img_top - Inches(0.1), img_width + Inches(0.2), Inches(5.5))
-        img_card.fill.solid()
-        img_card.fill.fore_color.rgb = COLOR_WHITE
-        img_card.line.color.rgb = COLOR_BORDER
-        img_card.line.width = Pt(1)
-        slide.shapes.add_picture(img_path, img_left, img_top + Inches(0.3), width=img_width)
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
 
 def add_example_slide(prs, ex_num, title, problem_stmt, solution_steps, current_slide, total_slides=26):
-    """Creates a step-by-step worked engineering example slide."""
-    slide = create_base_slide(prs)
-    add_header(slide, f"Worked Engineering Example {ex_num}: {title}")
+    blocks = [("PROBLEM SPECIFICATION & AGRICULTURAL CONTEXT", True),
+              (problem_stmt, False), ("STEP-BY-STEP SOLUTION & VERIFICATION", True)]
+    blocks.extend((step, False) for step in solution_steps)
+    return add_content_slides(prs, f"Worked Engineering Example {ex_num}: {title}", blocks)
 
-    # Problem Box (Top)
-    prob_box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), Inches(12.133), Inches(1.6))
-    prob_box.fill.solid()
-    prob_box.fill.fore_color.rgb = COLOR_CARD_BG
-    prob_box.line.color.rgb = SUA_GREEN
-    prob_box.line.width = Pt(1.5)
 
-    tb_p = slide.shapes.add_textbox(Inches(0.8), Inches(1.35), Inches(11.7), Inches(1.4))
-    tf_p = tb_p.text_frame
-    tf_p.word_wrap = True
-    p_lbl = tf_p.paragraphs[0]
-    p_lbl.text = f"PROBLEM SPECIFICATION & AGRICULTURAL CONTEXT:"
-    p_lbl.font.size = Pt(11)
-    p_lbl.font.bold = True
-    p_lbl.font.color.rgb = SUA_DARKGREEN
-    
-    p_txt = tf_p.add_paragraph()
-    p_txt.text = problem_stmt
-    p_txt.font.size = Pt(12)
-    p_txt.font.color.rgb = COLOR_TEXT
+def add_case_study_slide(prs, case_num, title, location, problem_desc, solution_desc,
+                         impact_metrics, current_slide, total_slides=26):
+    blocks = [("FIELD LOCATION & PROBLEM", True), ("Geographic Location: " + location, False),
+              (problem_desc, False), ("ENGINEERING SOLUTION & AGRONOMIC IMPACT", True),
+              (solution_desc, False), ("MEASURABLE PERFORMANCE METRICS", True)]
+    blocks.extend(("• " + metric, False) for metric in impact_metrics)
+    return add_content_slides(prs, f"Tanzanian Field Case Study {case_num}: {title}", blocks)
 
-    # Solution Box (Bottom)
-    sol_box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(3.05), Inches(12.133), Inches(3.8))
-    sol_box.fill.solid()
-    sol_box.fill.fore_color.rgb = COLOR_WHITE
-    sol_box.line.color.rgb = COLOR_BORDER
-    sol_box.line.width = Pt(1)
-
-    tb_s = slide.shapes.add_textbox(Inches(0.8), Inches(3.15), Inches(11.7), Inches(3.5))
-    tf_s = tb_s.text_frame
-    tf_s.word_wrap = True
-    p_slbl = tf_s.paragraphs[0]
-    p_slbl.text = "STEP-BY-STEP MATHEMATICAL SOLUTION & VERIFICATION:"
-    p_slbl.font.size = Pt(11)
-    p_slbl.font.bold = True
-    p_slbl.font.color.rgb = SUA_GREEN
-
-    for step in solution_steps:
-        p_step = tf_s.add_paragraph()
-        p_step.space_after = Pt(4)
-        p_step.font.size = Pt(11.5)
-        p_step.font.color.rgb = COLOR_TEXT
-        p_step.text = step
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
-
-def add_case_study_slide(prs, case_num, title, location, problem_desc, solution_desc, impact_metrics, current_slide, total_slides=26):
-    """Creates a Tanzanian agricultural engineering field case study slide."""
-    slide = create_base_slide(prs)
-    add_header(slide, f"Tanzanian Field Case Study {case_num}: {title}")
-
-    # Left Column: Problem & Context
-    box_l = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), Inches(5.9), Inches(5.5))
-    box_l.fill.solid()
-    box_l.fill.fore_color.rgb = COLOR_WHITE
-    box_l.line.color.rgb = COLOR_BORDER
-    box_l.line.width = Pt(1)
-
-    tb_l = slide.shapes.add_textbox(Inches(0.8), Inches(1.45), Inches(5.5), Inches(5.1))
-    tf_l = tb_l.text_frame
-    tf_l.word_wrap = True
-    p_lt = tf_l.paragraphs[0]
-    p_lt.text = f"FIELD LOCATION & PROBLEM IDENTIFICATION"
-    p_lt.font.size = Pt(13)
-    p_lt.font.bold = True
-    p_lt.font.color.rgb = RGBColor(185, 28, 28) # Red accent
-
-    p_loc = tf_l.add_paragraph()
-    p_loc.text = f"• Geographic Location: {location}"
-    p_loc.font.size = Pt(12)
-    p_loc.font.bold = True
-    p_loc.font.color.rgb = COLOR_TEXT
-    p_loc.space_after = Pt(8)
-
-    p_pdesc = tf_l.add_paragraph()
-    p_pdesc.text = problem_desc
-    p_pdesc.font.size = Pt(12)
-    p_pdesc.font.color.rgb = COLOR_TEXT
-
-    # Right Column: Engineering Solution & Impact
-    box_r = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(1.3), Inches(5.9), Inches(5.5))
-    box_r.fill.solid()
-    box_r.fill.fore_color.rgb = COLOR_CARD_BG
-    box_r.line.color.rgb = SUA_GREEN
-    box_r.line.width = Pt(1.5)
-
-    tb_r = slide.shapes.add_textbox(Inches(7.0), Inches(1.45), Inches(5.5), Inches(5.1))
-    tf_r = tb_r.text_frame
-    tf_r.word_wrap = True
-    p_rt = tf_r.paragraphs[0]
-    p_rt.text = "SUA ENGINEERING SOLUTION & AGRONOMIC IMPACT"
-    p_rt.font.size = Pt(13)
-    p_rt.font.bold = True
-    p_rt.font.color.rgb = SUA_DARKGREEN
-
-    p_sdesc = tf_r.add_paragraph()
-    p_sdesc.text = solution_desc
-    p_sdesc.font.size = Pt(12)
-    p_sdesc.font.color.rgb = COLOR_TEXT
-    p_sdesc.space_after = Pt(10)
-
-    p_it = tf_r.add_paragraph()
-    p_it.text = "Measurable Performance Metrics:"
-    p_it.font.size = Pt(12)
-    p_it.font.bold = True
-    p_it.font.color.rgb = SUA_GREEN
-
-    for metric in impact_metrics:
-        p_m = tf_r.add_paragraph()
-        p_m.text = "✔ " + metric
-        p_m.font.size = Pt(11.5)
-        p_m.font.color.rgb = COLOR_TEXT
-        p_m.space_after = Pt(4)
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
 
 def add_lab_slide(prs, title, objectives, procedures, current_slide, total_slides=26):
-    """Creates a laboratory bench protocol slide."""
-    slide = create_base_slide(prs)
-    add_header(slide, f"Laboratory Bench Protocol: {title}")
+    blocks = [("PRACTICAL LAB LEARNING OUTCOMES & BENCH REQUIREMENTS", True)]
+    blocks.extend(("• " + obj, False) for obj in objectives)
+    blocks.append(("STEP-BY-STEP PROTOTYPING & DIAGNOSTIC PROCEDURE", True))
+    blocks.extend((proc, False) for proc in procedures)
+    return add_content_slides(prs, f"Laboratory Bench Protocol: {title}", blocks)
 
-    # Top Card: Lab Objectives
-    box_top = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), Inches(12.133), Inches(1.5))
-    box_top.fill.solid()
-    box_top.fill.fore_color.rgb = COLOR_CARD_BG
-    box_top.line.color.rgb = SUA_GREEN
-    box_top.line.width = Pt(1)
-
-    tb_top = slide.shapes.add_textbox(Inches(0.8), Inches(1.35), Inches(11.7), Inches(1.3))
-    tf_top = tb_top.text_frame
-    tf_top.word_wrap = True
-    p_ot = tf_top.paragraphs[0]
-    p_ot.text = "PRACTICAL LAB LEARNING OUTCOMES & BENCH REQUIREMENTS:"
-    p_ot.font.size = Pt(11)
-    p_ot.font.bold = True
-    p_ot.font.color.rgb = SUA_DARKGREEN
-
-    for obj in objectives:
-        p_o = tf_top.add_paragraph()
-        p_o.text = "• " + obj
-        p_o.font.size = Pt(11)
-        p_o.font.color.rgb = COLOR_TEXT
-
-    # Bottom Card: Experimental Bench Procedures
-    box_bot = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(2.95), Inches(12.133), Inches(3.9))
-    box_bot.fill.solid()
-    box_bot.fill.fore_color.rgb = COLOR_WHITE
-    box_bot.line.color.rgb = COLOR_BORDER
-    box_bot.line.width = Pt(1)
-
-    tb_bot = slide.shapes.add_textbox(Inches(0.8), Inches(3.05), Inches(11.7), Inches(3.6))
-    tf_bot = tb_bot.text_frame
-    tf_bot.word_wrap = True
-    p_pt = tf_bot.paragraphs[0]
-    p_pt.text = "STEP-BY-STEP PROTOTYPING & DIAGNOSTIC PROCEDURE:"
-    p_pt.font.size = Pt(11)
-    p_pt.font.bold = True
-    p_pt.font.color.rgb = SUA_GREEN
-
-    for proc in procedures:
-        p_pr = tf_bot.add_paragraph()
-        p_pr.space_after = Pt(4)
-        p_pr.font.size = Pt(11.5)
-        p_pr.font.color.rgb = COLOR_TEXT
-        p_pr.text = proc
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
 
 def add_summary_slide(prs, lecture_num, takeaways, formula_cheatsheet, current_slide=25, total_slides=26):
-    """Creates a summary and formula cheat-sheet slide."""
-    slide = create_base_slide(prs)
-    add_header(slide, f"Lecture {lecture_num} Synthesis: Key Takeaways & Formula Sheet")
+    blocks = [("CORE CONCEPTUAL TAKEAWAYS", True)]
+    blocks.extend(("• " + item, False) for item in takeaways)
+    blocks.append(("CRITICAL ENGINEERING FORMULAS", True))
+    blocks.extend(("• " + formula, False) for formula in formula_cheatsheet)
+    return add_content_slides(prs, f"Lecture {lecture_num} Synthesis: Key Takeaways & Formula Sheet", blocks)
 
-    # Left Column: Key Takeaways
-    box_l = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), Inches(5.9), Inches(5.5))
-    box_l.fill.solid()
-    box_l.fill.fore_color.rgb = COLOR_WHITE
-    box_l.line.color.rgb = COLOR_BORDER
-    box_l.line.width = Pt(1)
-
-    tb_l = slide.shapes.add_textbox(Inches(0.8), Inches(1.45), Inches(5.5), Inches(5.1))
-    tf_l = tb_l.text_frame
-    tf_l.word_wrap = True
-    p_lt = tf_l.paragraphs[0]
-    p_lt.text = "CORE CONCEPTUAL TAKEAWAYS"
-    p_lt.font.size = Pt(13)
-    p_lt.font.bold = True
-    p_lt.font.color.rgb = SUA_DARKGREEN
-
-    for t in takeaways:
-        p = tf_l.add_paragraph()
-        p.space_after = Pt(6)
-        p.font.size = Pt(11.5)
-        p.font.color.rgb = COLOR_TEXT
-        p.text = "✔ " + t
-
-    # Right Column: Formula Sheet
-    box_r = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(1.3), Inches(5.9), Inches(5.5))
-    box_r.fill.solid()
-    box_r.fill.fore_color.rgb = COLOR_CARD_BG
-    box_r.line.color.rgb = SUA_GREEN
-    box_r.line.width = Pt(1.5)
-
-    tb_r = slide.shapes.add_textbox(Inches(7.0), Inches(1.45), Inches(5.5), Inches(5.1))
-    tf_r = tb_r.text_frame
-    tf_r.word_wrap = True
-    p_rt = tf_r.paragraphs[0]
-    p_rt.text = "CRITICAL ENGINEERING FORMULAS"
-    p_rt.font.size = Pt(13)
-    p_rt.font.bold = True
-    p_rt.font.color.rgb = SUA_GREEN
-
-    for formula in formula_cheatsheet:
-        p = tf_r.add_paragraph()
-        p.space_after = Pt(6)
-        p.font.size = Pt(11.5)
-        p.font.color.rgb = COLOR_TEXT
-        p.text = "★ " + formula
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
 
 def add_review_slide(prs, lecture_num, questions, preview_text, current_slide=26, total_slides=26):
-    """Creates the concluding review questions and next lecture preview slide."""
-    slide = create_base_slide(prs)
-    add_header(slide, f"Lecture {lecture_num} Self-Assessment & Upcoming Topics")
+    blocks = [("SELF-ASSESSMENT & PROBLEM-SOLVING EXERCISES", True)]
+    blocks.extend(("Q: " + question, False) for question in questions)
+    blocks.extend([("NEXT LECTURE PREVIEW & REQUIRED PREPARATION", True), (preview_text, False)])
+    return add_content_slides(prs, f"Lecture {lecture_num} Self-Assessment & Upcoming Topics", blocks)
 
-    # Top Box: Review Questions
-    box_q = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.3), Inches(12.133), Inches(4.0))
-    box_q.fill.solid()
-    box_q.fill.fore_color.rgb = COLOR_WHITE
-    box_q.line.color.rgb = COLOR_BORDER
-    box_q.line.width = Pt(1)
 
-    tb_q = slide.shapes.add_textbox(Inches(0.8), Inches(1.4), Inches(11.7), Inches(3.7))
-    tf_q = tb_q.text_frame
-    tf_q.word_wrap = True
-    p_qt = tf_q.paragraphs[0]
-    p_qt.text = "SELF-ASSESSMENT & PROBLEM-SOLVING EXERCISES:"
-    p_qt.font.size = Pt(12)
-    p_qt.font.bold = True
-    p_qt.font.color.rgb = SUA_DARKGREEN
-
-    for q in questions:
-        p = tf_q.add_paragraph()
-        p.space_after = Pt(5)
-        p.font.size = Pt(11.5)
-        p.font.color.rgb = COLOR_TEXT
-        p.text = "Q: " + q
-
-    # Bottom Box: Next Lecture Preview
-    box_prev = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(5.45), Inches(12.133), Inches(1.4))
-    box_prev.fill.solid()
-    box_prev.fill.fore_color.rgb = COLOR_CARD_BG
-    box_prev.line.color.rgb = SUA_GREEN
-    box_prev.line.width = Pt(1.5)
-
-    tb_prev = slide.shapes.add_textbox(Inches(0.8), Inches(5.5), Inches(11.7), Inches(1.2))
-    tf_prev = tb_prev.text_frame
-    tf_prev.word_wrap = True
-    p_pt = tf_prev.paragraphs[0]
-    p_pt.text = "NEXT LECTURE PREVIEW & REQUIRED PREPARATION:"
-    p_pt.font.size = Pt(11)
-    p_pt.font.bold = True
-    p_pt.font.color.rgb = SUA_GREEN
-
-    p_pbody = tf_prev.add_paragraph()
-    p_pbody.text = preview_text
-    p_pbody.font.size = Pt(11.5)
-    p_pbody.font.color.rgb = COLOR_TEXT
-
-    add_footer(slide, current_slide, total_slides)
-    return slide
-
-def generate_all_slides():
-    """Generates all 9 lecture presentations (26 slides each) and converts them to PDF."""
+def generate_all_slides(output_dir=LECTURES_DIR):
     from slides_part1 import build_lecture_1_deck, build_lecture_2_deck, build_lecture_3_deck
     from slides_part2 import build_lecture_4_deck, build_lecture_5_deck, build_lecture_6_deck
     from slides_part3 import build_lecture_7_deck, build_lecture_8_deck, build_lecture_9_deck
 
-    deck_builders = [
-        (1, build_lecture_1_deck),
-        (2, build_lecture_2_deck),
-        (3, build_lecture_3_deck),
-        (4, build_lecture_4_deck),
-        (5, build_lecture_5_deck),
-        (6, build_lecture_6_deck),
-        (7, build_lecture_7_deck),
-        (8, build_lecture_8_deck),
-        (9, build_lecture_9_deck)
-    ]
+    builders = [build_lecture_1_deck, build_lecture_2_deck, build_lecture_3_deck,
+                build_lecture_4_deck, build_lecture_5_deck, build_lecture_6_deck,
+                build_lecture_7_deck, build_lecture_8_deck, build_lecture_9_deck]
+    output_dir = Path(output_dir).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="aen214-lo-") as profile_dir:
+        profile_arg = f"-env:UserInstallation={Path(profile_dir).as_uri()}"
+        for number, builder in enumerate(builders, 1):
+            prs = Presentation()
+            prs.slide_width = Inches(13.333)
+            prs.slide_height = Inches(7.5)
+            builder(prs)
+            for index, slide in enumerate(prs.slides, 1):
+                add_footer(slide, index, len(prs.slides))
+            pptx_path = output_dir / f"AEN_214_Lecture_{number}.pptx"
+            pdf_path = pptx_path.with_suffix(".pdf")
+            prs.save(str(pptx_path))
+            with tempfile.TemporaryDirectory(prefix="aen214-pdf-") as pdf_dir:
+                result = subprocess.run(
+                    ["libreoffice", profile_arg, "--headless", "--convert-to", "pdf",
+                     "--outdir", pdf_dir, str(pptx_path)],
+                    capture_output=True, text=True, check=True,
+                )
+                converted = Path(pdf_dir) / pdf_path.name
+                if not converted.is_file() or converted.stat().st_size == 0:
+                    raise RuntimeError(f"PDF conversion failed for {pptx_path}: {result.stdout} {result.stderr}")
+                os.replace(converted, pdf_path)
+            print(f"Lecture {number}: {len(prs.slides)} slides -> {pptx_path.name}, {pdf_path.name}", flush=True)
 
-    print("=" * 70)
-    print("AEN 214: INTRODUCTION TO ELECTRONICS — LECTURE SLIDE GENERATOR")
-    print("Department of Agricultural Engineering, Sokoine University of Agriculture")
-    print("=" * 70)
-
-    pptx_files = []
-
-    for num, builder in deck_builders:
-        prs = Presentation()
-        prs.slide_width = Inches(13.333)
-        prs.slide_height = Inches(7.5)
-
-        print(f"\n[Building] Lecture {num} PowerPoint deck (26 slides)...")
-        builder(prs)
-
-        out_pptx = os.path.join(LECTURES_DIR, f"AEN_214_Lecture_{num}.pptx")
-        prs.save(out_pptx)
-        pptx_files.append(out_pptx)
-        print(f"[Success] Saved {out_pptx} ({os.path.getsize(out_pptx)} bytes, {len(prs.slides)} slides)")
-
-    print("\n" + "=" * 70)
-    print("CONVERTING ALL 9 PPTX PRESENTATIONS TO PDF VIA LIBREOFFICE")
-    print("=" * 70)
-
-    for pptx_path in pptx_files:
-        base_name = os.path.basename(pptx_path)
-        pdf_name = base_name.replace(".pptx", ".pdf")
-        pdf_path = os.path.join(LECTURES_DIR, pdf_name)
-
-        print(f"[Converting] {base_name} -> {pdf_name}...")
-        cmd = ["libreoffice", "--headless", "--convert-to", "pdf", pptx_path, "--outdir", LECTURES_DIR]
-        res = subprocess.run(cmd, capture_output=True, text=True)
-
-        if os.path.exists(pdf_path):
-            print(f"[Success] Converted {pdf_path} ({os.path.getsize(pdf_path)} bytes)")
-        else:
-            print(f"[Error] Failed to convert {pptx_path}:\n{res.stderr}")
-
-    print("\n[Completed] All 9 lecture PowerPoint decks and PDF slides generated successfully!")
 
 if __name__ == "__main__":
-    generate_all_slides()
-
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=LECTURES_DIR,
+                        help="Directory for generated PPTX and PDF files (default: Lectures)")
+    args = parser.parse_args()
+    generate_all_slides(args.output_dir)
