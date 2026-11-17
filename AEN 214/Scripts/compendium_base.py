@@ -427,7 +427,7 @@ def create_banner_header(lecture_num, lecture_title, topics_list):
         [Paragraph("AEN 214: INTRODUCTION TO ELECTRONICS", styles['CourseCode'])],
         [Paragraph(f"LECTURE COMPENDIUM {lecture_num}: {lecture_title.upper()}", styles['CourseTitle'])],
         [Paragraph("<b>Course Instructor:</b> Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T) | <b>Lab:</b> Electronics & Precision Agriculture Lab (EPAL)<br/>"
-                   "<b>Target Cohorts:</b> BSc Agricultural Engineering, BSc IWRE, BSc BPHE | <b>Academic Year:</b> 2025/2026", styles['MetaBox'])]
+                   "<b>Target Cohorts:</b> BSc Agricultural Engineering, BSc IWRE, BSc BPHE | <b>Academic Year:</b> 2026/2027", styles['MetaBox'])]
     ]
 
     if logo_img:

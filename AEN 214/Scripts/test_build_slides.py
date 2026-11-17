@@ -5,7 +5,7 @@ import unittest
 from pptx import Presentation
 from pptx.util import Inches
 
-from build_slides import notation_runs, text_box
+from build_slides import add_title_slide, notation_runs, text_box
 
 
 class EquationNotationTests(unittest.TestCase):
@@ -45,6 +45,15 @@ class EquationNotationTests(unittest.TestCase):
             [None, "-25000", None, "30000", None, "-25000", None],
         )
         self.assertEqual(shape.width, Inches(8))
+
+
+class SlideMetadataTests(unittest.TestCase):
+    def test_title_slide_academic_year(self):
+        presentation = Presentation()
+        slide = add_title_slide(presentation, 1, "Example", "Example subtitle")
+        text = " ".join(shape.text_frame.text for shape in slide.shapes if shape.has_text_frame)
+        self.assertIn("Academic Year 2026/2027", text)
+        self.assertNotIn("2025/2026", text)
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ def build_course_outline():
         [Paragraph("OFFICIAL COURSE SYLLABUS & LEARNING CONTRACT", styles['CourseTitle'])],
         [Paragraph(
             "<b>Instructor:</b> Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T) | <b>Laboratory:</b> Electronics & Precision Agriculture Lab<br/>"
-            "<b>Course Status:</b> Elective | <b>Credit Rating:</b> 6 Credits | <b>Total Notional Hours:</b> 60 Hours | <b>Academic Year:</b> 2025/2026",
+            "<b>Course Status:</b> Elective | <b>Credit Rating:</b> 6 Credits | <b>Total Notional Hours:</b> 60 Hours | <b>Academic Year:</b> 2026/2027",
             styles['MetaBox']
         )]
     ]
@@ -121,17 +121,18 @@ def build_course_outline():
     story.append(create_custom_table(grade_headers, grade_rows, [1.8*inch, 2.2*inch, 1.0*inch, 2.2*inch]))
 
     # 6. Reading List
+    story.append(PageBreak())
     story.append(Paragraph("6. Prescribed Textbooks & Reading List", styles['SecH1']))
     refs = [
-        "1. Boylestad, R. L., & Nashelsky, L. (2018). <i>Electronic Devices and Circuit Theory</i> (11th ed.). Pearson Education.",
-        "2. Sedra, A. S., & Smith, K. C. (2020). <i>Microelectronic Circuits</i> (8th ed.). Oxford University Press.",
+        "1. Bolton, W. (2015). <i>Mechatronics: Electronic control systems in mechanical and electrical engineering</i> (6th ed.). Pearson Education.",
+        "2. Boylestad, R. L., & Nashelsky, L. (2013). <i>Electronic devices and circuit theory</i> (11th ed.). Pearson.",
         "3. Floyd, T. L. (2017). <i>Electronic Devices: Conventional Current Version</i> (10th ed.). Pearson.",
-        "4. Mano, M. M., & Ciletti, M. D. (2017). <i>Digital Design: With an Introduction to Verilog HDL</i> (6th ed.). Pearson.",
-        "5. Karim, M. A., & Chen, X. (2017). <i>Digital Design: Basic Concepts and Principles</i>. CRC Press.",
-        "6. Person (2015). <i>Mechatronics: Electronic Control Systems in Mechanical and Electrical Engineering</i> (6th ed.). Pearson. ISBN-10: 9781292076683.",
-        "7. Johnson, M. A., & Smith, K. L. (2023). Fundamentals of Electronics: An Introduction. <i>IEEE Transactions on Education</i>, 66(3), 456-465.",
-        "8. Brown, R. J., & Davis, P. W. (2023). Basic Electronic Components and Circuits. <i>Journal of Electrical Engineering</i>, 44(2), 78-85.",
-        "9. Williams, S. E., & Wilson, T. A. (2023). Introduction to Semiconductor Devices and Circuits. <i>Journal of Applied Physics</i>, 135(6), 065420."
+        "4. Karim, M. A., & Chen, X. (2007). <i>Digital design: Basic concepts and principles</i>. CRC Press. Use 2017 when citing the CRC Press eBook reissue.",
+        "5. Mano, M. M., & Ciletti, M. D. (2017). <i>Digital design: With an introduction to the Verilog HDL, VHDL, and SystemVerilog</i> (6th ed.). Pearson.",
+        "6. Sedra, A. S., Smith, K. C., Carusone, T. C., & Gaudet, V. (2020). <i>Microelectronic circuits</i> (8th ed.). Oxford University Press.",
+        "7. Garcia-Zubia, J., Cuadros, J., Romero, S., Hernandez-Jayo, U., Orduña, P., Guenaga, M., Gonzalez-Sabate, L., & Gustavsson, I. (2017). Empirical analysis of the use of the VISIR remote lab in teaching analog electronics. <i>IEEE Transactions on Education, 60</i>(2), 149–156.",
+        "8. Nagel, L. W. (2023). The life of SPICE. <i>IEEE Solid-State Circuits Magazine, 15</i>(2), 16–23.",
+        "9. Lundstrom, M. S., & Alam, M. A. (2022). Moore's law: The journey ahead. <i>Science, 378</i>(6621), 722–723."
     ]
     for r in refs:
         story.append(Paragraph(r, styles['DocBullet']))

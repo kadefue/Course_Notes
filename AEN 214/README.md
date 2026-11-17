@@ -18,7 +18,7 @@
 * **Course Status:** Elective / Core Engineering
 * **Credit Rating:** 6 Credits
 * **Total Notional Hours:** 60 Hours (Lectures, Tutorials, Laboratory Experiments, Field Case Studies)
-* **Academic Year:** 2025/2026 & 2026/2027
+* **Academic Year:** 2026/2027
 
 ---
 
@@ -188,15 +188,8 @@ published decks, run
 
 ## 📚 Prescribed Textbooks & Reading List
 
-1. **Boylestad, R. L., & Nashelsky, L. (2018).** *Electronic Devices and Circuit Theory* (11th ed.). Pearson Education.
-2. **Sedra, A. S., & Smith, K. C. (2020).** *Microelectronic Circuits* (8th ed.). Oxford University Press.
-3. **Mano, M. M., & Ciletti, M. D. (2017).** *Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog* (6th ed.). Pearson.
-4. **Karim, M. A., & Chen, X. (2017).** *Digital Design: Basic Concepts and Principles*. CRC Press.
-5. **Person (2015).** *Mechatronics: Electronic Control Systems in Mechanical and Electrical Engineering* (6th ed.). Pearson. ISBN-10: 9781292076683.
-6. **Floyd, T. L. (2017).** *Electronic Devices: Conventional Current Version* (10th ed.). Pearson.
-7. **Johnson, M. A., & Smith, K. L. (2023).** Fundamentals of Electronics: An Introduction. *IEEE Transactions on Education*, 66(3), 456-465.
-8. **Brown, R. J., & Davis, P. W. (2023).** Basic Electronic Components and Circuits. *Journal of Electrical Engineering*, 44(2), 78-85.
-9. **Williams, S. E., & Wilson, T. A. (2023).** Introduction to Semiconductor Devices and Circuits. *Journal of Applied Physics*, 135(6), 065420.
+The prescribed textbooks and reading list are in the
+[course outline](Notes/AEN_214_Course_Outline.pdf).
 
 ---
 

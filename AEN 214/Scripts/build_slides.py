@@ -202,7 +202,7 @@ def add_title_slide(prs, lecture_num, title, subtitle, current_slide=1, total_sl
              "Course Instructor: Dr. Kadeghe Goodluck Fue, PhD, P.Eng (T)",
              19, TEXT, True)
     text_box(slide, 0.9, 6.15, 11.3, 0.52,
-             "Electronics & Precision Agriculture Laboratory | Academic Year 2025/2026\n"
+             "Electronics & Precision Agriculture Laboratory | Academic Year 2026/2027\n"
              "Sokoine University of Agriculture",
              16, MUTED, line_height=20)
     return slide

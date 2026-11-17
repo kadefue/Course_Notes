@@ -292,11 +292,8 @@ def build_lecture_7_deck(prs):
         "CAN Termination: R_term = 120 Ohm at both bus ends"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Mano, M. M., & Ciletti, M. D. (2017). Digital Design: With an Introduction to Verilog HDL (6th ed.). Pearson.",
-        "Floyd, T. L. (2015). Digital Fundamentals (11th ed.). Pearson.",
-        "ISO 11783: Tractors and machinery for agriculture and forestry — Serial control and communications data network (ISOBUS).",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review hexadecimal nibble grouping and truth tables before attending Lab Session 7.",
         "Field Assignment: Complete Assignment 3, Questions 1 to 4 on number systems and CAN-bus telemetry."
     ], current_slide=26, total_slides=total)
@@ -569,11 +566,8 @@ def build_lecture_8_deck(prs):
         "Full Adder: S = A ⊕ B ⊕ C_in; C_out = AB + C_in(A ⊕ B)"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Mano, M. M., & Ciletti, M. D. (2018). Digital Design: With an Introduction to Verilog HDL (6th ed.). Pearson.",
-        "Floyd, T. L. (2015). Digital Fundamentals (11th ed.). Pearson.",
-        "Karim, M. A., & Chen, X. (2017). Digital Design: Basic Concepts and Principles. CRC Press.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review DIP-14 pinout diagrams (74LS00, 74LS08, 74LS32, 74LS86) before Lab Session 8.",
         "Field Assignment: Complete Assignment 3, Questions 5 to 8 on logic gate synthesis and full adder circuits."
     ], current_slide=26, total_slides=total)
@@ -864,11 +858,8 @@ def build_lecture_9_deck(prs):
         "Hazard-Free SOP: Y_{safe} = A·/B + B·C + A·C (Consensus)"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Coursework Review", [
-        "Mano, M. M., & Ciletti, M. D. (2018). Digital Design: With an Introduction to Verilog HDL (6th ed.). Pearson.",
-        "Roth, C. H., & Kinney, L. L. (2020). Fundamentals of Logic Design (7th ed.). Cengage Learning.",
-        "Floyd, T. L. (2015). Digital Fundamentals (11th ed.). Pearson.",
+    # 26. Coursework Review
+    add_bullet_slide(prs, "Coursework Review", [
         "Continuous Assessment (CA): Theory Tests 1 and 2 account for 40% of the overall course mark (20% each).",
         "University Examination (UE): Comprehensive final examination covers Modules 1 through 9 (60% final weighting)."
     ], current_slide=26, total_slides=total)

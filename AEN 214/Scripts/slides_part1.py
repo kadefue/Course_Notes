@@ -261,11 +261,8 @@ def build_lecture_1_deck(prs):
         "Resonant Frequency: f_0 = 1 / [2*pi*sqrt(L*C)]"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Preview
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Floyd, T. L. (2017). Electronic Devices: Conventional Current Version (10th ed.). Pearson.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Bring digital multimeter, safety goggles, breadboard, and scientific calculator to Lab Session 1.",
         "Field Assignment: Complete Assignment 1, Questions 1 to 4 covering passive components and submit via SUA LMS."
     ], current_slide=26, total_slides=total)
@@ -525,11 +522,8 @@ def build_lecture_2_deck(prs):
         "Hall Coefficient: R_H = 1 / (n · q)"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Streetman, B. G., & Banerjee, S. (2016). Solid State Electronic Devices (7th ed.). Pearson.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review semiconductor diode safety procedures and wear ESD wrist straps during Lab Session 2.",
         "Field Assignment: Complete Assignment 1, Questions 5 to 8 on semiconductor physics and submit via SUA LMS."
     ], current_slide=26, total_slides=total)
@@ -795,11 +789,8 @@ def build_lecture_3_deck(prs):
         "Diode Power Loss: P = V_D · I_avg"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Floyd, T. L. (2017). Electronic Devices: Conventional Current Version (10th ed.). Pearson.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review oscilloscope AC coupling vs DC coupling modes before Lab Session 3.",
         "Field Assignment: Complete Assignment 1, Questions 9 to 12 on diode rectification and filtering."
     ], current_slide=26, total_slides=total)
@@ -807,4 +798,3 @@ def build_lecture_3_deck(prs):
     print(f"[Done] Built Lecture {lec_num} deck ({len(prs.slides)} slides).")
 
 print("slides_part1 module complete with Lectures 1, 2, and 3.")
-

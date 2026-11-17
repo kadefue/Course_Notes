@@ -269,11 +269,8 @@ def build_lecture_4_deck(prs):
         "Junction Temperature: T_J = T_amb + P_diss · theta_JA"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Floyd, T. L. (2017). Electronic Devices: Conventional Current Version (10th ed.). Pearson.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review LED current limiting resistor calculations before attending Lab Session 4.",
         "Field Assignment: Complete Assignment 2, Questions 1 to 4 on special purpose diodes and submit via SUA LMS."
     ], current_slide=26, total_slides=total)
@@ -538,11 +535,8 @@ def build_lecture_5_deck(prs):
         "Input Impedance: Z_in = R_1 || R_2 || (beta · r_e)"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Floyd, T. L. (2017). Electronic Devices: Conventional Current Version (10th ed.). Pearson.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review BJT pinout configurations (TO-92 EBC vs CBE) before attending Lab Session 5.",
         "Field Assignment: Complete Assignment 2, Questions 5 to 8 on BJT biasing and saturated switching."
     ], current_slide=26, total_slides=total)
@@ -809,11 +803,8 @@ def build_lecture_6_deck(prs):
         "Peak Gate Current: I_gate(peak) = Q_G / t_sw"
     ], current_slide=25, total_slides=total)
 
-    # 26. References & Reading List
-    add_bullet_slide(prs, "Prescribed References & Practical Laboratory Preparation", [
-        "Boylestad, R. L., & Nashelsky, L. (2018). Electronic Devices and Circuit Theory (11th ed.). Pearson Education.",
-        "Sedra, A. S., & Smith, K. C. (2020). Microelectronic Circuits (8th ed.). Oxford University Press.",
-        "Rashid, M. H. (2014). Power Electronics: Devices, Circuits, and Applications (4th ed.). Pearson.",
+    # 26. Laboratory Preparation
+    add_bullet_slide(prs, "Practical Laboratory Preparation", [
         "Laboratory Preparation: Review antistatic ESD handling procedures before attending Lab Session 6.",
         "Field Assignment: Complete Assignment 2, Questions 9 to 12 on JFET biasing and power MOSFET inverter design."
     ], current_slide=26, total_slides=total)
